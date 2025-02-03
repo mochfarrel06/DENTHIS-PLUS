@@ -73,8 +73,8 @@
                         onclick="fillLogin('admin@example.com', 'password')">Admin</button>
                     <button class="btn btn-secondary"
                         onclick="fillLogin('pasien@example.com', 'password')">Pasien</button>
-                    {{-- <button class="btn btn-secondary"
-                        onclick="fillLogin('doctor@example.com', 'password')">Dokter</button> --}}
+                    <button class="btn btn-secondary"
+                        onclick="fillLogin('dokter@example.com', 'password')">Dokter</button>
                 </div>
             </div>
             <!-- /.login-card-body -->

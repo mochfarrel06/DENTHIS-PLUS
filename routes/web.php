@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\DoctorController;
 use App\Http\Controllers\Admin\DoctorScheduleController;
 use App\Http\Controllers\Admin\PatientController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Doctor\DashboardController as DoctorDashboardController;
 use App\Http\Controllers\Patient\DashboardController as PatientDashboardController;
 use App\Http\Controllers\Patient\QueueController;
 use App\Http\Controllers\User\UserController;
@@ -61,4 +62,8 @@ Route::group([
     Route::get('queue', [QueueController::class, 'index'])->name('queue.index');
     Route::get('queue/create', [QueueController::class, 'create'])->name('queue.create');
     Route::post('queue', [QueueController::class, 'store'])->name('queue.store');
+});
+
+Route::group(['prefix' => 'doctor', 'as' => 'doctor.', 'middleware' => 'role:dokter'], function () {
+    Route::get('dashboard', [DoctorDashboardController::class, 'index'])->name('dashboard');
 });

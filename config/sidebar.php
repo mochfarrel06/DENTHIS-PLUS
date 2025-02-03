@@ -84,4 +84,12 @@ return [
         'role' => ['admin', 'pasien'],
         'icon' => 'iconoir-task-list',
     ],
+
+    // 3. Dokter
+    [
+        'text' => 'Dashboard',
+        'url' => '/doctor/dashboard',
+        'role' => ['dokter'],
+        'icon' => 'iconoir-dashboard-speed',
+    ],
 ];

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Doctor\DoctorStoreRequest;
 use App\Http\Requests\Doctor\DoctorUpdateRequest;
 use App\Models\Doctor;
+use App\Models\User;
 use App\Traits\ProfileUploadTrait;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -59,6 +60,13 @@ class DoctorController extends Controller
             ]);
 
             $doctor->save();
+
+            User::create([
+                'name' => $request->nama_depan . ' ' . $request->nama_belakang,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'role' => 'dokter'
+            ]);
 
             session()->flash('success', 'Berhasil menambahkan data dokter');
             return response()->json(['success' => true], 200);
