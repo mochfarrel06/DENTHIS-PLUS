@@ -60,4 +60,5 @@ Route::group([
     // Route::resource('queue', QueueController::class);
     Route::get('queue', [QueueController::class, 'index'])->name('queue.index');
     Route::get('queue/create', [QueueController::class, 'create'])->name('queue.create');
+    Route::post('queue', [QueueController::class, 'store'])->name('queue.store');
 });

@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Doctor;
 use App\Models\DoctorSchedule;
 use App\Models\Patient;
+use App\Models\Queue;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class QueueController extends Controller
 {
@@ -48,10 +50,19 @@ class QueueController extends Controller
                 while ($start->copy()->addMinutes($waktuPeriksa)->lte($end)) {
                     $slotStart = $start->format('H:i');
                     $slotEnd = $start->copy()->addMinutes($waktuPeriksa)->format('H:i');
+
+                    // Cek apakah slot sudah dipesan
+                    $isBooked = Queue::where('doctor_id', $doctorId)
+                        ->where('tgl_periksa', $date)
+                        ->where('start_time', $slotStart)
+                        ->exists();
+
                     $slots[] = [
                         'start' => $slotStart,
                         'end' => $slotEnd,
+                        'is_booked' => $isBooked
                     ];
+
                     $start->addMinutes($waktuPeriksa + $waktuJeda);
                 }
             }
@@ -62,14 +73,56 @@ class QueueController extends Controller
         return view('patient.queue.create', compact('doctors', 'patients'));
     }
 
-
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        //
+        // dd($request->all());
+        $userId = Auth::id();
+        $request->validate([
+            'doctor_id' => 'required|exists:doctors,id',
+            'urutan' => 'required',
+            'tgl_periksa' => 'required|date',
+            'start_time' => 'required',
+            'end_time' => 'required',
+            'status' => 'required|string',
+            'is_booked' => 'required|boolean'
+        ]);
+
+        // Cek apakah slot waktu sudah dipesan
+        $existingQueue = Queue::where('doctor_id', $request->doctor_id)
+            ->where('tgl_periksa', $request->tgl_periksa)
+            ->where('start_time', $request->start_time)
+            ->exists();
+
+        if ($existingQueue) {
+            return redirect()->back()->withErrors(['error' => 'Slot waktu ini sudah dipesan.']);
+        }
+
+        // Menentukan nomor urut antrean
+        $lastQueue = Queue::where('doctor_id', $request->doctor_id)
+            ->where('tgl_periksa', $request->tgl_periksa)
+            ->orderBy('urutan', 'desc')
+            ->first();
+
+        $urutan = $lastQueue ? $lastQueue->urutan + 1 : 1;
+
+        // Simpan data antrean
+        Queue::create([
+            'user_id' => $userId,
+            'doctor_id' => $request->doctor_id,
+            'tgl_periksa' => $request->tgl_periksa,
+            'start_time' => $request->start_time,
+            'end_time' => $request->end_time,
+            'urutan' => $urutan,
+            'status' => $request->status,
+            'is_booked' => $request->is_booked
+        ]);
+
+        return redirect()->route('data-patient.queue.index')->with('success', 'Antrean berhasil ditambahkan.');
     }
+
 
     /**
      * Display the specified resource.

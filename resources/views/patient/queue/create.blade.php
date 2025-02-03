@@ -1,8 +1,6 @@
 @extends('layouts.master')
 
-@section('title-page')
-    Tambah
-@endsection
+@section('title-page', 'Tambah Antrean')
 
 @section('content')
     <div class="content-header">
@@ -27,15 +25,14 @@
             <div class="row">
                 <section class="col-lg-12">
                     <div class="card">
-                        <form id="main-form" method="POST" action="">
+                        <form id="main-form" method="POST" action="{{ route('data-patient.queue.store') }}">
                             @csrf
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="">Dokter</label>
-                                            <select class="custom-select" name="doctor_id" id="doctor_id"
-                                                @error('doctor_id') is-invalid @enderror">
+                                            <label for="doctor_id">Dokter</label>
+                                            <select class="custom-select" name="doctor_id" id="doctor_id" required>
                                                 <option value="">-- Pilih Dokter --</option>
                                                 @foreach ($doctors as $doctor)
                                                     <option value="{{ $doctor->id }}">{{ $doctor->nama_depan }}
@@ -46,42 +43,49 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="">Tanggal</label>
-                                            <input type="date" class="form-control" min="" id="date">
+                                            <label for="date">Tanggal Periksa</label>
+                                            <input type="date" class="form-control" name="tgl_periksa" id="date"
+                                                required>
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="">Janji temu tersedia</label>
+                                            <label for="time-slots">Janji Temu Tersedia</label>
                                             <div class="time-slot-box">
-                                                <div class="container-time" id="time-slots">
-
-                                                </div>
+                                                <div class="container-time" id="time-slots"></div>
                                             </div>
-
                                         </div>
+                                        <input type="hidden" name="start_time" id="selected-start-time">
+                                        <input type="hidden" name="end_time" id="selected-end-time">
                                     </div>
                                 </div>
-
                                 <div class="row">
-                                    <div class="col-md-12">
+                                    <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="">Keluhan Pasien</label>
-                                            <textarea name="" id="" cols="30" rows="5" class="form-control"></textarea>
+                                            <label for="urutan">Urutan</label>
+                                            <input type="text" class="form-control" name="urutan" id="urutan">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="status">Status</label>
+                                            <select class="custom-select" name="status" id="status">
+                                                <option value="menunggu">Menunggu</option>
+                                                <option value="dikonfirmasi">Dikonfirmasi</option>
+                                                <option value="selesai">Selesai</option>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
+                                <input type="hidden" name="is_booked" value="1">
                             </div>
-
                             <div class="card-footer">
-                                <button type="submit" id="submit-btn" class="btn btn-primary mr-2">Submit</button>
+                                <button type="submit" class="btn btn-primary">Submit</button>
                                 <a href="{{ route('data-patient.queue.index') }}" class="btn btn-warning">Kembali</a>
                             </div>
                         </form>
-
                     </div>
                 </section>
             </div>
@@ -106,38 +110,29 @@
                         },
                         success: function(response) {
                             $('#time-slots').html('');
-                            if (response.length > 0) {
-                                response.forEach(function(slot) {
-                                    let btnClass = slot.is_booked ? 'btn-danger' :
-                                        'btn-success';
-                                    let isDisabled = slot.is_booked ? 'disabled' : '';
-                                    $('#time-slots').append(
-                                        `<a href="#" class="btn ${btnClass} m-1" ${isDisabled} data-start="${slot.start}" data-end="${slot.end}">
-                                    ${slot.start} - ${slot.end}
-                                </a>`
-                                    );
-                                });
-                            } else {
-                                $('#time-slots').html('<p>No available slots</p>');
-                            }
+                            response.forEach(function(slot) {
+                                let btnClass = slot.is_booked ? 'btn-danger' :
+                                    'btn-success';
+                                let isDisabled = slot.is_booked ? 'disabled' : '';
+                                $('#time-slots').append(
+                                    `<a href="#" class="btn ${btnClass} m-1 slot-btn" ${isDisabled} data-start="${slot.start}" data-end="${slot.end}">
+                                        ${slot.start} - ${slot.end}
+                                    </a>`
+                                );
+                            });
                         }
                     });
-                } else {
-                    $('#time-slots').html('');
                 }
             });
-
-            // Optional: Tambahkan event listener untuk menangani klik pada tombol yang tersedia
-            $('#time-slots').on('click', 'a:not(.btn-danger)', function(e) {
+            $('#time-slots').on('click', '.slot-btn:not(.btn-danger)', function(e) {
                 e.preventDefault();
                 var startTime = $(this).data('start');
                 var endTime = $(this).data('end');
-                alert(`Slot selected: ${startTime} - ${endTime}`);
+                $('#selected-start-time').val(startTime);
+                $('#selected-end-time').val(endTime);
+                alert(`Slot terpilih: ${startTime} - ${endTime}`);
             });
         });
-    </script>
-
-    <script>
         document.getElementById('date').min = new Date().toISOString().split('T')[0];
     </script>
 @endpush
