@@ -17,7 +17,8 @@ class QueueController extends Controller
      */
     public function index()
     {
-        return view('patient.queue.index');
+        $queues = Queue::with('doctor')->get();
+        return view('patient.queue.index', compact('queues'));
     }
 
     /**
@@ -78,16 +79,13 @@ class QueueController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
         $userId = Auth::id();
         $request->validate([
             'doctor_id' => 'required|exists:doctors,id',
-            'urutan' => 'required',
             'tgl_periksa' => 'required|date',
             'start_time' => 'required',
+            'keterangan' => 'required',
             'end_time' => 'required',
-            'status' => 'required|string',
-            'is_booked' => 'required|boolean'
         ]);
 
         // Cek apakah slot waktu sudah dipesan
@@ -106,7 +104,9 @@ class QueueController extends Controller
             ->orderBy('urutan', 'desc')
             ->first();
 
-        $urutan = $lastQueue ? $lastQueue->urutan + 1 : 1;
+        // Generate nomor urutan dengan format ANTREAN0001, ANTREAN0002, dst.
+        $lastNumber = $lastQueue ? (int) substr($lastQueue->urutan, 7) : 0;
+        $newUrutan = 'ANTREAN' . str_pad($lastNumber + 1, 4, '0', STR_PAD_LEFT);
 
         // Simpan data antrean
         Queue::create([
@@ -115,9 +115,10 @@ class QueueController extends Controller
             'tgl_periksa' => $request->tgl_periksa,
             'start_time' => $request->start_time,
             'end_time' => $request->end_time,
-            'urutan' => $urutan,
-            'status' => $request->status,
-            'is_booked' => $request->is_booked
+            'keterangan' => $request->keterangan,
+            'urutan' => $newUrutan,
+            'status' => 'booking',
+            'is_booked' => true
         ]);
 
         return redirect()->route('data-patient.queue.index')->with('success', 'Antrean berhasil ditambahkan.');
@@ -153,6 +154,13 @@ class QueueController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $queue = Queue::findOrFail($id);
+            $queue->delete();
+
+            return response(['status' => 'success', 'message' => 'Berhasil menghapus data pasien']);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
+        }
     }
 }

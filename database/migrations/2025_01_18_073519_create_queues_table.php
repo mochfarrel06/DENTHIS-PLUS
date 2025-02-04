@@ -18,11 +18,12 @@ return new class extends Migration
             $table->foreignId('doctor_id')->constrained()->onDelete('cascade');
 
             $table->date('tgl_periksa');
-            $table->time('start_time'); // Waktu mulai slot
-            $table->time('end_time');   // Waktu selesai slot
-            $table->string('urutan')->nullable();
+            $table->time('start_time');
+            $table->time('end_time');
+            $table->string('keterangan');
+            $table->string('urutan')->unique();
             $table->string('status');
-            $table->boolean('is_booked')->default(false);
+            $table->boolean('is_booked');
 
             $table->timestamps();
         });

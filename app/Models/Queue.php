@@ -15,6 +15,7 @@ class Queue extends Model
         'tgl_periksa',
         'start_time',
         'end_time',
+        'keterangan',
         'urutan',
         'status',
         'is_booked'
@@ -27,16 +28,11 @@ class Queue extends Model
 
     public function doctor()
     {
-        return $this->belongsTo(Doctor::class);
+        return $this->belongsTo(Doctor::class, 'doctor_id');
     }
 
     public function patient()
     {
         return $this->belongsTo(Patient::class);
-    }
-
-    public function doctorSchedule()
-    {
-        return $this->belongsTo(DoctorSchedule::class);
     }
 }

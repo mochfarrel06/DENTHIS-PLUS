@@ -44,30 +44,32 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {{-- @foreach ($patients as $patient)
+                                    @foreach ($queues as $queue)
                                         <tr>
-                                            <td>{{ $patient->kode_pasien }}</td>
-                                            <td>{{ $patient->nama_depan }} {{ $patient->nama_belakang }}</td>
+                                            <td>{{ $queue->urutan }}</td>
+                                            <td>{{ $queue->doctor->nama_depan }} {{ $queue->doctor->nama_belakang }}</td>
+                                            <td>{{ $queue->start_time }} - {{ $queue->end_time }}</td>
+                                            <td>{{ $queue->status }}</td>
                                             <td>
                                                 <div class="btn-group">
                                                     <a data-toggle="dropdown">
                                                         <i class="iconoir-more-vert"></i>
                                                     </a>
                                                     <ul class="dropdown-menu">
-                                                        <li><a class="dropdown-item"
-                                                                href="{{ route('patients.show', $patient->id) }}">Detail</a>
+                                                        {{-- <li><a class="dropdown-item"
+                                                                href="{{ route('queues.show', $queue->id) }}">Detail</a>
                                                         </li>
                                                         <li><a class="dropdown-item"
-                                                                href="{{ route('patients.edit', $patient->id) }}">Edit</a>
-                                                        </li>
+                                                                href="{{ route('queues.edit', $queue->id) }}">Edit</a>
+                                                        </li> --}}
                                                         <li><a class="dropdown-item delete-item"
-                                                                href="{{ route('patients.destroy', $patient->id) }}">Hapus</a>
+                                                                href="{{ route('data-patient.queue.destroy', $queue->id) }}">Hapus</a>
                                                         </li>
                                                     </ul>
                                                 </div>
                                             </td>
                                         </tr>
-                                    @endforeach --}}
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>

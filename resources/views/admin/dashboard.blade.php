@@ -54,7 +54,7 @@
                     <!-- small box -->
                     <div class="small-box bg-warning">
                         <div class="inner">
-                            <h3>44</h3>
+                            <h3>{{ $jumlahAntrean }}</h3>
 
                             <p>Jumlah Antrean</p>
                         </div>
@@ -79,39 +79,27 @@
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
-                                        <th>Urutan Antrean</th>
                                         <th>Kode Pasien</th>
+                                        <th>Dokter</th>
                                         <th>Pasien</th>
                                         <th>Waktu Periksa</th>
-                                        <th>Alamat</th>
                                         <th>Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {{-- @foreach ($patients as $patient)
+                                    @forelse ($antreanHariIni as $index => $queue)
                                         <tr>
-                                            <td>{{ $patient->kode_pasien }}</td>
-                                            <td>{{ $patient->nama_depan }} {{ $patient->nama_belakang }}</td>
-                                            <td>
-                                                <div class="btn-group">
-                                                    <a data-toggle="dropdown">
-                                                        <i class="iconoir-more-vert"></i>
-                                                    </a>
-                                                    <ul class="dropdown-menu">
-                                                        <li><a class="dropdown-item"
-                                                                href="{{ route('patients.show', $patient->id) }}">Detail</a>
-                                                        </li>
-                                                        <li><a class="dropdown-item"
-                                                                href="{{ route('patients.edit', $patient->id) }}">Edit</a>
-                                                        </li>
-                                                        <li><a class="dropdown-item delete-item"
-                                                                href="{{ route('patients.destroy', $patient->id) }}">Hapus</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
+                                            <td>{{ $queue->urutan }}</td>
+                                            <td>{{ $queue->doctor->nama_depan }} {{ $queue->doctor->nama_belakang }}</td>
+                                            <td>{{ $queue->user->name }}</td>
+                                            <td>{{ $queue->start_time }} - {{ $queue->end_time }}</td>
+                                            <td>{{ $queue->status }}</td>
                                         </tr>
-                                    @endforeach --}}
+                                    @empty
+                                        <tr class="text-center">
+                                            <td colspan="5">Tidak ada antrean untuk hari ini.</td>
+                                        </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>

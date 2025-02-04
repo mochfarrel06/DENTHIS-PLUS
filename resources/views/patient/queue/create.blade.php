@@ -62,24 +62,13 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="urutan">Urutan</label>
-                                            <input type="text" class="form-control" name="urutan" id="urutan">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="status">Status</label>
-                                            <select class="custom-select" name="status" id="status">
-                                                <option value="menunggu">Menunggu</option>
-                                                <option value="dikonfirmasi">Dikonfirmasi</option>
-                                                <option value="selesai">Selesai</option>
-                                            </select>
+                                            <label for="keterangan">Keterangan Periksa</label>
+                                            <textarea name="keterangan" id="keterangan" cols="20" rows="5" class="form-control"></textarea>
                                         </div>
                                     </div>
                                 </div>
-                                <input type="hidden" name="is_booked" value="1">
                             </div>
                             <div class="card-footer">
                                 <button type="submit" class="btn btn-primary">Submit</button>
