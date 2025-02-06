@@ -106,8 +106,8 @@ class DoctorController extends Controller
             $doctors = $request->except(['foto_dokter', 'password']);
 
             if ($request->hasFile('foto_dokter')) {
-                if ($doctor->foto_dokter && Storage::exists($doctor->foto_dokter)) {
-                    Storage::delete($doctor->foto_dokter);
+                if ($doctor->foto_dokter && file_exists(public_path($doctor->foto_dokter))) {
+                    unlink(public_path($doctor->foto_dokter));
                 }
 
                 $imagePath = $this->uploadImage($request, 'foto_dokter');
@@ -143,6 +143,20 @@ class DoctorController extends Controller
     {
         try {
             $doctor = Doctor::findOrFail($id);
+
+            if ($doctor->foto_dokter) {
+                $photoPath = public_path($doctor->foto_dokter);
+                if (file_exists($photoPath)) {
+                    unlink($photoPath);
+                }
+            }
+
+            // Hapus data user terkait
+            $user = User::where('email', $doctor->email)->first();
+            if ($user) {
+                $user->delete();
+            }
+
             $doctor->delete();
 
             return response(['status' => 'success', 'message' => 'Berhasil menghapus data dokter']);

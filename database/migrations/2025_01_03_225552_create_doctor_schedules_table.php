@@ -20,7 +20,6 @@ return new class extends Migration
             $table->time('jam_selesai')->nullable();
             $table->integer('waktu_periksa');
             $table->integer('waktu_jeda');
-            $table->boolean('is_booked')->default(false);
 
             $table->timestamps();
         });

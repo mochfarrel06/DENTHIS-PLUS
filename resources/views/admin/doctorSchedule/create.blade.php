@@ -98,18 +98,20 @@
                                         @endphp
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <label for="start_time_{{ $day }}">Start Time</label>
+                                                <label for="start_time_{{ $day }}">Waktu Mulai</label>
                                                 <select name="jam_mulai[{{ $day }}]"
                                                     id="start_time_{{ $day }}" class="form-control">
+                                                    <option value="">-- Pilih Waktu Mulai</option>
                                                     @foreach ($times as $time)
                                                         <option value="{{ $time }}">{{ $time }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
                                             <div class="col-md-6">
-                                                <label for="end_time_{{ $day }}">End Time</label>
+                                                <label for="end_time_{{ $day }}">Waktu Selesai</label>
                                                 <select name="jam_selesai[{{ $day }}]"
                                                     id="end_time_{{ $day }}" class="form-control">
+                                                    <option value="">-- Pilih Waktu Selesai</option>
                                                     @foreach ($times as $time)
                                                         <option value="{{ $time }}">{{ $time }}</option>
                                                     @endforeach

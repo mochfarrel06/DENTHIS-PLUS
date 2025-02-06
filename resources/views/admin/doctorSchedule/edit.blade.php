@@ -51,8 +51,9 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="">Waktu Jeda</label>
-                                            <select name="waktu_jeda" id="waktu_jeda" class="form-control">
-                                                <option value="">-- Pilih Waktu Jeda --</option>
+                                            <select name="waktu_jeda" id="waktu_jeda" class="form-control"
+                                                @error('waktu_jeda') is-invalid @enderror">
+                                                <option>-- Pilih Waktu Jeda --</option>
                                                 <option value="5"
                                                     {{ $firstSchedule && $firstSchedule->waktu_jeda === 5 ? 'selected' : '' }}>
                                                     5 Menit</option>
@@ -74,7 +75,8 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="">Waktu Pertemuan</label>
-                                            <select name="waktu_periksa" id="waktu_periksa" class="form-control">
+                                            <select name="waktu_periksa" id="waktu_periksa" class="form-control"
+                                                @error('waktu_periksa') is-invalid @enderror">
                                                 <option value="">-- Pilih Waktu Periksa --</option>
                                                 <option value="5"
                                                     {{ $firstSchedule && $firstSchedule->waktu_periksa === 5 ? 'selected' : '' }}>
@@ -105,22 +107,48 @@
                                                 <label class="form-check-label"
                                                     for="{{ $day }}">{{ $day }}</label>
                                             </div>
+                                            @php
+                                                // Membuat array rentang waktu (08:00 - 22:00) dengan interval 15 menit
+                                                $times = [];
+                                                $startTime = strtotime('08:00');
+                                                $endTime = strtotime('22:00');
+
+                                                while ($startTime <= $endTime) {
+                                                    $times[] = date('H:i', $startTime);
+                                                    $startTime = strtotime('+15 minutes', $startTime);
+                                                }
+                                            @endphp
                                             <div class="row">
                                                 <div class="col-md-6">
-                                                    <label for="start_time_{{ $day }}">Start Time</label>
-                                                    <input type="time" name="jam_mulai[{{ $day }}]"
-                                                        id="start_time_{{ $day }}" class="form-control"
-                                                        value="{{ $formattedSchedules[$day]['jam_mulai'] }}">
+                                                    <label for="start_time_{{ $day }}">Waktu Mulai</label>
+                                                    <select name="jam_mulai[{{ $day }}]"
+                                                        id="start_time_{{ $day }}" class="form-control">
+                                                        <option value="">-- Pilih Waktu Mulai</option>
+                                                        @foreach ($times as $time)
+                                                            <option value="{{ $time }}"
+                                                                {{ isset($formattedSchedules[$day]['jam_mulai']) && $formattedSchedules[$day]['jam_mulai'] === $time ? 'selected' : '' }}>
+                                                                {{ $time }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <label for="end_time_{{ $day }}">End Time</label>
-                                                    <input type="time" name="jam_selesai[{{ $day }}]"
-                                                        id="end_time_{{ $day }}" class="form-control"
-                                                        value="{{ $formattedSchedules[$day]['jam_selesai'] }}">
+                                                    <label for="end_time_{{ $day }}">Waktu Selesai</label>
+                                                    <select name="jam_selesai[{{ $day }}]"
+                                                        id="end_time_{{ $day }}" class="form-control">
+                                                        <option value="">-- Pilih Waktu Selesai</option>
+                                                        @foreach ($times as $time)
+                                                            <option value="{{ $time }}"
+                                                                {{ isset($formattedSchedules[$day]['jam_selesai']) && $formattedSchedules[$day]['jam_selesai'] === $time ? 'selected' : '' }}>
+                                                                {{ $time }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
                                     @endforeach
+
 
                                 </div>
                             </div>
