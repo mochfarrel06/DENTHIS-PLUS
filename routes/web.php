@@ -60,9 +60,9 @@ Route::group([
 ], function () {
     // Route::resource('queue', QueueController::class);
     Route::get('queue', [QueueController::class, 'index'])->name('queue.index');
-    Route::get('queue/create', [QueueController::class, 'create'])->name('queue.create');
-    Route::post('queue', [QueueController::class, 'store'])->name('queue.store');
-    Route::delete('queue/{id}', [QueueController::class, 'destroy'])->name('queue.destroy');
+    Route::get('queue/create', [QueueController::class, 'create'])->name('queue.create')->middleware('role:pasien');
+    Route::post('queue', [QueueController::class, 'store'])->name('queue.store')->middleware('role:pasien');
+    Route::delete('queue/{id}', [QueueController::class, 'destroy'])->name('queue.destroy')->middleware('role:pasien,admin');
 });
 
 Route::group(['prefix' => 'doctor', 'as' => 'doctor.', 'middleware' => 'role:dokter'], function () {

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Patient\PatientStoreRequest;
 use App\Http\Requests\Patient\PatientUpdateRequest;
 use App\Models\Patient;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -52,6 +53,13 @@ class PatientController extends Controller
             ]);
 
             $patient->save();
+
+            User::create([
+                'name' => $request->nama_depan . ' ' . $request->nama_belakang,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'role' => 'pasien'
+            ]);
 
             session()->flash('success', 'Berhasil menambahkan data pasien');
             return response()->json(['success' => true], 200);

@@ -26,11 +26,13 @@
                                 <h3 class="card-title">Antrean Pasien</h3>
                             </div>
 
-                            <div class="ml-auto">
-                                <a href="{{ route('data-patient.queue.create') }}"
-                                    class="btn btn-primary d-flex align-items-center"><i
-                                        class="iconoir-plus-circle mr-2"></i> Tambah</a>
-                            </div>
+                            @if (auth()->user() && auth()->user()->role == 'pasien')
+                                <div class="ml-auto">
+                                    <a href="{{ route('data-patient.queue.create') }}"
+                                        class="btn btn-primary d-flex align-items-center"><i
+                                            class="iconoir-plus-circle mr-2"></i> Tambah</a>
+                                </div>
+                            @endif
                         </div>
                         <div class="card-body">
                             <table id="example1" class="table table-bordered table-striped">

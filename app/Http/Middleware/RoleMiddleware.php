@@ -27,7 +27,7 @@ class RoleMiddleware
 
         // Check if the user's role matches any of the allowed roles
         if (!in_array(Auth::user()->role, $roles)) {
-            abort(403, 'Unauthorized action.'); // Or redirect to another route
+            return redirect()->back()->with('error', "Anda tidak memiliki akses");
         }
 
         return $next($request);
