@@ -42,7 +42,9 @@
                                         <th>Dokter</th>
                                         <th>Janji Temu</th>
                                         <th>Status</th>
-                                        <th>Aksi</th>
+                                        @if (auth()->user() && (auth()->user()->role == 'pasien' || auth()->user()->role == 'admin'))
+                                            <th>Aksi</th>
+                                        @endif
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -52,24 +54,32 @@
                                             <td>{{ $queue->doctor->nama_depan }} {{ $queue->doctor->nama_belakang }}</td>
                                             <td>{{ $queue->start_time }} - {{ $queue->end_time }}</td>
                                             <td>{{ $queue->status }}</td>
-                                            <td>
-                                                <div class="btn-group">
-                                                    <a data-toggle="dropdown">
-                                                        <i class="iconoir-more-vert"></i>
-                                                    </a>
-                                                    <ul class="dropdown-menu">
-                                                        {{-- <li><a class="dropdown-item"
+                                            @if (auth()->user() && (auth()->user()->role == 'pasien' || auth()->user()->role == 'admin'))
+                                                <td>
+                                                    <div class="btn-group">
+                                                        <a data-toggle="dropdown">
+                                                            <i class="iconoir-more-vert"></i>
+                                                        </a>
+                                                        <ul class="dropdown-menu">
+                                                            {{-- <li><a class="dropdown-item"
                                                                 href="{{ route('queues.show', $queue->id) }}">Detail</a>
                                                         </li>
                                                         <li><a class="dropdown-item"
                                                                 href="{{ route('queues.edit', $queue->id) }}">Edit</a>
                                                         </li> --}}
-                                                        <li><a class="dropdown-item delete-item"
-                                                                href="{{ route('data-patient.queue.destroy', $queue->id) }}">Hapus</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
+                                                            <li><a class="dropdown-item delete-item"
+                                                                    href="{{ route('data-patient.queue.destroy', $queue->id) }}">Hapus</a>
+                                                            </li>
+                                                            <li>
+                                                                <button class="btn btn-success start-exam"
+                                                                    data-id="{{ $queue->id }}">
+                                                                    Panggil Pasien
+                                                                </button>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            @endif
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -82,3 +92,26 @@
         </div>
     </section>
 @endsection
+
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            $('.start-exam').click(function() {
+                let queueId = $(this).data('id');
+                $.ajax({
+                    url: '/data-patient/queue/' + queueId + '/call',
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        if (response.success) {
+                            $('#queue-' + queueId + ' .queue-status').text('In Progress');
+                            alert('Notifikasi telah dikirim ke pasien!');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+@endpush

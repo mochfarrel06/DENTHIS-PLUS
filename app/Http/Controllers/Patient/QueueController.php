@@ -163,4 +163,23 @@ class QueueController extends Controller
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
         }
     }
+
+    public function callPatient($id)
+    {
+        $queue = Queue::findOrFail($id);
+        $queue->status = 'called';
+        $queue->save();
+
+        return response()->json(['message' => 'Pasien telah dipanggil!']);
+    }
+
+    // 3️⃣ Pasien mengecek status antreannya
+    public function checkStatus($user_id)
+    {
+        $queue = Queue::where('user_id', $user_id)->whereIn('status', ['called', 'in_progress'])->first();
+
+        return response()->json([
+            'status' => $queue ? $queue->status : 'waiting'
+        ]);
+    }
 }

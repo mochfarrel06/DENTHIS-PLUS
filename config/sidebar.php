@@ -64,8 +64,16 @@ return [
     //     'icon' => 'iconoir-group',
     // ],
 
+    // 2. Dokter
+    [
+        'text' => 'Dashboard',
+        'url' => '/doctor/dashboard',
+        'role' => ['dokter'],
+        'icon' => 'iconoir-dashboard-speed',
+    ],
 
-    // 2. PASIEN
+
+    // 3. PASIEN
     [
         'text' => 'Dashboard',
         'url' => '/patient/dashboard',
@@ -75,21 +83,15 @@ return [
 
     [
         'text' => 'ANTREAN',
-        'role' => ['admin', 'pasien'],
+        'role' => ['admin', 'pasien', 'dokter'],
         'is_header' => true,
     ],
     [
         'text' => 'Antrean Pasien',
         'url' => '/data-patient/queue',
-        'role' => ['admin', 'pasien'],
+        'role' => ['pasien', 'dokter', 'admin'],
         'icon' => 'iconoir-task-list',
     ],
 
-    // 3. Dokter
-    [
-        'text' => 'Dashboard',
-        'url' => '/doctor/dashboard',
-        'role' => ['dokter'],
-        'icon' => 'iconoir-dashboard-speed',
-    ],
+
 ];

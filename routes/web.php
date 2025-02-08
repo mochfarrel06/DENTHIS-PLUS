@@ -56,13 +56,16 @@ Route::group(['prefix' => 'patient', 'as' => 'patient.', 'middleware' => 'role:p
 Route::group([
     'prefix' => 'data-patient',
     'as' => 'data-patient.',
-    'middleware' => ['role:pasien,admin']
+    'middleware' => ['role:pasien,admin,dokter']
 ], function () {
     // Route::resource('queue', QueueController::class);
     Route::get('queue', [QueueController::class, 'index'])->name('queue.index');
     Route::get('queue/create', [QueueController::class, 'create'])->name('queue.create')->middleware('role:pasien');
     Route::post('queue', [QueueController::class, 'store'])->name('queue.store')->middleware('role:pasien');
     Route::delete('queue/{id}', [QueueController::class, 'destroy'])->name('queue.destroy')->middleware('role:pasien,admin');
+
+    Route::post('/queue/{id}/call', [QueueController::class, 'callPatient']); // Panggil pasien
+    Route::get('/queue/status/{user_id}', [QueueController::class, 'checkStatus']); // Cek status antrean pasien
 });
 
 Route::group(['prefix' => 'doctor', 'as' => 'doctor.', 'middleware' => 'role:dokter'], function () {
