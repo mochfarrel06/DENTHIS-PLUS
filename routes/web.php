@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\DoctorScheduleController;
 use App\Http\Controllers\Admin\PatientController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Doctor\DashboardController as DoctorDashboardController;
+use App\Http\Controllers\Doctor\MedicalRecordController;
 use App\Http\Controllers\Patient\DashboardController as PatientDashboardController;
 use App\Http\Controllers\Patient\QueueController;
 use App\Http\Controllers\User\UserController;
@@ -63,11 +64,15 @@ Route::group([
     Route::get('queue/create', [QueueController::class, 'create'])->name('queue.create')->middleware('role:pasien');
     Route::post('queue', [QueueController::class, 'store'])->name('queue.store')->middleware('role:pasien');
     Route::delete('queue/{id}', [QueueController::class, 'destroy'])->name('queue.destroy')->middleware('role:pasien,admin');
-
-    Route::post('/queue/{id}/call', [QueueController::class, 'callPatient']); // Panggil pasien
-    Route::get('/queue/status/{user_id}', [QueueController::class, 'checkStatus']); // Cek status antrean pasien
+    Route::post('call-patient/{id}', [QueueController::class, 'callPatient'])->middleware('role:admin');
+    Route::get('/queue/check-status', [QueueController::class, 'checkQueueStatus'])->name('queue.checkStatus');
 });
 
 Route::group(['prefix' => 'doctor', 'as' => 'doctor.', 'middleware' => 'role:dokter'], function () {
     Route::get('dashboard', [DoctorDashboardController::class, 'index'])->name('dashboard');
+
+    Route::get('/medical-records', [MedicalRecordController::class, 'index'])->name('medical-record.index');
+    Route::get('/medical-record/create', [MedicalRecordController::class, 'create'])->name('medical-record.create');
+    Route::post('/medical-record/store', [MedicalRecordController::class, 'store'])->name('medical-record.store');
+    Route::get('/medical-record/{queueId}', [MedicalRecordController::class, 'show'])->name('medical-record.show');
 });

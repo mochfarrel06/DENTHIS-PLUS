@@ -4,7 +4,7 @@ return [
     // 1. ADMIN
     [
         'text' => 'UTAMA',
-        'role' => ['admin', 'pasien'],
+        'role' => ['admin', 'pasien', 'dokter'],
         'is_header' => true,
     ],
     [
@@ -69,6 +69,12 @@ return [
         'text' => 'Dashboard',
         'url' => '/doctor/dashboard',
         'role' => ['dokter'],
+        'icon' => 'iconoir-dashboard-speed',
+    ],
+    [
+        'text' => 'Rekam Medis',
+        'url' => '/doctor/medical-records',
+        'role' => ['dokter', 'admin'],
         'icon' => 'iconoir-dashboard-speed',
     ],
 

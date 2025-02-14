@@ -11,18 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('queues', function (Blueprint $table) {
+        Schema::create('medical_records', function (Blueprint $table) {
             $table->id();
 
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->foreignId('doctor_id')->constrained()->onDelete('cascade');
-
+            // $table->foreignId('doctor_id')->constrained()->onDelete('cascade');
+            $table->foreignId('queue_id')->constrained()->onDelete('cascade');
             $table->date('tgl_periksa');
-            $table->time('start_time');
-            $table->time('end_time');
-            $table->string('keterangan');
-            $table->string('status');
-            $table->boolean('is_booked');
+            $table->text('diagnosis');
+            $table->text('resep');
+            $table->text('catatan_medis')->nullable();
 
             $table->timestamps();
         });
@@ -33,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('queues');
+        Schema::dropIfExists('medical_records');
     }
 };

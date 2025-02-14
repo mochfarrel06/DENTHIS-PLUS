@@ -5,19 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Queue extends Model
+class MedicalRecord extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'doctor_id',
         'user_id',
+        // 'doctor_id',
+        'queue_id',
         'tgl_periksa',
-        'start_time',
-        'end_time',
-        'keterangan',
-        'status',
-        'is_booked'
+        'diagnosis',
+        'resep',
+        'catatan_medis'
     ];
 
     public function user()
@@ -27,11 +26,11 @@ class Queue extends Model
 
     public function doctor()
     {
-        return $this->belongsTo(Doctor::class, 'doctor_id');
+        return $this->belongsTo(User::class, 'doctor_id');
     }
 
-    public function patient()
+    public function queue()
     {
-        return $this->belongsTo(Patient::class);
+        return $this->belongsTo(Queue::class);
     }
 }

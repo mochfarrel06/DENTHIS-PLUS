@@ -18,6 +18,43 @@
     <section class="content">
         <div class="container-fluid">
             <div class="row">
+                <div class="col-md-12">
+                    {{-- @if (auth()->user()->role == 'admin')
+                        <button class="btn btn-primary" onclick="callPatient({{ $queue->id }})">Panggil Pasien</button>
+                    @endif --}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    {{-- @foreach ($queues as $queue)
+                        @if ($queue->status == 'called' && $queue->user_id == auth()->id())
+                            <div class="alert alert-info alert-dismissible">
+                                <button type="button" class="close" data-dismiss="alert"
+                                    aria-hidden="true">&times;</button>
+                                <h5><i class="icon fas fa-info"></i> Info</h5>
+                                Antrean Anda sudah dipanggil oleh dokter.
+                            </div>
+                        @endif
+                    @endforeach --}}
+
+                    @if ($userQueue)
+                        <div class="alert alert-info alert-dismissible">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <h5><i class="icon fas fa-info"></i> Info</h5>
+                            Antrean Anda sudah dipanggil oleh dokter.
+                        </div>
+
+                        {{-- <div id="queue-alert" class="alert alert-info alert-dismissible" style="display: none;">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <h5><i class="icon fas fa-info"></i> Info</h5>
+                            Antrean Anda sudah dipanggil oleh dokter.
+                        </div> --}}
+                    @endif
+
+
+                </div>
+            </div>
+            <div class="row">
                 <section class="col-lg-12">
                     <div class="card">
                         <div class="card-header d-flex">
@@ -38,7 +75,6 @@
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
-                                        <th>Urutan Antrean</th>
                                         <th>Dokter</th>
                                         <th>Janji Temu</th>
                                         <th>Status</th>
@@ -50,7 +86,6 @@
                                 <tbody>
                                     @foreach ($queues as $queue)
                                         <tr>
-                                            <td>{{ $queue->urutan }}</td>
                                             <td>{{ $queue->doctor->nama_depan }} {{ $queue->doctor->nama_belakang }}</td>
                                             <td>{{ $queue->start_time }} - {{ $queue->end_time }}</td>
                                             <td>{{ $queue->status }}</td>
@@ -71,10 +106,11 @@
                                                                     href="{{ route('data-patient.queue.destroy', $queue->id) }}">Hapus</a>
                                                             </li>
                                                             <li>
-                                                                <button class="btn btn-success start-exam"
-                                                                    data-id="{{ $queue->id }}">
-                                                                    Panggil Pasien
-                                                                </button>
+                                                                @if (auth()->user()->role == 'admin')
+                                                                    <button class="btn btn-primary"
+                                                                        onclick="callPatient({{ $queue->id }})">Panggil
+                                                                        Pasien</button>
+                                                                @endif
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -95,23 +131,40 @@
 
 @push('scripts')
     <script>
-        $(document).ready(function() {
-            $('.start-exam').click(function() {
-                let queueId = $(this).data('id');
-                $.ajax({
-                    url: '/data-patient/queue/' + queueId + '/call',
+        function callPatient(queueId) {
+            fetch(`/data-patient/call-patient/${queueId}`, {
                     method: 'POST',
                     headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        'Content-Type': 'application/json'
                     },
-                    success: function(response) {
-                        if (response.success) {
-                            $('#queue-' + queueId + ' .queue-status').text('In Progress');
-                            alert('Notifikasi telah dikirim ke pasien!');
-                        }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        alert('Pasien telah dipanggil!');
+                        location.reload();
+                    } else {
+                        alert('Gagal memanggil pasien!');
                     }
-                });
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
+    <script>
+        function checkQueueStatus() {
+            $.ajax({
+                url: "{{ route('data-patient.queue.checkStatus') }}",
+                type: "GET",
+                success: function(response) {
+                    if (response.called) {
+                        $('#queue-alert').show(); // Tampilkan notifikasi
+                    }
+                }
             });
-        });
+        }
+
+        // Jalankan AJAX setiap 5 detik (5000 milidetik)
+        setInterval(checkQueueStatus, 5000);
     </script>
 @endpush

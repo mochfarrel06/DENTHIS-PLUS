@@ -17,8 +17,11 @@ class QueueController extends Controller
      */
     public function index()
     {
+        // $queues = Queue::with('doctor')->get();
+        // $queues = Queue::where('user_id', auth()->id())->get();
         $queues = Queue::with('doctor')->get();
-        return view('patient.queue.index', compact('queues'));
+        $userQueue = Queue::where('user_id', auth()->id())->where('status', 'called')->first();
+        return view('patient.queue.index', compact('queues', 'userQueue'));
     }
 
     /**
@@ -99,14 +102,14 @@ class QueueController extends Controller
         }
 
         // Menentukan nomor urut antrean
-        $lastQueue = Queue::where('doctor_id', $request->doctor_id)
-            ->where('tgl_periksa', $request->tgl_periksa)
-            ->orderBy('urutan', 'desc')
-            ->first();
+        // $lastQueue = Queue::where('doctor_id', $request->doctor_id)
+        //     ->where('tgl_periksa', $request->tgl_periksa)
+        //     ->orderBy('urutan', 'desc')
+        //     ->first();
 
         // Generate nomor urutan dengan format ANTREAN0001, ANTREAN0002, dst.
-        $lastNumber = $lastQueue ? (int) substr($lastQueue->urutan, 7) : 0;
-        $newUrutan = 'ANTREAN' . str_pad($lastNumber + 1, 4, '0', STR_PAD_LEFT);
+        // $lastNumber = $lastQueue ? (int) substr($lastQueue->urutan, 7) : 0;
+        // $newUrutan = 'ANTREAN' . str_pad($lastNumber + 1, 4, '0', STR_PAD_LEFT);
 
         // Simpan data antrean
         Queue::create([
@@ -116,7 +119,7 @@ class QueueController extends Controller
             'start_time' => $request->start_time,
             'end_time' => $request->end_time,
             'keterangan' => $request->keterangan,
-            'urutan' => $newUrutan,
+            // 'urutan' => $newUrutan,
             'status' => 'booking',
             'is_booked' => true
         ]);
@@ -167,19 +170,20 @@ class QueueController extends Controller
     public function callPatient($id)
     {
         $queue = Queue::findOrFail($id);
+        // Kirim event ke WebSocket atau gunakan sesi untuk menampilkan alert ke pasien
         $queue->status = 'called';
         $queue->save();
-
-        return response()->json(['message' => 'Pasien telah dipanggil!']);
+        return response()->json(['status' => 'success', 'message' => 'Pasien telah dipanggil']);
     }
 
-    // 3️⃣ Pasien mengecek status antreannya
-    public function checkStatus($user_id)
+    public function checkQueueStatus()
     {
-        $queue = Queue::where('user_id', $user_id)->whereIn('status', ['called', 'in_progress'])->first();
+        $queue = Queue::where('user_id', auth()->id())->where('status', 'called')->first();
 
-        return response()->json([
-            'status' => $queue ? $queue->status : 'waiting'
-        ]);
+        if ($queue) {
+            return response()->json(['called' => true]);
+        } else {
+            return response()->json(['called' => false]);
+        }
     }
 }
