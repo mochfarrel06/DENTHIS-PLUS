@@ -16,6 +16,7 @@ return new class extends Migration
 
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('doctor_id')->constrained()->onDelete('cascade');
+            $table->foreignId('patient_id')->nullable()->constrained()->onDelete('cascade');
 
             $table->date('tgl_periksa');
             $table->time('start_time');

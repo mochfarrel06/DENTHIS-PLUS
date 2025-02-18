@@ -19,7 +19,6 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-3 col-6">
-                    <!-- small box -->
                     <div class="small-box bg-info">
                         <div class="inner">
                             <h3>{{ $jumlahDokter }}</h3>
@@ -33,9 +32,7 @@
                                 class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
-                <!-- ./col -->
                 <div class="col-lg-3 col-6">
-                    <!-- small box -->
                     <div class="small-box bg-success">
                         <div class="inner">
                             <h3>{{ $jumlahPasien }}</h3>
@@ -49,9 +46,7 @@
                                 class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
-                <!-- ./col -->
                 <div class="col-lg-3 col-6">
-                    <!-- small box -->
                     <div class="small-box bg-warning">
                         <div class="inner">
                             <h3>{{ $jumlahAntrean }}</h3>
@@ -72,8 +67,12 @@
                         <div class="card-header d-flex">
                             <div class="d-flex align-items-center">
                                 <i class="iconoir-table mr-2"></i>
-                                <h3 class="card-title">Antrean Pasien</h3>
+                                <h3 class="card-title">Antrean Pasien per hari</h3>
                             </div>
+
+                            {{-- <div class="ml-auto">
+                                <a class="btn btn-warning btn-sm">Booking</a>
+                            </div> --}}
                         </div>
                         <div class="card-body">
                             <table id="example1" class="table table-bordered table-striped">
@@ -87,23 +86,29 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($antreanHariIni as $index => $queue)
+                                    @foreach ($antreanHariIni as $queue)
                                         <tr>
-                                            <td>{{ $queue->urutan }}</td>
-                                            <td>{{ $queue->doctor->nama_depan }} {{ $queue->doctor->nama_belakang }}</td>
                                             <td>{{ $queue->user->name }}</td>
+                                            <td>{{ $queue->doctor->nama_depan }} {{ $queue->doctor->nama_belakang }}</td>
+                                            <td>{{ $queue->patient->nama_depan }} - {{ $queue->patient->nama_belakang }}
+                                            </td>
                                             <td>{{ $queue->start_time }} - {{ $queue->end_time }}</td>
-                                            <td>{{ $queue->status }}</td>
+                                            <td>
+                                                @if ($queue->status == 'booking')
+                                                    <a class="btn btn-warning btn-sm">Booking</a>
+                                                @elseif ($queue->status == 'dipanggil')
+                                                    <a class="btn btn-info btn-sm">Di Panggil</a>
+                                                @elseif ($queue->status == 'periksa')
+                                                    <a class="btn btn-info btn-sm">Periksa</a>
+                                                @elseif ($queue->status == 'Selesai')
+                                                    <a class="btn btn-info btn-sm">Selesai</a>
+                                                @endif
+                                            </td>
                                         </tr>
-                                    @empty
-                                        <tr class="text-center">
-                                            <td colspan="5">Tidak ada antrean untuk hari ini.</td>
-                                        </tr>
-                                    @endforelse
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
-                        <!-- /.card-body -->
                     </div>
                 </section>
             </div>

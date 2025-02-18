@@ -12,6 +12,7 @@ class Queue extends Model
     protected $fillable = [
         'doctor_id',
         'user_id',
+        'patient_id',
         'tgl_periksa',
         'start_time',
         'end_time',

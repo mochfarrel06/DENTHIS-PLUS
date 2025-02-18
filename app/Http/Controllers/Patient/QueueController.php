@@ -83,6 +83,19 @@ class QueueController extends Controller
     public function store(Request $request)
     {
         $userId = Auth::id();
+
+        // Ambil email dari user yang sedang login
+        $userEmail = Auth::user()->email;
+
+        // Cari pasien berdasarkan email user yang sedang login
+        $patient = Patient::where('email', $userEmail)->first();
+
+        // dd($patient);
+
+        if (!$patient) {
+            return redirect()->back()->withErrors(['error' => 'Data pasien tidak ditemukan untuk pengguna ini.']);
+        }
+
         $request->validate([
             'doctor_id' => 'required|exists:doctors,id',
             'tgl_periksa' => 'required|date',
@@ -115,6 +128,7 @@ class QueueController extends Controller
         Queue::create([
             'user_id' => $userId,
             'doctor_id' => $request->doctor_id,
+            'patient_id' => $patient->id,
             'tgl_periksa' => $request->tgl_periksa,
             'start_time' => $request->start_time,
             'end_time' => $request->end_time,
