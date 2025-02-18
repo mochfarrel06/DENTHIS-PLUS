@@ -69,10 +69,6 @@
                                 <i class="iconoir-table mr-2"></i>
                                 <h3 class="card-title">Antrean Pasien per hari</h3>
                             </div>
-
-                            {{-- <div class="ml-auto">
-                                <a class="btn btn-warning btn-sm">Booking</a>
-                            </div> --}}
                         </div>
                         <div class="card-body">
                             <table id="example1" class="table table-bordered table-striped">
@@ -88,11 +84,14 @@
                                 <tbody>
                                     @foreach ($antreanHariIni as $queue)
                                         <tr>
-                                            <td>{{ $queue->user->name }}</td>
+                                            <td>{{ $queue->patient->kode_pasien }}</td>
                                             <td>{{ $queue->doctor->nama_depan }} {{ $queue->doctor->nama_belakang }}</td>
                                             <td>{{ $queue->patient->nama_depan }} - {{ $queue->patient->nama_belakang }}
                                             </td>
-                                            <td>{{ $queue->start_time }} - {{ $queue->end_time }}</td>
+                                            <td>{{ \Carbon\Carbon::createFromFormat('H:i:s', $queue->start_time)->format('H:i') }}
+                                                -
+                                                {{ \Carbon\Carbon::createFromFormat('H:i:s', $queue->end_time)->format('H.i') }}
+                                            </td>
                                             <td>
                                                 @if ($queue->status == 'booking')
                                                     <a class="btn btn-warning btn-sm">Booking</a>

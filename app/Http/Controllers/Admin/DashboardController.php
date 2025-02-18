@@ -17,7 +17,6 @@ class DashboardController extends Controller
         $jumlahPasien = Patient::count();
         $jumlahAntrean = Queue::whereDate('tgl_periksa', Carbon::today())->count();
 
-        // Antrean hari ini
         $antreanHariIni = Queue::whereDate('tgl_periksa', Carbon::today())
             ->orderBy('start_time', 'asc')
             ->get();
