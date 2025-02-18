@@ -13,7 +13,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
                         <li class="breadcrumb-item"><a href="{{ route('admin.doctors.index') }}">Dokter</a></li>
                         <li class="breadcrumb-item active">Tambah</li>
                     </ol>
@@ -36,12 +36,10 @@
                                         <div class="form-group">
                                             <label>Profile</label>
                                             <div>
-                                                <!-- Gambar profil -->
                                                 <img id="profileImage" class="profile-user-img img-fluid img-circle"
                                                     src="{{ asset('assets/admin/dist/img/avatar.png') }}"
                                                     alt="User profile picture"
                                                     style="cursor: pointer; object-fit: cover; width: 100px; height: 100px; border-radius: 50%;">
-                                                <!-- Input file hidden -->
                                                 <input type="file" id="foto_dokter" name="foto_dokter"
                                                     style="display: none;" accept="image/*">
                                             </div>
@@ -142,8 +140,8 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Golongan Darah</label>
-                                            <select class="custom-select" name="golongan_darah"
+                                            <label for="golongan_darah">Golongan Darah</label>
+                                            <select class="custom-select" name="golongan_darah" id="golongan_darah"
                                                 @error('golongan_darah') is-invalid @enderror">
                                                 <option value="">-- Pilih Golongan Darah --</option>
                                                 <option value="A">A</option>
