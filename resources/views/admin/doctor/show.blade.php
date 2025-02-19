@@ -13,7 +13,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
                         <li class="breadcrumb-item"><a href="{{ route('admin.doctors.index') }}">Dokter</a></li>
                         <li class="breadcrumb-item active">Detail</li>
                     </ol>
@@ -34,7 +34,6 @@
                                         <div class="form-group">
                                             <label>Profile</label>
                                             <div>
-                                                <!-- Gambar profil -->
                                                 <img id="profileImage" class="profile-user-img img-fluid img-circle"
                                                     src="{{ asset($doctor->foto_dokter) }}" alt="User Dokter"
                                                     style="cursor: pointer; object-fit: cover; width: 100px; height: 100px; border-radius: 50%;">
@@ -74,21 +73,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                {{-- <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="">Password</label>
-                                            <input type="password" name="password" id="password" class="form-control" value="{{ $doctor->nama_depan }}">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="">Konfirmasi Password</label>
-                                            <input type="password" name="konfirmasi_password" id="konfirmasi_password"
-                                                class="form-control" placeholder="Masukkan konfirmasi password">
-                                        </div>
-                                    </div>
-                                </div> --}}
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -142,7 +126,7 @@
                                     </div>
                                 </div>
 
-                                <p class="font-bold mt-4">Informasi Alamat</p>
+                                <h5 class="font-bolder mt-4 fs-4">Informasi Alamat</h5>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -197,86 +181,3 @@
         </div>
     </section>
 @endsection
-
-@push('scripts')
-    <script>
-        // Ambil elemen gambar dan input file
-        const profileImage = document.getElementById('profileImage');
-        const profileInput = document.getElementById('foto_dokter');
-
-        // Tambahkan event klik pada gambar
-        profileImage.addEventListener('click', function() {
-            profileInput.click(); // Simulasikan klik pada input file
-        });
-
-        // Update gambar saat file dipilih
-        profileInput.addEventListener('change', function(event) {
-            const file = event.target.files[0]; // Ambil file yang dipilih
-            if (file) {
-                const reader = new FileReader();
-
-                reader.onload = function(e) {
-                    profileImage.src = e.target.result; // Perbarui src gambar
-                };
-
-                reader.readAsDataURL(file); // Baca file sebagai data URL
-            }
-        });
-    </script>
-
-    <script>
-        $(document).ready(function() {
-            const $submitBtn = $('#submit-btn');
-            $('#main-form').on('submit', function(event) {
-                event.preventDefault();
-
-                const form = $(this)[0];
-                const formData = new FormData(form);
-
-                $submitBtn.prop('disabled', true).text('Loading...');
-
-                $.ajax({
-                    url: form.action,
-                    method: 'POST',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function(response) {
-                        if (response.success) {
-                            sessionStorage.setItem('success',
-                                'Data dokter berhasil disubmit.');
-                            window.location.href =
-                                "{{ route('admin.doctors.index') }}";
-                        } else {
-                            $('#flash-messages').html('<div class="alert alert-danger">' +
-                                response.error + '</div>');
-                        }
-                    },
-                    error: function(response) {
-                        const errors = response.responseJSON.errors;
-                        for (let field in errors) {
-                            let input = $('[name=' + field + ']');
-                            let error = errors[field][0];
-                            input.addClass('is-invalid');
-                            input.next('.invalid-feedback').remove();
-                            input.after('<div class="invalid-feedback">' + error + '</div>');
-                        }
-
-                        const message = response.responseJSON.message ||
-                            'Terdapat kesalahan pada proses dokter';
-                        $('#flash-messages').html('<div class="alert alert-danger">' + message +
-                            '</div>');
-                    },
-                    complete: function() {
-                        $submitBtn.prop('disabled', false).text('Tambah');
-                    }
-                });
-            });
-
-            $('input, select, textarea').on('input change', function() {
-                $(this).removeClass('is-invalid');
-                $(this).next('.invalid-feedback').text('');
-            });
-        });
-    </script>
-@endpush

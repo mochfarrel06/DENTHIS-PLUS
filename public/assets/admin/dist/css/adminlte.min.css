@@ -3236,10 +3236,10 @@ input[type="submit"].btn-block {
     border-top: 1px solid #e9ecef;
 }
 .dropdown-item {
-    display: block;
+    display: flex;
+    align-items: center;
     width: 100%;
-    padding: 0.25rem 1rem;
-    clear: both;
+    padding: 0.5rem 1rem;
     font-weight: 400;
     color: #212529;
     text-align: inherit;
@@ -3249,9 +3249,9 @@ input[type="submit"].btn-block {
 }
 .dropdown-item:focus,
 .dropdown-item:hover {
-    color: #16181b;
+    color: #fff;
     text-decoration: none;
-    background-color: #f8f9fa;
+    background-color: #0288d1;
 }
 .dropdown-item.active,
 .dropdown-item:active {
@@ -3267,6 +3267,7 @@ input[type="submit"].btn-block {
 }
 .dropdown-menu.show {
     display: block;
+    padding: 0;
 }
 .dropdown-header {
     display: block;

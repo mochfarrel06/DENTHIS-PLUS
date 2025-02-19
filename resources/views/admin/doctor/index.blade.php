@@ -61,13 +61,16 @@
                                                     </a>
                                                     <ul class="dropdown-menu">
                                                         <li><a class="dropdown-item"
-                                                                href="{{ route('admin.doctors.show', $doctor->id) }}">Detail</a>
+                                                                href="{{ route('admin.doctors.show', $doctor->id) }}"><i
+                                                                    class="iconoir-eye-solid mr-2"></i> Detail</a>
                                                         </li>
                                                         <li><a class="dropdown-item"
-                                                                href="{{ route('admin.doctors.edit', $doctor->id) }}">Edit</a>
+                                                                href="{{ route('admin.doctors.edit', $doctor->id) }}"><i
+                                                                    class="iconoir-edit-pencil mr-2"></i> Edit</a>
                                                         </li>
                                                         <li><a class="dropdown-item delete-item"
-                                                                href="{{ route('admin.doctors.destroy', $doctor->id) }}">Hapus</a>
+                                                                href="{{ route('admin.doctors.destroy', $doctor->id) }}"><i
+                                                                    class="iconoir-trash-solid mr-2"></i> Hapus</a>
                                                         </li>
                                                     </ul>
                                                 </div>

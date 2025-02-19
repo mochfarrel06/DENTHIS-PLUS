@@ -160,6 +160,7 @@
                                         position: 'topRight'
                                     });
                                     row.remove(); // Remove the item from the table
+                                    location.reload();
 
                                     // Update row indices
                                     $('#example1 tbody tr').each(function(index) {

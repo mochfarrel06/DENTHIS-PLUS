@@ -14,9 +14,7 @@ use Illuminate\Support\Facades\Storage;
 class DoctorController extends Controller
 {
     use ProfileUploadTrait;
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
         $doctors = Doctor::all();
@@ -24,17 +22,11 @@ class DoctorController extends Controller
         return view('admin.doctor.index', compact('doctors'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('admin.doctor.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(DoctorStoreRequest $request)
     {
         try {
@@ -76,9 +68,6 @@ class DoctorController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         $doctor = Doctor::findOrFail($id);
@@ -86,9 +75,6 @@ class DoctorController extends Controller
         return view('admin.doctor.show', compact('doctor'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         $doctor = Doctor::findOrFail($id);
@@ -96,9 +82,6 @@ class DoctorController extends Controller
         return view('admin.doctor.edit', compact('doctor'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(DoctorUpdateRequest $request, string $id)
     {
         try {
@@ -136,9 +119,6 @@ class DoctorController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         try {

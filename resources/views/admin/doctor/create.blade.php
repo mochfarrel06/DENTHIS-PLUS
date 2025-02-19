@@ -153,7 +153,7 @@
                                     </div>
                                 </div>
 
-                                <p class="font-bold mt-4">Informasi Alamat</p>
+                                <h5 class="font-bolder mt-4 fs-4">Informasi Alamat</h5>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -198,7 +198,7 @@
                             </div>
 
                             <div class="card-footer">
-                                <button type="submit" id="submit-btn" class="btn btn-primary mr-2">Submit</button>
+                                <button type="submit" id="submit-btn" class="btn btn-primary mr-2">Simpan</button>
                                 <a href="{{ route('admin.doctors.index') }}" class="btn btn-warning">Kembali</a>
                             </div>
                         </form>
