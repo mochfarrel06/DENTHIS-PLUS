@@ -11,33 +11,30 @@ use Illuminate\Http\Request;
 
 class DoctorScheduleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $schedules = DoctorSchedule::with('doctor')
             ->whereIn('id', function ($query) {
                 $query->selectRaw('MIN(id)')
                     ->from('doctor_schedules')
-                    ->groupBy('doctor_id'); // Group by doctor_id untuk mendapatkan satu jadwal per dokter
+                    ->groupBy('doctor_id');
             })
             ->get();
         return view('admin.doctorSchedule.index', compact('schedules'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        $doctors = Doctor::all();
+        // Ambil ID dokter yang sudah memiliki jadwal
+        $scheduledDoctorIds = DoctorSchedule::pluck('doctor_id')->toArray();
+
+        // Ambil daftar dokter yang belum memiliki jadwal
+        $doctors = Doctor::whereNotIn('id', $scheduledDoctorIds)->get();
+
         return view('admin.doctorSchedule.create', compact('doctors'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(DoctorScheduleStoreRequest $request)
     {
         try {
@@ -47,7 +44,6 @@ class DoctorScheduleController extends Controller
                 $jamMulai = $request->jam_mulai[$hari] ?? null;
                 $jamSelesai = $request->jam_selesai[$hari] ?? null;
 
-                // Jika salah satu waktu tidak diisi, lewati iterasi ini
                 if (!$jamMulai || !$jamSelesai) {
                     continue;
                 }
@@ -78,24 +74,12 @@ class DoctorScheduleController extends Controller
                 ->route('admin.doctor-schedules.index')
                 ->with('success', 'Data jadwal dokter berhasil ditambahkan.');
         } catch (\Exception $e) {
-            // Redirect kembali ke halaman sebelumnya dengan error message
             return redirect()
                 ->back()
                 ->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit($doctorId)
     {
         // Ambil data dokter
@@ -130,9 +114,6 @@ class DoctorScheduleController extends Controller
         return view('admin.doctorSchedule.edit', compact('doctor', 'formattedSchedules', 'firstSchedule'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $doctorId)
     {
         try {
@@ -199,13 +180,6 @@ class DoctorScheduleController extends Controller
         }
     }
 
-
-
-
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy($doctorId)
     {
         try {

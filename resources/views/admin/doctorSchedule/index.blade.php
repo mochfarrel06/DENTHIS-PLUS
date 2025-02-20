@@ -13,7 +13,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
                         <li class="breadcrumb-item active">Jadwal Dokter</li>
                     </ol>
                 </div>
@@ -44,6 +44,7 @@
                                     <tr>
                                         <th>Kode Dokter</th>
                                         <th>Dokter</th>
+                                        <th>Spesialisasi</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -53,6 +54,7 @@
                                             <td>{{ $schedule->doctor->kode_dokter }}</td>
                                             <td>{{ $schedule->doctor->nama_depan }} {{ $schedule->doctor->nama_belakang }}
                                             </td>
+                                            <td>{{ $schedule->doctor->spesialisasi }}</td>
                                             <td>
                                                 <div class="btn-group">
                                                     <a data-toggle="dropdown">
@@ -80,12 +82,9 @@
                                 </tbody>
                             </table>
                         </div>
-                        <!-- /.card-body -->
                     </div>
                 </section>
             </div>
-            <!-- /.row (main row) -->
-        </div><!-- /.container-fluid -->
+        </div>
     </section>
-    <!-- /.content -->
 @endsection

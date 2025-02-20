@@ -13,7 +13,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
                         <li class="breadcrumb-item"><a href="{{ route('admin.doctors.index') }}">Dokter</a></li>
                         <li class="breadcrumb-item active">Edit</li>
                     </ol>
@@ -212,7 +212,7 @@
                             </div>
 
                             <div class="card-footer">
-                                <button type="submit" id="submit-btn" class="btn btn-primary mr-2">Submit</button>
+                                <button type="submit" id="submit-btn" class="btn btn-primary mr-2">Simpan</button>
                                 <a href="{{ route('admin.doctors.index') }}" class="btn btn-warning">Kembali</a>
                             </div>
                         </form>
