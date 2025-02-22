@@ -35,7 +35,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Dokter</label>
-                                            <select class="custom-select @error('doctor_id') is-invalid @enderror"" name="doctor_id" id="doctor_id">
+                                            <select class="custom-select @error('doctor_id') is-invalid @enderror" name="doctor_id" id="doctor_id">
                                                 <option value="">-- Pilih Dokter --</option>
                                                 @foreach ($doctors as $doctor)
                                                     <option value="{{ $doctor->id }}">{{ $doctor->nama_depan }}
@@ -179,7 +179,6 @@
             }
         }
 
-        // Pastikan saat halaman dimuat, input waktu tetap disabled jika checkbox belum dicentang
         document.addEventListener("DOMContentLoaded", function() {
             document.querySelectorAll('input[type="checkbox"][name="hari[]"]').forEach(function(checkbox) {
                 toggleTimeInputs(checkbox.id);

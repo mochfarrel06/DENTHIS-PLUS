@@ -35,9 +35,6 @@ class DoctorScheduleStoreRequest extends FormRequest
     {
         return [
             'doctor_id.required' => 'Dokter tidak boleh kosong',
-            // 'hari.required' => 'Hari tidak boleh kosong',
-            // 'jam_mulai.required' => 'Jam mulai tidak boleh kosong',
-            // 'jam_selesai.required' => 'Jam selesai tidak boleh kosong',
             'waktu_periksa.required' => 'Waktu periksa tidak boleh kosong',
             'waktu_periksa.in' => 'Waktu periksa harus berupa 5, 10, 15, 30, atau 60 menit',
             'waktu_jeda.required' => 'Waktu jeda tidak boleh kosong',

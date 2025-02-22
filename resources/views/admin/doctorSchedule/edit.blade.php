@@ -13,7 +13,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
                         <li class="breadcrumb-item"><a href="{{ route('admin.doctor-schedules.index') }}">Jadwal Dokter</a>
                         </li>
                         <li class="breadcrumb-item active">Edit</li>
@@ -33,18 +33,17 @@
                             @method('PUT')
 
                             <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label>Profile</label>
-                                            <div>
-                                                <!-- Gambar profil -->
-                                                <img class="profile-user-img img-fluid img-circle"
-                                                    src="{{ $doctor->foto_dokter ? asset($doctor->foto_dokter) : asset('assets/admin/dist/img/avatar.png') }}"
-                                                    alt="User profile picture"
-                                                    style="cursor: pointer; object-fit: cover; width: 100px; height: 100px; border-radius: 50%;">
-                                            </div>
-                                        </div>
+                                <div class="row mb-4">
+                                    <div class="col-md-2">
+                                        <img class="profile-user-img img-fluid img-circle"
+                                            src="{{ $doctor->foto_dokter ? asset($doctor->foto_dokter) : asset('assets/admin/dist/img/avatar.png') }}"
+                                            alt="User profile picture"
+                                            style="cursor: pointer; object-fit: cover; width: 150px; height: 150px; border-radius: 50%;">
+
+                                    </div>
+                                    <div class="col-md-10">
+                                        <h3>{{ $doctor->nama_depan }} {{ $doctor->nama_belakang }}</h3>
+                                        <p>{{ $doctor->email }}</p>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -70,6 +69,9 @@
                                                     {{ $firstSchedule && $firstSchedule->waktu_jeda === 60 ? 'selected' : '' }}>
                                                     1 Jam</option>
                                             </select>
+                                            @error('waktu_jeda')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -94,32 +96,48 @@
                                                     {{ $firstSchedule && $firstSchedule->waktu_periksa === 60 ? 'selected' : '' }}>
                                                     1 Jam</option>
                                             </select>
+                                            @error('waktu_periksa')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    @foreach (['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] as $day)
-                                        <div class="col-md-12 mb-3">
-                                            <div class="form-check">
-                                                <input type="checkbox" name="hari[]" value="{{ $day }}"
-                                                    id="{{ $day }}"
-                                                    {{ isset($formattedSchedules[$day]['jam_mulai']) ? 'checked' : '' }}>
-                                                <label class="form-check-label"
-                                                    for="{{ $day }}">{{ $day }}</label>
-                                            </div>
-                                            @php
-                                                // Membuat array rentang waktu (08:00 - 22:00) dengan interval 15 menit
-                                                $times = [];
-                                                $startTime = strtotime('08:00');
-                                                $endTime = strtotime('22:00');
+                                    @php
+                                        $dayMapping = [
+                                            'Monday' => 'Senin',
+                                            'Tuesday' => 'Selasa',
+                                            'Wednesday' => 'Rabu',
+                                            'Thursday' => 'Kamis',
+                                            'Friday' => 'Jumat',
+                                            'Saturday' => 'Sabtu',
+                                            'Sunday' => 'Minggu',
+                                        ];
+                                    @endphp
 
-                                                while ($startTime <= $endTime) {
-                                                    $times[] = date('H:i', $startTime);
-                                                    $startTime = strtotime('+15 minutes', $startTime);
-                                                }
-                                            @endphp
-                                            <div class="row">
-                                                <div class="col-md-6">
+                                    @foreach (['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'] as $day)
+                                        @php
+                                            $times = [];
+                                            $startTime = strtotime('08:00');
+                                            $endTime = strtotime('22:00');
+
+                                            while ($startTime <= $endTime) {
+                                                $times[] = date('H:i', $startTime);
+                                                $startTime = strtotime('+15 minutes', $startTime);
+                                            }
+                                        @endphp
+                                        <div class="col-md-12 mb-3">
+                                            <div class="row align-items-center">
+                                                <div class="col-md-2">
+                                                    <div class="form-check">
+                                                        <input type="checkbox" name="hari[]" value="{{ $day }}"
+                                                            id="{{ $day }}"
+                                                            {{ isset($formattedSchedules[$day]['jam_mulai']) ? 'checked' : '' }} onchange="toggleTimeInputs('{{ $day }}')">
+                                                        <label class="form-check-label"
+                                                            for="{{ $day }}">{{ $dayMapping[$day] }}</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-5">
                                                     <label for="start_time_{{ $day }}">Waktu Mulai</label>
                                                     <select name="jam_mulai[{{ $day }}]"
                                                         id="start_time_{{ $day }}" class="form-control">
@@ -132,7 +150,7 @@
                                                         @endforeach
                                                     </select>
                                                 </div>
-                                                <div class="col-md-6">
+                                                <div class="col-md-5">
                                                     <label for="end_time_{{ $day }}">Waktu Selesai</label>
                                                     <select name="jam_selesai[{{ $day }}]"
                                                         id="end_time_{{ $day }}" class="form-control">
@@ -148,8 +166,6 @@
                                             </div>
                                         </div>
                                     @endforeach
-
-
                                 </div>
                             </div>
 
@@ -164,3 +180,80 @@
         </div>
     </section>
 @endsection
+
+@push('scripts')
+    <script>
+        function toggleTimeInputs(day) {
+            let checkbox = document.getElementById(day);
+            let startTime = document.getElementById(`start_time_${day}`);
+            let endTime = document.getElementById(`end_time_${day}`);
+
+            if (checkbox.checked) {
+                startTime.removeAttribute("disabled");
+                endTime.removeAttribute("disabled");
+            } else {
+                startTime.value = ""; // Reset nilai input
+                endTime.value = ""; // Reset nilai input
+                startTime.setAttribute("disabled", "disabled");
+                endTime.setAttribute("disabled", "disabled");
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelectorAll('input[type="checkbox"][name="hari[]"]').forEach(function(checkbox) {
+                toggleTimeInputs(checkbox.id);
+            });
+        });
+    </script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let submitBtn = document.getElementById('submit-btn');
+        let waktuJeda = document.getElementById('waktu_jeda');
+        let waktuPeriksa = document.getElementById('waktu_periksa');
+        let checkboxes = document.querySelectorAll('input[name="hari[]"]');
+
+        function checkFormValidity() {
+            let waktuJedaValue = waktuJeda.value;
+            let waktuPeriksaValue = waktuPeriksa.value;
+            let checkedDays = document.querySelectorAll('input[name="hari[]"]:checked').length > 0;
+
+            // Jika waktu jeda, waktu periksa diisi dan ada hari yang dipilih, enable tombol
+            if (waktuJedaValue && waktuPeriksaValue && checkedDays) {
+                submitBtn.removeAttribute("disabled");
+            } else {
+                submitBtn.setAttribute("disabled", "disabled");
+            }
+        }
+
+        // Event listener untuk dropdown waktu jeda & periksa
+        waktuJeda.addEventListener("change", checkFormValidity);
+        waktuPeriksa.addEventListener("change", checkFormValidity);
+
+        // Event listener untuk checkbox hari
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener("change", checkFormValidity);
+        });
+
+        // Mencegah submit jika tidak ada checkbox yang dipilih
+        document.getElementById('main-form').addEventListener('submit', function (event) {
+            let checkedDays = document.querySelectorAll('input[name="hari[]"]:checked').length;
+
+            if (checkedDays === 0) {
+                event.preventDefault();
+
+                // Tampilkan SweetAlert2
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Oops...',
+                    text: 'Harap pilih setidaknya satu hari untuk jadwal dokter!',
+                });
+            }
+        });
+
+        // Jalankan validasi awal
+        checkFormValidity();
+    });
+</script>
+
+@endpush

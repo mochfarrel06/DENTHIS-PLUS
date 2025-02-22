@@ -62,17 +62,14 @@
                                                     </a>
                                                     <ul class="dropdown-menu">
                                                         <li><a class="dropdown-item"
-                                                                href="{{ route('admin.doctor-schedules.edit', $schedule->doctor_id) }}">Edit</a>
+                                                                href="{{ route('admin.doctor-schedules.edit', $schedule->doctor_id) }}"><i
+                                                                class="iconoir-eye-solid mr-2"></i> Edit</a>
                                                         </li>
                                                         <li>
-                                                            <form
-                                                                action="{{ route('admin.doctor-schedules.destroy', $schedule->doctor_id) }}"
-                                                                method="POST" style="display: inline-block;"
-                                                                onsubmit="return confirm('Apakah Anda yakin ingin menghapus semua jadwal dokter ini?')">
-                                                                @csrf
-                                                                @method('DELETE')
-                                                                <button type="submit" class="dropdown-item">Hapus</button>
-                                                            </form>
+                                                            <button type="button" class="dropdown-item btn-delete"
+                                                                data-id="{{ $schedule->doctor_id }}">
+                                                                <i class="iconoir-trash-solid mr-2"></i> Hapus
+                                                            </button>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -81,6 +78,12 @@
                                     @endforeach
                                 </tbody>
                             </table>
+
+                            <!-- Form Hapus (Hidden) -->
+                            <form id="delete-form" method="POST" style="display: none;">
+                                @csrf
+                                @method('DELETE')
+                            </form>
                         </div>
                     </div>
                 </section>
@@ -88,3 +91,31 @@
         </div>
     </section>
 @endsection
+
+@push('scripts')
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll(".btn-delete").forEach(function(button) {
+            button.addEventListener("click", function() {
+                let doctorId = this.getAttribute("data-id");
+                Swal.fire({
+                    title: "Apakah Anda yakin?",
+                    text: "Data ini akan dihapus secara permanen!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#d33",
+                    cancelButtonColor: "#3085d6",
+                    confirmButtonText: "Ya, hapus!",
+                    cancelButtonText: "Batal"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        let form = document.getElementById("delete-form");
+                        form.action = `/admin/doctor-schedules/${doctorId}`;
+                        form.submit();
+                    }
+                });
+            });
+        });
+    });
+</script>
+@endpush

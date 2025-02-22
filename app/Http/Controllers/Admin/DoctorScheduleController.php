@@ -114,35 +114,22 @@ class DoctorScheduleController extends Controller
         return view('admin.doctorSchedule.edit', compact('doctor', 'formattedSchedules', 'firstSchedule'));
     }
 
-    public function update(Request $request, string $doctorId)
+    public function update(DoctorScheduleUpdateRequest $request, string $doctorId)
     {
         try {
-            // Validasi input
-            $request->validate([
-                'waktu_jeda' => 'nullable',
-                'waktu_periksa' => 'nullable',
-                'hari' => 'required|array',  // Hari yang dicentang
-                'jam_mulai' => 'required|array',
-                'jam_selesai' => 'required|array',
-            ]);
-
-            // Dapatkan semua jadwal dokter untuk hari-hari yang dicentang
             foreach ($request->hari as $hari) {
                 $jamMulai = $request->jam_mulai[$hari] ?? null;
                 $jamSelesai = $request->jam_selesai[$hari] ?? null;
 
-                // Jika salah satu waktu tidak diisi, lewati iterasi ini
                 if (!$jamMulai || !$jamSelesai) {
                     continue;
                 }
 
-                // Cari jadwal dokter yang sudah ada
                 $schedule = DoctorSchedule::where('doctor_id', $doctorId)
                     ->where('hari', $hari)
                     ->first();
 
                 if ($schedule) {
-                    // Jika jadwal sudah ada, perbarui
                     $schedule->update([
                         'jam_mulai' => $jamMulai,
                         'jam_selesai' => $jamSelesai,
@@ -150,7 +137,6 @@ class DoctorScheduleController extends Controller
                         'waktu_jeda' => $request->waktu_jeda,
                     ]);
                 } else {
-                    // Jika jadwal tidak ditemukan, buat baru
                     DoctorSchedule::create([
                         'doctor_id' => $doctorId,
                         'hari' => $hari,
@@ -162,7 +148,6 @@ class DoctorScheduleController extends Controller
                 }
             }
 
-            // Hapus jadwal dokter untuk hari yang tidak dicentang
             $checkedHolidays = $request->hari ?? [];  // Hari-hari yang dicentang
             DoctorSchedule::where('doctor_id', $doctorId)
                 ->whereNotIn('hari', $checkedHolidays)  // Hari yang tidak dicentang
