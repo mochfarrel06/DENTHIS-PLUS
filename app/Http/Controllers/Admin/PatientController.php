@@ -12,9 +12,6 @@ use Illuminate\Support\Facades\Hash;
 
 class PatientController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $patients = Patient::all();
@@ -22,17 +19,11 @@ class PatientController extends Controller
         return view('admin.patient.index', compact('patients'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('admin.patient.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(PatientStoreRequest $request)
     {
         try {
@@ -69,9 +60,6 @@ class PatientController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         $patient = Patient::findOrFail($id);
@@ -79,9 +67,6 @@ class PatientController extends Controller
         return view('admin.patient.show', compact('patient'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         $patient = Patient::findOrFail($id);
@@ -89,9 +74,6 @@ class PatientController extends Controller
         return view('admin.patient.edit', compact('patient'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(PatientUpdateRequest $request, string $id)
     {
         try {
@@ -120,9 +102,6 @@ class PatientController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         try {

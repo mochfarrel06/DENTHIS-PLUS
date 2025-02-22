@@ -6,11 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Login</title>
 
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('assets/admin/plugins/fontawesome-free/css/all.min.css') }}">
-    <!-- icheck bootstrap -->
     <link rel="stylesheet" href="{{ asset('assets/admin/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
-    <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('assets/admin/dist/css/adminlte.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/admin/plugins/izitoast/css/iziToast.min.css') }}">
 </head>
@@ -20,76 +17,72 @@
         <div class="login-logo">
             <a><b>DENTHIS.PLUS</b></a>
         </div>
-        <!-- /.login-logo -->
         <div class="card">
-            <div class="card-body login-card-body" style="padding-bottom: 100px">
+            <div class="card-body login-card-body" style="padding-bottom: 30px">
                 <p class="login-box-msg">Login untuk memulai aplikasi</p>
 
                 <form action="{{ route('login.store') }}" method="post">
                     @csrf
-                    <div class="input-group mb-3">
-                        <input type="email" class="form-control" placeholder="Email" name="email" id="email"
-                            @error('email') is-invalid @enderror">
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-envelope"></span>
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <input type="email" class="form-control @error('email') is-invalid @enderror"
+                                placeholder="Email" name="email" id="email" value="{{ old('email') }}">
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-envelope"></span>
+                                </div>
                             </div>
                         </div>
                         @error('email')
                             <div class="text-danger" style="font-size: 0.8em">*{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="input-group mb-3">
-                        <input type="password" class="form-control" name="password" id="password"
-                            @error('password') is-invalid @enderror" placeholder="Password">
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-lock"></span>
+
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <input type="password" class="form-control @error('password') is-invalid @enderror"
+                                name="password" id="password" placeholder="Password">
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-lock"></span>
+                                </div>
                             </div>
                         </div>
                         @error('password')
                             <div class="text-danger" style="font-size: 0.8em">*{{ $message }}</div>
                         @enderror
                     </div>
-                    <div class="row">
-                        <div class="col-8">
-                            <div class="icheck-primary">
-                                <input type="checkbox" id="remember">
-                                <label for="remember">
-                                    Remember Me
-                                </label>
-                            </div>
+
+                    <div class="row mt-4">
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-primary btn-block">Login</button>
                         </div>
-                        <!-- /.col -->
-                        <div class="col-4">
-                            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
-                        </div>
-                        <!-- /.col -->
                     </div>
                 </form>
 
+                <p class="mb-1 mt-2">
+                    <a href="{{ route('forgot-password') }}">Lupa Password?</a>
+                </p>
+                <p class="mb-1">
+                    <a href="{{ route('register') }}">Buat akun baru?</a>
+                </p>
+
                 <div class="mt-3 text-center">
                     <button class="btn btn-secondary"
-                        onclick="fillLogin('admin@example.com', 'password')">Admin</button>
+                        onclick="fillLogin('admin@example.com', '123456789')">Admin</button>
                     <button class="btn btn-secondary"
                         onclick="fillLogin('pasien@example.com', 'password')">Pasien</button>
                     <button class="btn btn-secondary"
                         onclick="fillLogin('dokter@example.com', 'password')">Dokter</button>
                 </div>
             </div>
-            <!-- /.login-card-body -->
         </div>
     </div>
-    <!-- /.login-box -->
 
-    <!-- jQuery -->
     <script src="{{ asset('assets/admin/plugins/jquery/jquery.min.js') }}"></script>
-    <!-- Bootstrap 4 -->
     <script src="{{ asset('assets/admin/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <!-- AdminLTE App -->
     <script src="{{ asset('assets/admin/dist/js/adminlte.min.js') }}"></script>
     <script src="{{ asset('assets/admin/plugins/izitoast/js/iziToast.min.js') }}"></script>
-
     <script>
         $(document).ready(function() {
             @if (session('success'))

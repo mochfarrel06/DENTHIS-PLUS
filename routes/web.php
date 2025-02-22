@@ -31,6 +31,10 @@ Route::get('login', [LoginController::class, 'index'])->name('login');
 Route::post('login', [LoginController::class, 'store'])->name('login.store');
 Route::post('logout', [LoginController::class, 'destroy'])->name('login.destroy');
 
+Route::get('register', [LoginController::class, 'indexRegister'])->name('register');
+Route::post('register', [LoginController::class, 'storeRegister'])->name('register.store');
+Route::get('forgot-password', [LoginController::class, 'indexForgot'])->name('forgot-password');
+
 Route::get('/', [UserController::class, 'index'])->name('home');
 Route::get('/dokter', [UserController::class, 'indexDokter'])->name('index-dokter');
 Route::get('/tentang-kami', [UserController::class, 'indexTentangKami'])->name('index-tentangKami');
