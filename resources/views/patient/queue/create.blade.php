@@ -11,7 +11,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('patient.dashboard') }}">Dashboard</a></li>
                         <li class="breadcrumb-item"><a href="{{ route('data-patient.queue.index') }}">Antrean</a></li>
                         <li class="breadcrumb-item active">Tambah</li>
                     </ol>
@@ -71,7 +71,7 @@
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="submit" class="btn btn-primary">Simpan</button>
                                 <a href="{{ route('data-patient.queue.index') }}" class="btn btn-warning">Kembali</a>
                             </div>
                         </form>
@@ -115,11 +115,13 @@
             });
             $('#time-slots').on('click', '.slot-btn:not(.btn-danger)', function(e) {
                 e.preventDefault();
+                $('.slot-btn').removeClass('btn-warning').addClass('btn-success');
+                $(this).removeClass('btn-success').addClass('btn-warning');
+
                 var startTime = $(this).data('start');
                 var endTime = $(this).data('end');
                 $('#selected-start-time').val(startTime);
                 $('#selected-end-time').val(endTime);
-                alert(`Slot terpilih: ${startTime} - ${endTime}`);
             });
         });
         document.getElementById('date').min = new Date().toISOString().split('T')[0];

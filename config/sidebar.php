@@ -74,8 +74,8 @@ return [
     [
         'text' => 'Rekam Medis',
         'url' => '/doctor/medical-records',
-        'role' => ['dokter', 'admin'],
-        'icon' => 'iconoir-dashboard-speed',
+        'role' => ['dokter'],
+        'icon' => 'iconoir-book',
     ],
 
 

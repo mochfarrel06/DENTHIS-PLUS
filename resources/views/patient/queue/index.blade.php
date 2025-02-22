@@ -82,7 +82,7 @@
                                         <th>Dokter</th>
                                         <th>Janji Temu</th>
                                         <th>Status</th>
-                                        @if (auth()->user() && (auth()->user()->role == 'pasien' || auth()->user()->role == 'admin'))
+                                        @if (auth()->user() && (auth()->user()->role == 'pasien' || auth()->user()->role == 'dokter'))
                                             <th>Aksi</th>
                                         @endif
                                     </tr>
@@ -93,29 +93,28 @@
                                             <td>{{ $queue->doctor->nama_depan }} {{ $queue->doctor->nama_belakang }}</td>
                                             <td>{{ $queue->start_time }} - {{ $queue->end_time }}</td>
                                             <td>{{ $queue->status }}</td>
-                                            @if (auth()->user() && (auth()->user()->role == 'pasien' || auth()->user()->role == 'admin'))
+                                            @if (auth()->user() && (auth()->user()->role == 'pasien' || auth()->user()->role == 'dokter'))
                                                 <td>
                                                     <div class="btn-group">
                                                         <a data-toggle="dropdown">
                                                             <i class="iconoir-more-vert"></i>
                                                         </a>
                                                         <ul class="dropdown-menu">
-                                                            {{-- <li><a class="dropdown-item"
-                                                                href="{{ route('queues.show', $queue->id) }}">Detail</a>
-                                                        </li>
-                                                        <li><a class="dropdown-item"
-                                                                href="{{ route('queues.edit', $queue->id) }}">Edit</a>
-                                                        </li> --}}
+                                                            <li><a class="dropdown-item" href=""><i
+                                                                        class="iconoir-eye-solid mr-2"></i> Detail</a>
+                                                            </li>
                                                             <li><a class="dropdown-item delete-item"
-                                                                    href="{{ route('data-patient.queue.destroy', $queue->id) }}">Hapus</a>
+                                                                    href="{{ route('data-patient.queue.destroy', $queue->id) }}"><i
+                                                                        class="iconoir-trash-solid mr-2"></i> Hapus</a>
                                                             </li>
-                                                            <li>
-                                                                @if (auth()->user()->role == 'admin')
-                                                                    <button class="btn btn-primary"
-                                                                        onclick="callPatient({{ $queue->id }})">Panggil
-                                                                        Pasien</button>
-                                                                @endif
-                                                            </li>
+                                                            @if (auth()->user()->role == 'dokter')
+                                                                <li>
+                                                                    <a class="dropdown-item" href=""
+                                                                        onclick="callPatient({{ $queue->id }})"><i
+                                                                        class="iconoir-phone-solid mr-2"></i> Panggil
+                                                                        Pasien</a>
+                                                                </li>
+                                                            @endif
                                                         </ul>
                                                     </div>
                                                 </td>
@@ -125,7 +124,6 @@
                                 </tbody>
                             </table>
                         </div>
-                        <!-- /.card-body -->
                     </div>
                 </section>
             </div>
@@ -162,13 +160,11 @@
                 type: "GET",
                 success: function(response) {
                     if (response.called) {
-                        $('#queue-alert').show(); // Tampilkan notifikasi
+                        $('#queue-alert').show();
                     }
                 }
             });
         }
-
-        // Jalankan AJAX setiap 5 detik (5000 milidetik)
         setInterval(checkQueueStatus, 5000);
     </script>
 @endpush

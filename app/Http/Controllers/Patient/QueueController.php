@@ -12,9 +12,6 @@ use Illuminate\Support\Facades\Auth;
 
 class QueueController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         // $queues = Queue::with('doctor')->get();
@@ -24,9 +21,6 @@ class QueueController extends Controller
         return view('patient.queue.index', compact('queues', 'userQueue'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create(Request $request)
     {
         $doctors = Doctor::all();
@@ -37,8 +31,6 @@ class QueueController extends Controller
             $date = $request->input('date');
 
             $dayOfWeek = \Carbon\Carbon::parse($date)->format('l');
-
-            // Ambil jadwal dokter
             $doctorSchedules = DoctorSchedule::where('doctor_id', $doctorId)
                 ->where('hari', $dayOfWeek)
                 ->get();
@@ -77,9 +69,6 @@ class QueueController extends Controller
         return view('patient.queue.create', compact('doctors', 'patients'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $userId = Auth::id();
@@ -141,34 +130,6 @@ class QueueController extends Controller
         return redirect()->route('data-patient.queue.index')->with('success', 'Antrean berhasil ditambahkan.');
     }
 
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         try {
