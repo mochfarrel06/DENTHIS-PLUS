@@ -32,11 +32,11 @@
                                 <h3 class="card-title">Tabel Pasien</h3>
                             </div>
 
-                            <div class="ml-auto">
+                            {{-- <div class="ml-auto">
                                 <a href="{{ route('admin.patients.create') }}"
                                     class="btn btn-primary d-flex align-items-center"><i
                                         class="iconoir-plus-circle mr-2"></i> Tambah</a>
-                            </div>
+                            </div> --}}
                         </div>
                         <div class="card-body">
                             <table id="example1" class="table table-bordered table-striped">
@@ -59,13 +59,12 @@
                                                     </a>
                                                     <ul class="dropdown-menu">
                                                         <li><a class="dropdown-item"
-                                                                href="{{ route('admin.patients.show', $patient->id) }}">Detail</a>
-                                                        </li>
-                                                        <li><a class="dropdown-item"
-                                                                href="{{ route('admin.patients.edit', $patient->id) }}">Edit</a>
+                                                                href="{{ route('admin.patients.edit', $patient->id) }}"><i
+                                                                class="iconoir-edit-pencil mr-2"></i> Edit</a>
                                                         </li>
                                                         <li><a class="dropdown-item delete-item"
-                                                                href="{{ route('admin.patients.destroy', $patient->id) }}">Hapus</a>
+                                                                href="{{ route('admin.patients.destroy', $patient->id) }}"><i
+                                                                class="iconoir-trash-solid mr-2"></i> Hapus</a>
                                                         </li>
                                                     </ul>
                                                 </div>
