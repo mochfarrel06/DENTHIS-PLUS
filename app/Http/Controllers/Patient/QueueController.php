@@ -161,4 +161,12 @@ class QueueController extends Controller
             return response()->json(['called' => false]);
         }
     }
+
+    public function selesaiPeriksa($id)
+    {
+        $queue = Queue::findOrFail($id);
+        $queue->status = 'selesai';
+        $queue->save();
+        return response()->json(['status' => 'success', 'message' => 'Antrean pasien ini telah selesai']);
+    }
 }

@@ -95,12 +95,12 @@
                                             <td>
                                                 @if ($queue->status == 'booking')
                                                     <a class="btn btn-warning btn-sm">Booking</a>
-                                                @elseif ($queue->status == 'dipanggil')
-                                                    <a class="btn btn-info btn-sm">Di Panggil</a>
                                                 @elseif ($queue->status == 'periksa')
                                                     <a class="btn btn-info btn-sm">Periksa</a>
-                                                @elseif ($queue->status == 'Selesai')
-                                                    <a class="btn btn-info btn-sm">Selesai</a>
+                                                @elseif ($queue->status == 'periksa')
+                                                    <a class="btn btn-success btn-sm">Selesai</a>
+                                                @elseif ($queue->status == 'batal')
+                                                    <a class="btn btn-danger btn-sm">Batal</a>
                                                 @endif
                                             </td>
                                         </tr>

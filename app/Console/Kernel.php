@@ -17,7 +17,7 @@ class Kernel extends ConsoleKernel
     {
         // Kirim pesan 10 menit sebelum periksa
         $schedule->call(function () {
-            $this->sendWhatsAppReminder(-10);
+            $this->sendWhatsAppReminder(+10);
         })->everyMinute();
 
         // Kirim pesan saat waktu periksa
@@ -50,6 +50,10 @@ class Kernel extends ConsoleKernel
 
             // Kirim pesan ke WhatsApp menggunakan API Fonnte
             $this->sendWhatsAppMessage($phone, $message);
+
+            if ($minutesBefore == 0) {
+                $appointment->update(['status' => 'periksa']);
+            }
         }
     }
 

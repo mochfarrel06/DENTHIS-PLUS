@@ -19,43 +19,13 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    {{-- @if (auth()->user()->role == 'admin')
-                        <button class="btn btn-primary" onclick="callPatient({{ $queue->id }})">Panggil Pasien</button>
-                    @endif --}}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    {{-- @foreach ($queues as $queue)
-                        @if ($queue->status == 'called' && $queue->user_id == auth()->id())
-                            <div class="alert alert-info alert-dismissible">
-                                <button type="button" class="close" data-dismiss="alert"
-                                    aria-hidden="true">&times;</button>
-                                <h5><i class="icon fas fa-info"></i> Info</h5>
-                                Antrean Anda sudah dipanggil oleh dokter.
-                            </div>
-                        @endif
-                    @endforeach --}}
-
                     @if ($userQueue)
                         <div class="alert alert-info alert-dismissible">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                             <h5><i class="icon fas fa-info"></i> Info</h5>
                             Antrean Anda sudah dipanggil oleh dokter.
                         </div>
-
-                        {{-- <div id="queue-alert" class="alert alert-info alert-dismissible" style="display: none;">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <h5><i class="icon fas fa-info"></i> Info</h5>
-                            Antrean Anda sudah dipanggil oleh dokter.
-                        </div> --}}
                     @endif
-
-                    {{-- <div class="ml-auto">
-                        <button type="button" class="btn btn-primary d-flex align-items-center" style="gap: 5px"><i
-                                class="iconoir-filter-solid"></i>Filter</button>
-                    </div> --}}
-
                 </div>
             </div>
             <div class="row">
@@ -82,9 +52,7 @@
                                         <th>Dokter</th>
                                         <th>Janji Temu</th>
                                         <th>Status</th>
-                                        @if (auth()->user() && (auth()->user()->role == 'pasien' || auth()->user()->role == 'dokter'))
-                                            <th>Aksi</th>
-                                        @endif
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -92,33 +60,46 @@
                                         <tr>
                                             <td>{{ $queue->doctor->nama_depan }} {{ $queue->doctor->nama_belakang }}</td>
                                             <td>{{ $queue->start_time }} - {{ $queue->end_time }}</td>
-                                            <td>{{ $queue->status }}</td>
-                                            @if (auth()->user() && (auth()->user()->role == 'pasien' || auth()->user()->role == 'dokter'))
-                                                <td>
-                                                    <div class="btn-group">
-                                                        <a data-toggle="dropdown">
-                                                            <i class="iconoir-more-vert"></i>
-                                                        </a>
-                                                        <ul class="dropdown-menu">
-                                                            <li><a class="dropdown-item" href=""><i
-                                                                        class="iconoir-eye-solid mr-2"></i> Detail</a>
+                                            <td>
+                                                @if ($queue->status == 'booking')
+                                                    <a class="btn btn-warning btn-sm">Booking</a>
+                                                @elseif ($queue->status == 'periksa')
+                                                    <a class="btn btn-info btn-sm">Periksa</a>
+                                                @elseif ($queue->status == 'selesai')
+                                                    <a class="btn btn-success btn-sm">Selesai</a>
+                                                @elseif ($queue->status == 'batal')
+                                                    <a class="btn btn-danger btn-sm">Batal</a>
+                                                @endif
+                                            </td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <a data-toggle="dropdown">
+                                                        <i class="iconoir-more-vert"></i>
+                                                    </a>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a class="dropdown-item" href=""><i
+                                                                    class="iconoir-eye-solid mr-2"></i> Detail</a>
+                                                        </li>
+                                                        @if (auth()->user()->role == 'dokter' && $queue->status == 'periksa')
+                                                            <li>
+                                                                <a class="dropdown-item" href=""
+                                                                    onclick="selesaiPeriksa({{ $queue->id }})"><i
+                                                                        class="iconoir-check mr-2"></i> Selesai Periksa</a>
                                                             </li>
+                                                        @elseif (auth()->user()->role == 'admin')
                                                             <li><a class="dropdown-item delete-item"
                                                                     href="{{ route('data-patient.queue.destroy', $queue->id) }}"><i
                                                                         class="iconoir-trash-solid mr-2"></i> Hapus</a>
                                                             </li>
-                                                            @if (auth()->user()->role == 'dokter')
-                                                                <li>
-                                                                    <a class="dropdown-item" href=""
-                                                                        onclick="callPatient({{ $queue->id }})"><i
-                                                                        class="iconoir-phone-solid mr-2"></i> Panggil
-                                                                        Pasien</a>
-                                                                </li>
-                                                            @endif
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                            @endif
+                                                        @elseif (auth()->user()->role == 'pasien')
+                                                            <li><a class="dropdown-item"
+                                                                    href="{{ route('data-patient.queue.destroy', $queue->id) }}"><i
+                                                                        class="iconoir-trash-solid mr-2"></i> Hapus</a>
+                                                            </li>
+                                                        @endif
+                                                    </ul>
+                                                </div>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -148,6 +129,26 @@
                         location.reload();
                     } else {
                         alert('Gagal memanggil pasien!');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        function selesaiPeriksa(queueId) {
+            fetch(`/data-patient/selesai-periksa/${queueId}`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        'Content-Type': 'application/json'
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        alert('Pasien telah selesai periksa');
+                        location.reload();
+                    } else {
+                        alert('Gagal selesai!');
                     }
                 })
                 .catch(error => console.error('Error:', error));

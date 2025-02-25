@@ -70,6 +70,7 @@ Route::group([
     Route::delete('queue/{id}', [QueueController::class, 'destroy'])->name('queue.destroy')->middleware('role:pasien,admin');
     Route::post('call-patient/{id}', [QueueController::class, 'callPatient'])->middleware('role:admin');
     Route::get('/queue/check-status', [QueueController::class, 'checkQueueStatus'])->name('queue.checkStatus');
+    Route::post('selesai-periksa/{id}', [QueueController::class, 'selesaiPeriksa']);
 });
 
 Route::group(['prefix' => 'doctor', 'as' => 'doctor.', 'middleware' => 'role:dokter'], function () {
