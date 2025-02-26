@@ -38,6 +38,31 @@ return [
         'icon' => 'iconoir-user-square',
     ],
 
+
+    [
+        'text' => 'ANTREAN',
+        'role' => ['admin', 'pasien', 'dokter'],
+        'is_header' => true,
+    ],
+    [
+        'text' => 'Antrean Pasien',
+        'url' => '/data-patient/queue',
+        'role' => ['pasien', 'dokter', 'admin'],
+        'icon' => 'iconoir-task-list',
+    ],
+
+    [
+        'text' => 'Account',
+        'role' => ['admin'],
+        'is_header' => true,
+    ],
+    [
+        'text' => 'User Management',
+        'url' => '/admin/user-management',
+        'role' => ['admin'],
+        'icon' => 'iconoir-settings',
+    ],
+
     // Antrean
     // [
     //     'text' => 'ANTREAN',
@@ -87,17 +112,7 @@ return [
         'icon' => 'iconoir-dashboard-speed',
     ],
 
-    [
-        'text' => 'ANTREAN',
-        'role' => ['admin', 'pasien', 'dokter'],
-        'is_header' => true,
-    ],
-    [
-        'text' => 'Antrean Pasien',
-        'url' => '/data-patient/queue',
-        'role' => ['pasien', 'dokter', 'admin'],
-        'icon' => 'iconoir-task-list',
-    ],
+
 
 
 ];

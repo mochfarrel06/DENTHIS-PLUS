@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DoctorController;
 use App\Http\Controllers\Admin\DoctorScheduleController;
 use App\Http\Controllers\Admin\PatientController;
+use App\Http\Controllers\Admin\UserManagementController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Doctor\DashboardController as DoctorDashboardController;
 use App\Http\Controllers\Doctor\MedicalRecordController;
@@ -52,6 +53,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'role:admin
     Route::delete('doctor-schedules/{doctorId}', [DoctorScheduleController::class, 'destroy'])->name('doctor-schedules.destroy');
 
     Route::resource('patients', PatientController::class);
+
+    Route::get('user-management', [UserManagementController::class, 'index'])->name('user-management.index');
+    Route::get('user-management/create', [UserManagementController::class, 'create'])->name('user-management.create');
+    Route::post('user-management', [UserManagementController::class, 'store'])->name('user-management.store');
+    Route::get('user-management/{id}/edit', [UserManagementController::class, 'edit'])->name('user-management.edit');
+    Route::put('user-management/{id}', [UserManagementController::class, 'update'])->name('user-management.update');
+    Route::delete('user-management/{id}', [UserManagementController::class, 'destroy'])->name('user-management.destroy');
 });
 
 Route::group(['prefix' => 'patient', 'as' => 'patient.', 'middleware' => 'role:pasien'], function () {
