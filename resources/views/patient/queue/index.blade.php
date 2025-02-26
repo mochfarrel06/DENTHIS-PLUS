@@ -9,7 +9,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Antrean</h1>
+                    <h1 class="m-0">Antrean Pasien</h1>
                 </div>
             </div>
         </div>
@@ -50,6 +50,8 @@
                                 <thead>
                                     <tr>
                                         <th>Dokter</th>
+                                        <th>Pasien</th>
+                                        <th>Hari, Tanggal</th>
                                         <th>Janji Temu</th>
                                         <th>Status</th>
                                         <th>Aksi</th>
@@ -59,7 +61,11 @@
                                     @foreach ($queues as $queue)
                                         <tr>
                                             <td>{{ $queue->doctor->nama_depan }} {{ $queue->doctor->nama_belakang }}</td>
-                                            <td>{{ $queue->start_time }} - {{ $queue->end_time }}</td>
+                                            <td>{{ $queue->patient->nama_depan }} {{ $queue->patient->nama_belakang }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($queue->tgl_periksa)->locale('id')->translatedFormat('l') }}, {{ $queue->tgl_periksa }}</td>
+                                            <td>{{ \Carbon\Carbon::createFromFormat('H:i:s', $queue->start_time)->format('H:i') }}
+                                                -
+                                                {{ \Carbon\Carbon::createFromFormat('H:i:s', $queue->end_time)->format('H:i') }}</td>
                                             <td>
                                                 @if ($queue->status == 'booking')
                                                     <a class="btn btn-warning btn-sm">Booking</a>
@@ -77,7 +83,7 @@
                                                         <i class="iconoir-more-vert"></i>
                                                     </a>
                                                     <ul class="dropdown-menu">
-                                                        <li><a class="dropdown-item" href=""><i
+                                                        <li><a class="dropdown-item" href="{{ route('data-patient.queue.show', $queue->id) }}"><i
                                                                     class="iconoir-eye-solid mr-2"></i> Detail</a>
                                                         </li>
                                                         @if (auth()->user()->role == 'dokter' && $queue->status == 'periksa')

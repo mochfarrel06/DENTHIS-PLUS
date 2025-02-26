@@ -67,6 +67,7 @@ Route::group([
     Route::get('queue', [QueueController::class, 'index'])->name('queue.index');
     Route::get('queue/create', [QueueController::class, 'create'])->name('queue.create')->middleware('role:pasien');
     Route::post('queue', [QueueController::class, 'store'])->name('queue.store')->middleware('role:pasien');
+    Route::get('queue/{id}', [QueueController::class, 'show'])->name('queue.show');
     Route::delete('queue/{id}', [QueueController::class, 'destroy'])->name('queue.destroy')->middleware('role:pasien,admin');
     Route::post('call-patient/{id}', [QueueController::class, 'callPatient'])->middleware('role:admin');
     Route::get('/queue/check-status', [QueueController::class, 'checkQueueStatus'])->name('queue.checkStatus');

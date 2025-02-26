@@ -90,7 +90,7 @@
                                             </td>
                                             <td>{{ \Carbon\Carbon::createFromFormat('H:i:s', $queue->start_time)->format('H:i') }}
                                                 -
-                                                {{ \Carbon\Carbon::createFromFormat('H:i:s', $queue->end_time)->format('H.i') }}
+                                                {{ \Carbon\Carbon::createFromFormat('H:i:s', $queue->end_time)->format('H:i') }}
                                             </td>
                                             <td>
                                                 @if ($queue->status == 'booking')

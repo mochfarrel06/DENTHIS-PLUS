@@ -169,4 +169,10 @@ class QueueController extends Controller
         $queue->save();
         return response()->json(['status' => 'success', 'message' => 'Antrean pasien ini telah selesai']);
     }
+
+    public function show(string $id) {
+        $queue = Queue::findOrFail($id);
+
+        return view('patient.queue.show', compact('queue'));
+    }
 }
