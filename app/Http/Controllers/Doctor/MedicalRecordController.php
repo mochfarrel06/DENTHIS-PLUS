@@ -28,7 +28,7 @@ class MedicalRecordController extends Controller
 
     public function create()
     {
-        $queues = Queue::where('status', 'called')->get();
+        $queues = Queue::where('status', 'periksa')->get();
         return view('doctor.medical-record.create', compact('queues'));
     }
 
@@ -54,7 +54,7 @@ class MedicalRecordController extends Controller
             'catatan_medis' => $request->catatan_medis,
         ]);
 
-        $queue->update(['status' => 'done']);
+        $queue->update(['status' => 'selesai']);
 
         return redirect()->route('doctor.medical-record.index')->with('success', 'Rekam medis berhasil disimpan.');
     }
