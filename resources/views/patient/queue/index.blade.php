@@ -92,13 +92,8 @@
                                                                     onclick="selesaiPeriksa({{ $queue->id }})"><i
                                                                         class="iconoir-check mr-2"></i> Selesai Periksa</a>
                                                             </li>
-                                                        @elseif (auth()->user()->role == 'admin')
+                                                        @elseif (auth()->user()->role == 'admin' || auth()->user()->role == 'pasien')
                                                             <li><a class="dropdown-item delete-item"
-                                                                    href="{{ route('data-patient.queue.destroy', $queue->id) }}"><i
-                                                                        class="iconoir-trash-solid mr-2"></i> Hapus</a>
-                                                            </li>
-                                                        @elseif (auth()->user()->role == 'pasien')
-                                                            <li><a class="dropdown-item"
                                                                     href="{{ route('data-patient.queue.destroy', $queue->id) }}"><i
                                                                         class="iconoir-trash-solid mr-2"></i> Hapus</a>
                                                             </li>

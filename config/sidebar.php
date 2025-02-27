@@ -38,6 +38,28 @@ return [
         'icon' => 'iconoir-user-square',
     ],
 
+    // 2. Dokter
+    [
+        'text' => 'Dashboard',
+        'url' => '/doctor/dashboard',
+        'role' => ['dokter'],
+        'icon' => 'iconoir-dashboard-speed',
+    ],
+    [
+        'text' => 'Rekam Medis',
+        'url' => '/doctor/medical-records',
+        'role' => ['dokter'],
+        'icon' => 'iconoir-book',
+    ],
+
+    // 3. PASIEN
+    [
+        'text' => 'Dashboard',
+        'url' => '/patient/dashboard',
+        'role' => ['pasien'],
+        'icon' => 'iconoir-dashboard-speed',
+    ],
+
 
     [
         'text' => 'ANTREAN',
@@ -89,28 +111,6 @@ return [
     //     'icon' => 'iconoir-group',
     // ],
 
-    // 2. Dokter
-    [
-        'text' => 'Dashboard',
-        'url' => '/doctor/dashboard',
-        'role' => ['dokter'],
-        'icon' => 'iconoir-dashboard-speed',
-    ],
-    [
-        'text' => 'Rekam Medis',
-        'url' => '/doctor/medical-records',
-        'role' => ['dokter'],
-        'icon' => 'iconoir-book',
-    ],
-
-
-    // 3. PASIEN
-    [
-        'text' => 'Dashboard',
-        'url' => '/patient/dashboard',
-        'role' => ['pasien'],
-        'icon' => 'iconoir-dashboard-speed',
-    ],
 
 
 
