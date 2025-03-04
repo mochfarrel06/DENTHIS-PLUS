@@ -36,7 +36,7 @@
                                             <div>
                                                 <img id="profileImage" class="profile-user-img img-fluid img-circle"
                                                     src="{{ asset($doctor->foto_dokter) }}" alt="User Dokter"
-                                                    style="cursor: pointer; object-fit: cover; width: 100px; height: 100px; border-radius: 50%;">
+                                                    style="cursor: pointer; object-fit: cover; width: 120px; height: 120px; border-radius: 50%;">
                                             </div>
                                         </div>
                                     </div>
