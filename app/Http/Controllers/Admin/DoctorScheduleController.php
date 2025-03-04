@@ -25,10 +25,7 @@ class DoctorScheduleController extends Controller
 
     public function create()
     {
-        // Ambil ID dokter yang sudah memiliki jadwal
         $scheduledDoctorIds = DoctorSchedule::pluck('doctor_id')->toArray();
-
-        // Ambil daftar dokter yang belum memiliki jadwal
         $doctors = Doctor::whereNotIn('id', $scheduledDoctorIds)->get();
 
         return view('admin.doctorSchedule.create', compact('doctors'));

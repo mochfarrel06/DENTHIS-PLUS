@@ -36,16 +36,15 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="nama_depan">Nama Depan</label>
-                                            <input type="text" class="form-control" name="nama_depan" id="nama_depan"
-                                                @error('nama_depan') is-invalid @enderror"
+                                            <input type="text" class="form-control @error('nama_depan') is-invalid @enderror" name="nama_depan" id="nama_depan"
                                                 value="{{ old('nama_depan', $patient->nama_depan) }}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="nama_belakang">Nama Belakang</label>
-                                            <input type="text" class="form-control" name="nama_belakang"
-                                                id="nama_belakang" @error('nama_belakang') is-invalid @enderror"
+                                            <input type="text" class="form-control @error('nama_belakang') is-invalid @enderror" name="nama_belakang"
+                                                id="nama_belakang"
                                                 value="{{ old('nama_belakang', $patient->nama_belakang) }}">
                                         </div>
                                     </div>
@@ -54,16 +53,14 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="email">Email</label>
-                                            <input type="email" class="form-control" name="email" id="email"
-                                                @error('email') is-invalid @enderror"
+                                            <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="email"
                                                 value="{{ old('email', $patient->email) }}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="no_hp">Nomor Kontak</label>
-                                            <input type="text" class="form-control" name="no_hp" id="no_hp"
-                                                @error('no_hp') is-invalid @enderror"
+                                            <input type="text" class="form-control @error('no_hp') is-invalid @enderror" name="no_hp" id="no_hp"
                                                 value="{{ old('no_hp', $patient->no_hp) }}">
                                         </div>
                                     </div>
@@ -72,8 +69,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="">Password</label>
-                                            <input type="password" name="password" id="password"
-                                                @error('password') is-invalid @enderror" class="form-control"
+                                            <input type="password" name="password" id="password" class="form-control @error('password') is-invalid @enderror"
                                                 placeholder="Masukkan password">
                                         </div>
                                     </div>
@@ -89,8 +85,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="tgl_lahir">Tanggal Lahir</label>
-                                            <input type="date" class="form-control" name="tgl_lahir" id="tgl_lahir"
-                                                @error('tgl_lahir') is-invalid @enderror"
+                                            <input type="date" class="form-control @error('tgl_lahir') is-invalid @enderror" name="tgl_lahir" id="tgl_lahir"
                                                 value="{{ old('tgl_lahir', $patient->tgl_lahir) }}" />
                                         </div>
                                     </div>
@@ -122,16 +117,14 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="alamat">Alamat</label>
-                                            <input type="text" class="form-control" name="alamat" id="alamat"
-                                                @error('alamat') is-invalid @enderror"
+                                            <input type="text" class="form-control @error('alamat') is-invalid @enderror" name="alamat" id="alamat"
                                                 value="{{ old('alamat', $patient->alamat) }}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="negara">Negara</label>
-                                            <input type="text" class="form-control" name="negara" id="negara"
-                                                @error('negara') is-invalid @enderror"
+                                            <input type="text" class="form-control @error('negara') is-invalid @enderror" name="negara" id="negara"
                                                 value="{{ old('negara', $patient->negara) }}">
                                         </div>
                                     </div>
@@ -140,16 +133,14 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="provinsi">Provinsi</label>
-                                            <input type="text" class="form-control" name="provinsi" id="provinsi"
-                                                @error('provinsi') is-invalid @enderror"
+                                            <input type="text" class="form-control @error('provinsi') is-invalid @enderror" name="provinsi" id="provinsi"
                                                 value="{{ old('provinsi', $patient->provinsi) }}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="kota">Kota</label>
-                                            <input type="text" class="form-control" name="kota" id="kota"
-                                                @error('kota') is-invalid @enderror"
+                                            <input type="text" class="form-control @error('kota') is-invalid @enderror" name="kota" id="kota"
                                                 value="{{ old('kota', $patient->kota) }}">
                                         </div>
                                     </div>
@@ -158,8 +149,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="kodepos">Kode Pos</label>
-                                            <input type="number" class="form-control" name="kodepos" id="kode_pos"
-                                                @error('kodepos') is-invalid @enderror"
+                                            <input type="number" class="form-control @error('kodepos') is-invalid @enderror" name="kodepos" id="kode_pos"
                                                 value="{{ old('kodepos', $patient->kodepos) }}">
                                         </div>
                                     </div>
