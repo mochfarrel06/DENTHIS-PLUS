@@ -34,15 +34,19 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label>Profile</label>
+                                            <label>Profil</label>
                                             <div>
                                                 <img id="profileImage" class="profile-user-img img-fluid img-circle"
                                                     src="{{ asset('assets/admin/dist/img/avatar.png') }}"
                                                     alt="User profile picture"
-                                                    style="cursor: pointer; object-fit: cover; width: 100px; height: 100px; border-radius: 50%;">
+                                                    style="cursor: pointer; object-fit: cover; width: 120px; height: 120px; border-radius: 50%;">
                                                 <input type="file" id="foto_dokter" name="foto_dokter"
                                                     style="display: none;" accept="image/*">
                                             </div>
+                                            @error('foto_dokter')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+
                                         </div>
                                     </div>
                                 </div>
@@ -50,17 +54,22 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="nama_depan">Nama Depan</label>
-                                            <input type="text" class="form-control" name="nama_depan" id="nama_depan"
-                                                @error('nama_depan') is-invalid @enderror"
+                                            <input type="text" class="form-control @error('nama_depan') is-invalid @enderror" name="nama_depan" id="nama_depan"
                                                 placeholder="Masukkan Nama Depan">
+                                                @error('nama_depan')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="nama_belakang">Nama Belakang</label>
-                                            <input type="text" class="form-control" name="nama_belakang"
-                                                id="nama_belakang" @error('nama_belakang') is-invalid @enderror"
+                                            <input type="text" class="form-control @error('nama_belakang') is-invalid @enderror" name="nama_belakang"
+                                                id="nama_belakang"
                                                 placeholder="Masukkan Nama Belakang">
+                                                @error('nama_belakang')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
                                         </div>
                                     </div>
                                 </div>
@@ -68,15 +77,19 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="email">Email</label>
-                                            <input type="email" class="form-control" name="email" id="email"
-                                                @error('email') is-invalid @enderror" placeholder="Masukkan Email">
+                                            <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="email" placeholder="Masukkan Email">
+                                                @error('email')
+                                                    <div class="invalid-feedback">{{ $message }}</div>
+                                                @enderror
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="no_hp">Nomor Kontak</label>
-                                            <input type="text" class="form-control" name="no_hp" id="no_hp"
-                                                @error('no_hp') is-invalid @enderror" placeholder="Masukkan Nomor Kontak">
+                                            <input type="text" class="form-control @error('no_hp') is-invalid @enderror" name="no_hp" id="no_hp" placeholder="Masukkan Nomor Kontak">
+                                            @error('no_hp')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                 </div>
@@ -84,9 +97,11 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="">Password</label>
-                                            <input type="password" name="password" id="password"
-                                                @error('password') is-invalid @enderror" class="form-control"
+                                            <input type="password" name="password" id="password" class="form-control @error('password') is-invalid @enderror"
                                                 placeholder="Masukkan password">
+                                            @error('password')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -101,8 +116,10 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="tgl_lahir">Tanggal Lahir</label>
-                                            <input type="date" class="form-control" name="tgl_lahir" id="tgl_lahir"
-                                                @error('tgl_lahir') is-invalid @enderror" />
+                                            <input type="date" class="form-control @error('tgl_lahir') is-invalid @enderror" name="tgl_lahir" id="tgl_lahir" />
+                                            @error('tgl_lahir')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -126,6 +143,9 @@
                                                         class="custom-control-label">Perempuan</label>
                                                 </div>
                                             </div>
+                                            @error('jenis_kelamin')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                 </div>
@@ -133,22 +153,26 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="pengalaman">Pengalaman</label>
-                                            <input type="number" class="form-control" name="pengalaman" id="pengalaman"
-                                                @error('pengalaman') is-invalid @enderror"
+                                            <input type="number" class="form-control @error('pengalaman') is-invalid @enderror" name="pengalaman" id="pengalaman"
                                                 placeholder="Masukkan Pengalaman" />
+                                            @error('pengalaman')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="golongan_darah">Golongan Darah</label>
-                                            <select class="custom-select" name="golongan_darah" id="golongan_darah"
-                                                @error('golongan_darah') is-invalid @enderror">
+                                            <select class="custom-select @error('golongan_darah') is-invalid @enderror" name="golongan_darah" id="golongan_darah" >
                                                 <option value="">-- Pilih Golongan Darah --</option>
                                                 <option value="A">A</option>
                                                 <option value="B">B</option>
                                                 <option value="AB">AB</option>
                                                 <option value="O">O</option>
                                             </select>
+                                            @error('golongan_darah')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                 </div>
@@ -158,15 +182,19 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="alamat">Alamat</label>
-                                            <input type="text" class="form-control" name="alamat" id="alamat"
-                                                @error('alamat') is-invalid @enderror" placeholder="Masukkan Alamat">
+                                            <input type="text" class="form-control @error('alamat') is-invalid @enderror" name="alamat" id="alamat" placeholder="Masukkan Alamat">
+                                            @error('alamat')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="negara">Negara</label>
-                                            <input type="text" class="form-control" name="negara" id="negara"
-                                                @error('negara') is-invalid @enderror" placeholder="Masukkan Negara">
+                                            <input type="text" class="form-control @error('negara') is-invalid @enderror" name="negara" id="negara" placeholder="Masukkan Negara">
+                                            @error('negara')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                 </div>
@@ -174,15 +202,19 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="provinsi">Provinsi</label>
-                                            <input type="text" class="form-control" name="provinsi" id="provinsi"
-                                                @error('provinsi') is-invalid @enderror" placeholder="Masukkan Provinsi">
+                                            <input type="text" class="form-control @error('provinsi') is-invalid @enderror" name="provinsi" id="provinsi" placeholder="Masukkan Provinsi">
+                                            @error('provinsi')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="kota">Kota</label>
-                                            <input type="text" class="form-control" name="kota" id="kota"
-                                                @error('kota') is-invalid @enderror" placeholder="Masukkan Kota">
+                                            <input type="text" class="form-control @error('kota') is-invalid @enderror" name="kota" id="kota" placeholder="Masukkan Kota">
+                                            @error('kota')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                 </div>
@@ -190,8 +222,10 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="kodepos">Kode Pos</label>
-                                            <input type="number" class="form-control" name="kodepos" id="kode_pos"
-                                                @error('kodepos') is-invalid @enderror" placeholder="Masukkan Kode Pos">
+                                            <input type="number" class="form-control @error('kodepos') is-invalid @enderror" name="kodepos" id="kode_pos" placeholder="Masukkan Kode Pos">
+                                            @error('kodepos')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                 </div>

@@ -61,7 +61,7 @@
         @include('layouts.sidebar')
 
         <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper">
+        <div class="content-wrapper" style="padding-top: 60px">
             @yield('content')
         </div>
         <!-- /.content-wrapper -->
