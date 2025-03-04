@@ -28,7 +28,7 @@
                         <div class="icon">
                             <i class="ion ion-bag"></i>
                         </div>
-                        <a href="{{ route('admin.doctor-schedules.index') }}" class="small-box-footer">More info <i
+                        <a href="{{ route('admin.doctors.index') }}" class="small-box-footer">More info <i
                                 class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
@@ -56,7 +56,7 @@
                         <div class="icon">
                             <i class="ion ion-person-add"></i>
                         </div>
-                        <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                        <a href="{{ route('data-patient.queue.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                     </div>
                 </div>
             </div>
@@ -67,7 +67,7 @@
                         <div class="card-header d-flex">
                             <div class="d-flex align-items-center">
                                 <i class="iconoir-table mr-2"></i>
-                                <h3 class="card-title">Antrean Pasien per hari</h3>
+                                <h3 class="card-title">Antrean Pasien <b>{{ \Carbon\Carbon::now()->locale('id')->translatedFormat('l, d-m-Y') }}</b></h3>
                             </div>
                         </div>
                         <div class="card-body">
@@ -86,7 +86,7 @@
                                         <tr>
                                             <td>{{ $queue->patient->kode_pasien }}</td>
                                             <td>{{ $queue->doctor->nama_depan }} {{ $queue->doctor->nama_belakang }}</td>
-                                            <td>{{ $queue->patient->nama_depan }} - {{ $queue->patient->nama_belakang }}
+                                            <td>{{ $queue->patient->nama_depan }} {{ $queue->patient->nama_belakang }}
                                             </td>
                                             <td>{{ \Carbon\Carbon::createFromFormat('H:i:s', $queue->start_time)->format('H:i') }}
                                                 -
@@ -97,7 +97,7 @@
                                                     <a class="btn btn-warning btn-sm">Booking</a>
                                                 @elseif ($queue->status == 'periksa')
                                                     <a class="btn btn-info btn-sm">Periksa</a>
-                                                @elseif ($queue->status == 'periksa')
+                                                @elseif ($queue->status == 'selesai')
                                                     <a class="btn btn-success btn-sm">Selesai</a>
                                                 @elseif ($queue->status == 'batal')
                                                     <a class="btn btn-danger btn-sm">Batal</a>
