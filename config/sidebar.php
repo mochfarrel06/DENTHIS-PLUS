@@ -74,6 +74,13 @@ return [
     ],
 
     [
+        'text' => 'Riwayat Antrean Pasien',
+        'url' => '/data-patient/queue-history',
+        'role' => ['pasien', 'dokter', 'admin'],
+        'icon' => 'iconoir-ease-curve-control-points',
+    ],
+
+    [
         'text' => 'Account',
         'role' => ['admin'],
         'is_header' => true,

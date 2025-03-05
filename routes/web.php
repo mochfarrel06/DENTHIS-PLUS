@@ -10,6 +10,7 @@ use App\Http\Controllers\Doctor\DashboardController as DoctorDashboardController
 use App\Http\Controllers\Doctor\MedicalRecordController;
 use App\Http\Controllers\Patient\DashboardController as PatientDashboardController;
 use App\Http\Controllers\Patient\QueueController;
+use App\Http\Controllers\Patient\QueueHistoryController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -80,6 +81,7 @@ Route::group([
     Route::post('call-patient/{id}', [QueueController::class, 'callPatient'])->middleware('role:admin');
     Route::get('/queue/check-status', [QueueController::class, 'checkQueueStatus'])->name('queue.checkStatus');
     Route::post('selesai-periksa/{id}', [QueueController::class, 'selesaiPeriksa']);
+    Route::get('/queue-history', [QueueHistoryController::class, 'index'])->name('queue-history.index');
 });
 
 Route::group(['prefix' => 'doctor', 'as' => 'doctor.', 'middleware' => 'role:dokter'], function () {

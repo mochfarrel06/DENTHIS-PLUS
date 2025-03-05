@@ -8,6 +8,7 @@ use App\Models\Doctor;
 use App\Models\DoctorSchedule;
 use App\Models\Patient;
 use App\Models\Queue;
+use App\Models\QueueHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -110,6 +111,21 @@ class QueueController extends Controller
     {
         try {
             $queue = Queue::findOrFail($id);
+            $userId = Auth::id();
+
+            QueueHistory::create([
+                'queue_id' => $queue->id,
+                'user_id' => $userId,
+                'doctor_id' => $queue->doctor_id,
+                'patient_id' => $queue->patient_id,
+                'tgl_periksa' => $queue->tgl_periksa,
+                'start_time' => $queue->start_time,
+                'end_time' => $queue->end_time,
+                'keterangan' => $queue->keterangan,
+                'status' => 'batal',
+                'is_booked' => $queue->is_booked,
+            ]);
+
             $queue->delete();
 
             return response(['status' => 'success', 'message' => 'Berhasil menghapus data pasien']);
@@ -141,7 +157,22 @@ class QueueController extends Controller
     public function selesaiPeriksa($id)
     {
         $queue = Queue::findOrFail($id);
+        $userId = Auth::id();
         $queue->status = 'selesai';
+
+        QueueHistory::create([
+            'queue_id' => $queue->id,
+            'user_id' => $userId,
+            'doctor_id' => $queue->doctor_id,
+            'patient_id' => $queue->patient_id,
+            'tgl_periksa' => $queue->tgl_periksa,
+            'start_time' => $queue->start_time,
+            'end_time' => $queue->end_time,
+            'keterangan' => $queue->keterangan,
+            'status' => $queue->status,
+            'is_booked' => $queue->is_booked,
+        ]);
+
         $queue->save();
         return response()->json(['status' => 'success', 'message' => 'Antrean pasien ini telah selesai']);
     }

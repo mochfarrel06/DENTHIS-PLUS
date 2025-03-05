@@ -21,7 +21,7 @@
         <div class="icon-boxes position-relative" data-aos="fade-up" data-aos-delay="200">
             <div class="container position-relative">
                 <div class="row gy-4 mt-5">
-                    <div class="col-xl-3 col-md-6">
+                    <div class="col-xl-4 col-md-6">
                         <div class="icon-box">
                             <h4 class="title">
                                 <a href="" class="stretched-link">SISTEM ANTREAN ONLINE DENTHIS.PLUS</a>
@@ -36,11 +36,11 @@
                     </div>
                     <!--End Icon Box -->
 
-                    <div class="col-xl-3 col-md-6">
+                    <div class="col-xl-4 col-md-6">
                         <div class="icon-box">
                             <div class="icon"><i class="bi bi-gem"></i></div>
                             <h4 class="title">
-                                <a href="" class="stretched-link">Poli Gigi</a>
+                                <a href="" class="stretched-link">Klinik Gigi</a>
                                 <p class="desk-card">
                                     Klinik Gigi Sehat adalah solusi terpercaya untuk perawatan
                                     kesehatan gigi dan mulut Anda. Dengan layanan profesional
@@ -50,6 +50,21 @@
                             </h4>
                         </div>
                     </div>
+
+                    <div class="col-xl-4 col-md-6">
+                        <div class="icon-box">
+                            <div class="icon"><i class="bi bi-gem"></i></div>
+                            <h4 class="title">
+                                <a href="" class="stretched-link">Dokter Spesialis Gigi</a>
+                                <p class="desk-card">
+                                    Layanan Dokter Spesialis Gigi yang berpengalaman dalam menangani berbagai
+                                    permasalahan gigi, mulai dari pencabutan gigi bungsu, perawatan saluran akar,
+                                    hingga pemasangan gigi palsu dengan teknologi terbaru.
+                                </p>
+                            </h4>
+                        </div>
+                    </div>
+
                     <!--End Icon Box -->
                 </div>
             </div>
