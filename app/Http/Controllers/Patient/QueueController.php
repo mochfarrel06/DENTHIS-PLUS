@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Patient;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Patient\QueueStoreRequest;
 use App\Models\Doctor;
 use App\Models\DoctorSchedule;
 use App\Models\Patient;
@@ -14,8 +15,6 @@ class QueueController extends Controller
 {
     public function index()
     {
-        // $queues = Queue::with('doctor')->get();
-        // $queues = Queue::where('user_id', auth()->id())->get();
         $queues = Queue::with('doctor')->get();
         $userQueue = Queue::where('user_id', auth()->id())->where('status', 'called')->first();
         return view('patient.queue.index', compact('queues', 'userQueue'));
@@ -40,14 +39,13 @@ class QueueController extends Controller
                 $start = \Carbon\Carbon::parse($schedule->jam_mulai);
                 $end = \Carbon\Carbon::parse($schedule->jam_selesai);
 
-                $waktuPeriksa = $schedule->waktu_periksa ?? 30; // Default 30 menit
-                $waktuJeda = $schedule->waktu_jeda ?? 10; // Default 10 menit
+                $waktuPeriksa = $schedule->waktu_periksa ?? 30;
+                $waktuJeda = $schedule->waktu_jeda ?? 10;
 
                 while ($start->copy()->addMinutes($waktuPeriksa)->lte($end)) {
                     $slotStart = $start->format('H:i');
                     $slotEnd = $start->copy()->addMinutes($waktuPeriksa)->format('H:i');
 
-                    // Cek apakah slot sudah dipesan
                     $isBooked = Queue::where('doctor_id', $doctorId)
                         ->where('tgl_periksa', $date)
                         ->where('start_time', $slotStart)
@@ -69,29 +67,17 @@ class QueueController extends Controller
         return view('patient.queue.create', compact('doctors', 'patients'));
     }
 
-    public function store(Request $request)
+    public function store(QueueStoreRequest $request)
     {
         $userId = Auth::id();
 
-        // Ambil email dari user yang sedang login
         $userEmail = Auth::user()->email;
 
-        // Cari pasien berdasarkan email user yang sedang login
         $patient = Patient::where('email', $userEmail)->first();
-
-        // dd($patient);
 
         if (!$patient) {
             return redirect()->back()->withErrors(['error' => 'Data pasien tidak ditemukan untuk pengguna ini.']);
         }
-
-        $request->validate([
-            'doctor_id' => 'required|exists:doctors,id',
-            'tgl_periksa' => 'required|date',
-            'start_time' => 'required',
-            'keterangan' => 'required',
-            'end_time' => 'required',
-        ]);
 
         // Cek apakah slot waktu sudah dipesan
         $existingQueue = Queue::where('doctor_id', $request->doctor_id)
@@ -102,16 +88,6 @@ class QueueController extends Controller
         if ($existingQueue) {
             return redirect()->back()->withErrors(['error' => 'Slot waktu ini sudah dipesan.']);
         }
-
-        // Menentukan nomor urut antrean
-        // $lastQueue = Queue::where('doctor_id', $request->doctor_id)
-        //     ->where('tgl_periksa', $request->tgl_periksa)
-        //     ->orderBy('urutan', 'desc')
-        //     ->first();
-
-        // Generate nomor urutan dengan format ANTREAN0001, ANTREAN0002, dst.
-        // $lastNumber = $lastQueue ? (int) substr($lastQueue->urutan, 7) : 0;
-        // $newUrutan = 'ANTREAN' . str_pad($lastNumber + 1, 4, '0', STR_PAD_LEFT);
 
         // Simpan data antrean
         Queue::create([

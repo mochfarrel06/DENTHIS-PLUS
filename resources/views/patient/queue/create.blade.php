@@ -7,12 +7,11 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Tambah Data Antrean</h1>
+                    <h1 class="m-0">Tambah Antrean Pasien</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ route('patient.dashboard') }}">Dashboard</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('data-patient.queue.index') }}">Antrean</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('data-patient.queue.index') }}">Antrean Pasien</a></li>
                         <li class="breadcrumb-item active">Tambah</li>
                     </ol>
                 </div>
@@ -32,20 +31,28 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="doctor_id">Dokter</label>
-                                            <select class="custom-select" name="doctor_id" id="doctor_id" required>
+                                            <select class="custom-select @error('doctor_id') is-invalid @enderror"
+                                                name="doctor_id" id="doctor_id">
                                                 <option value="">-- Pilih Dokter --</option>
                                                 @foreach ($doctors as $doctor)
                                                     <option value="{{ $doctor->id }}">{{ $doctor->nama_depan }}
                                                         {{ $doctor->nama_belakang }}</option>
                                                 @endforeach
                                             </select>
+                                            @error('doctor_id')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="date">Tanggal Periksa</label>
-                                            <input type="date" class="form-control" name="tgl_periksa" id="date"
-                                                required>
+                                            <input type="date"
+                                                class="form-control @error('tgl_periksa') is-invalid @enderror"
+                                                name="tgl_periksa" id="date">
+                                            @error('tgl_periksa')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                 </div>
@@ -53,25 +60,34 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="time-slots">Janji Temu Tersedia</label>
-                                            <div class="time-slot-box">
+                                            <div class="time-slot-box @error('start_time') is-invalid @enderror @error('end_time') is-invalid @enderror">
                                                 <div class="container-time" id="time-slots"></div>
                                             </div>
+                                            @error('start_time')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                            @error('end_time')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                         </div>
-                                        <input type="hidden" name="start_time" id="selected-start-time">
-                                        <input type="hidden" name="end_time" id="selected-end-time">
+                                        <input type="hidden" name="start_time" id="selected-start-time" value="{{ old('start_time') }}">
+                                        <input type="hidden" name="end_time" id="selected-end-time" value="{{ old('end_time') }}">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="keterangan">Keterangan Periksa</label>
-                                            <textarea name="keterangan" id="keterangan" cols="20" rows="5" class="form-control"></textarea>
+                                            <textarea name="keterangan" id="keterangan" cols="20" rows="5" class="form-control @error('keterangan') is-invalid @enderror"></textarea>
+                                            @error('keterangan')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-primary">Simpan</button>
+                                <button type="submit" class="btn btn-primary mr-2">Simpan</button>
                                 <a href="{{ route('data-patient.queue.index') }}" class="btn btn-warning">Kembali</a>
                             </div>
                         </form>
