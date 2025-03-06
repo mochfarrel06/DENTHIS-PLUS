@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title-page')
-    Dashboard
+    Rekam Medis
 @endsection
 
 @section('content')
@@ -9,7 +9,13 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Dashboard</h1>
+                    <h1 class="m-0">Rekam Medis</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{{ route('doctor.dashboard') }}">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Rekam Medis</li>
+                    </ol>
                 </div>
             </div>
         </div>
@@ -23,7 +29,7 @@
                         <div class="card-header d-flex">
                             <div class="d-flex align-items-center">
                                 <i class="iconoir-table mr-2"></i>
-                                <h3 class="card-title">Dashboard Dokter</h3>
+                                <h3 class="card-title">Rekam Medis</h3>
                             </div>
 
                             <div class="ml-auto">
@@ -39,7 +45,6 @@
                                         <th>Tanggal Periksa</th>
                                         <th>Dokter</th>
                                         <th>Diagnosis</th>
-                                        <th>Perawatan</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -47,14 +52,28 @@
                                     @foreach ($medicalRecords as $record)
                                         <tr>
                                             <td>{{ $record->tgl_periksa }}</td>
-                                            <td>{{ $record->tgl_periksa }}</td>
+                                            <td>{{ $record->user->name }}</td>
                                             <td>{{ Str::limit($record->diagnosis, 30) }}</td>
-                                            <td>{{ Str::limit($record->treatment, 30) }}</td>
                                             <td>
-                                                {{-- <a href="{{ route('medical-record.show', $record->queue_id) }}"
-                                                    class="btn btn-info btn-sm">
-                                                    Lihat Detail
-                                                </a> --}}
+                                                <div class="btn-group">
+                                                    <a data-toggle="dropdown">
+                                                        <i class="iconoir-more-vert"></i>
+                                                    </a>
+                                                    <ul class="dropdown-menu">
+                                                        {{-- <li><a class="dropdown-item"
+                                                                href="{{ route('admin.user-management.edit', $user->id) }}"><i
+                                                                    class="iconoir-edit-pencil mr-2"></i> Edit</a>
+                                                        </li>
+                                                        <li><a class="dropdown-item delete-item"
+                                                                href="{{ route('admin.user-management.destroy', $user->id) }}"><i
+                                                                    class="iconoir-trash-solid mr-2"></i> Hapus</a>
+                                                        </li> --}}
+                                                        <li><a class="dropdown-item"
+                                                            href="{{ route('doctor.medical-record.pdf', $record->id) }}"><i
+                                                                class="iconoir-download mr-2"></i> Download</a>
+                                                    </li>
+                                                    </ul>
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach

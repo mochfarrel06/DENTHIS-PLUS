@@ -33,4 +33,9 @@ class MedicalRecord extends Model
     {
         return $this->belongsTo(Queue::class);
     }
+
+    public function patient()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

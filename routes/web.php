@@ -81,7 +81,10 @@ Route::group([
     Route::post('call-patient/{id}', [QueueController::class, 'callPatient'])->middleware('role:admin');
     Route::get('/queue/check-status', [QueueController::class, 'checkQueueStatus'])->name('queue.checkStatus');
     Route::post('selesai-periksa/{id}', [QueueController::class, 'selesaiPeriksa']);
-    Route::get('/queue-history', [QueueHistoryController::class, 'index'])->name('queue-history.index');
+});
+
+Route::group(['prefix' => 'history', 'as' => 'history', 'middleware' => 'role:admin,dokter,pasien'], function() {
+    Route::get('/queue', [QueueHistoryController::class, 'index'])->name('history.index');
 });
 
 Route::group(['prefix' => 'doctor', 'as' => 'doctor.', 'middleware' => 'role:dokter'], function () {
@@ -91,4 +94,6 @@ Route::group(['prefix' => 'doctor', 'as' => 'doctor.', 'middleware' => 'role:dok
     Route::get('/medical-record/create', [MedicalRecordController::class, 'create'])->name('medical-record.create');
     Route::post('/medical-record/store', [MedicalRecordController::class, 'store'])->name('medical-record.store');
     Route::get('/medical-record/{queueId}', [MedicalRecordController::class, 'show'])->name('medical-record.show');
+
+    Route::get('/medical-record/{id}/pdf', [MedicalRecordController::class, 'generatePDF'])->name('medical-record.pdf');
 });

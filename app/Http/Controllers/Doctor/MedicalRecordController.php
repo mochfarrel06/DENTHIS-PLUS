@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Doctor;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Doctor\MedicalRecordStoreRequest;
 use App\Models\MedicalRecord;
 use App\Models\Queue;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -12,15 +14,6 @@ class MedicalRecordController extends Controller
 {
     public function index()
     {
-        // // Jika user adalah dokter, tampilkan semua rekam medis yang dibuatnya
-        // if (auth()->user()->role = 'dokter') {
-        //     $medicalRecords = MedicalRecord::where('doctor_id', auth()->id())->get();
-        // }
-        // // Jika user adalah pasien, tampilkan hanya rekam medisnya sendiri
-        // else {
-        //     $medicalRecords = MedicalRecord::where('user_id', auth()->id())->get();
-        // }
-
         $medicalRecords = MedicalRecord::all();
 
         return view('doctor.medical-record.index', compact('medicalRecords'));
@@ -32,31 +25,39 @@ class MedicalRecordController extends Controller
         return view('doctor.medical-record.create', compact('queues'));
     }
 
-    public function store(Request $request)
+    public function store(MedicalRecordStoreRequest $request)
     {
-        $request->validate([
-            'queue_id' => 'required|exists:queues,id',
-            'diagnosis' => 'required|string',
-            'resep' => 'required|string',
-            'catatan_medis' => 'nullable|string',
-        ]);
+        try {
+            $queue = Queue::findOrFail($request->queue_id);
 
-        $queue = Queue::findOrFail($request->queue_id);
-        $userId = Auth::id();
+            MedicalRecord::create([
+                'user_id' => $queue->user_id,
+                // 'doctor_id' => $queue->user_id,
+                'queue_id' => $queue->id,
+                'tgl_periksa' => now(),
+                'diagnosis' => $request->diagnosis,
+                'resep' => $request->resep,
+                'catatan_medis' => $request->catatan_medis,
+            ]);
 
-        MedicalRecord::create([
-            'user_id' => $queue->user_id,
-            // 'doctor_id' => $queue->user_id,
-            'queue_id' => $queue->id,
-            'tgl_periksa' => now(),
-            'diagnosis' => $request->diagnosis,
-            'resep' => $request->resep,
-            'catatan_medis' => $request->catatan_medis,
-        ]);
+            $queue->update(['status' => 'selesai']);
 
-        $queue->update(['status' => 'selesai']);
+            session()->flash('success', 'Berhasil menambahkan data rekam medis');
+            return response()->json(['success' => true], 200);
+        } catch (\Exception $e) {
+            session()->flash('error', 'Terdapat kesalahan pada proses data dokter: ' . $e->getMessage());
+            return response()->json(['error' => $e->getMessage()], 400);
+        }
+    }
 
-        return redirect()->route('doctor.medical-record.index')->with('success', 'Rekam medis berhasil disimpan.');
+    public function generatePDF($id)
+    {
+        $medicalRecord = MedicalRecord::with(['patient', 'queue'])->findOrFail($id);
+
+        $pdf = Pdf::loadView('doctor.medical-record.pdf', compact('medicalRecord'))
+            ->setPaper('a4', 'portrait');
+
+        return $pdf->download('rekam_medis_' . $medicalRecord->patient->name . '.pdf');
     }
 
     // public function show($queueId)

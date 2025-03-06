@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title-page')
-    User Management
+    Manajemen Pengguna
 @endsection
 
 @section('content')
@@ -9,12 +9,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">User Management</h1>
+                    <h1 class="m-0">Manajemen Pengguna</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
-                        <li class="breadcrumb-item active">User Management</li>
+                        <li class="breadcrumb-item active">Manajemen Pengguna</li>
                     </ol>
                 </div>
             </div>
@@ -29,7 +29,7 @@
                         <div class="card-header d-flex">
                             <div class="d-flex align-items-center">
                                 <i class="iconoir-table mr-2"></i>
-                                <h3 class="card-title">Tabel User Management</h3>
+                                <h3 class="card-title">Tabel Manajemen Pengguna</h3>
                             </div>
 
                             <div class="ml-auto">

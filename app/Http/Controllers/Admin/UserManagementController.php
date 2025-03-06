@@ -33,10 +33,10 @@ class UserManagementController extends Controller
 
             $user->save();
 
-            session()->flash('success', 'Berhasil menambahkan data account');
+            session()->flash('success', 'Berhasil menambahkan data manajemen pengguna');
             return response()->json(['success' => true], 200);
         } catch (\Exception $e) {
-            session()->flash('error', 'Terdapat kesalahan pada proses data account: ' . $e->getMessage());
+            session()->flash('error', 'Terdapat kesalahan pada proses data manajemen pengguna: ' . $e->getMessage());
             return response()->json(['error' => $e->getMessage()], 400);
         }
     }
@@ -63,14 +63,14 @@ class UserManagementController extends Controller
             if ($user->isDirty()) {
                 $user->save();
 
-                session()->flash('success', 'Berhasil melakukan perubahan pada data user');
+                session()->flash('success', 'Berhasil melakukan perubahan data manajemen pengguna');
                 return response()->json(['success' => true], 200);
             } else {
-                session()->flash('info', 'Tidak melakukan perubahan pada data user');
+                session()->flash('info', 'Tidak melakukan perubahan data manajemen pengguna');
                 return response()->json(['info' => true], 200);
             }
         } catch (\Exception $e) {
-            session()->flash('error', 'Terdapat kesalahan pada proses update data user: ' . $e->getMessage());
+            session()->flash('error', 'Terdapat kesalahan pada proses updata manajemen pengguna: ' . $e->getMessage());
             return response()->json(['error' => $e->getMessage()], 400);
         }
     }

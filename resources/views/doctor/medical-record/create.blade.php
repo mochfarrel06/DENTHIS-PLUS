@@ -11,13 +11,13 @@
                 <div class="col-sm-6">
                     <h1 class="m-0">Tambah Data Dokter</h1>
                 </div>
-                {{-- <div class="col-sm-6">
+                <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('admin.doctors.index') }}">Dokter</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('doctor.dashboard') }}">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('doctor.medical-record.index') }}">Dokter</a></li>
                         <li class="breadcrumb-item active">Tambah</li>
                     </ol>
-                </div> --}}
+                </div>
             </div>
         </div>
     </div>
@@ -31,29 +31,43 @@
                             @csrf
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="queue_id">Pilih Pasien (Antrean Called)</label>
-                                    <select name="queue_id" id="queue_id" class="form-control">
+                                    <label for="queue_id">Pilih Antrean Pasien</label>
+                                    <select name="queue_id" id="queue_id"
+                                        class="form-control @error('queue_id') is-invalid @enderror">
                                         <option value="">-- Pilih Pasien --</option>
                                         @foreach ($queues as $queue)
-                                            <option value="{{ $queue->id }}">{{ $queue->id }} -
+                                            <option value="{{ $queue->id }}">{{ $queue->patient->kode_pasien }} -
+                                                {{ $queue->patient->nama_depan }} {{ $queue->patient->nama_belakang }} -
                                                 {{ $queue->tgl_periksa }}</option>
                                         @endforeach
                                     </select>
+                                    @error('queue_id')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">
                                     <label for="diagnosis">Diagnosis</label>
-                                    <textarea name="diagnosis" class="form-control" required></textarea>
+                                    <textarea name="diagnosis" class="form-control @error('diagnosis') is-invalid @enderror"></textarea>
+                                    @error('diagnosis')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">
                                     <label for="resep">Perawatan</label>
-                                    <textarea name="resep" class="form-control" required></textarea>
+                                    <textarea name="resep" class="form-control @error('resep') is-invalid @enderror"></textarea>
+                                    @error('resep')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="catatan_medis">Catata</label>
-                                    <textarea name="catatan_medis" class="form-control" required></textarea>
+                                    <label for="catatan_medis">Catatan Medis</label>
+                                    <textarea name="catatan_medis" class="form-control @error('catatan_medis') is-invalid @enderror"></textarea>
+                                    @error('catatan_medis')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
                                 </div>
                             </div>
 
@@ -70,7 +84,7 @@
     </section>
 @endsection
 
-{{-- @push('scripts')
+@push('scripts')
     <script>
         $(document).ready(function() {
             const $submitBtn = $('#submit-btn');
@@ -91,9 +105,9 @@
                     success: function(response) {
                         if (response.success) {
                             sessionStorage.setItem('success',
-                                'Data dokter berhasil disubmit.');
+                                'Data Rekam Medis berhasil disubmit.');
                             window.location.href =
-                                "{{ route('admin.doctors.index') }}";
+                                "{{ route('doctor.medical-record.index') }}";
                         } else {
                             $('#flash-messages').html('<div class="alert alert-danger">' +
                                 response.error + '</div>');
@@ -110,7 +124,7 @@
                         }
 
                         const message = response.responseJSON.message ||
-                            'Terdapat kesalahan pada proses dokter';
+                            'Terdapat kesalahan pada proses rekam medis';
                         $('#flash-messages').html('<div class="alert alert-danger">' + message +
                             '</div>');
                     },
@@ -126,4 +140,4 @@
             });
         });
     </script>
-@endpush --}}
+@endpush

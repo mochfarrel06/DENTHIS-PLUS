@@ -38,7 +38,7 @@
                         <div class="card-header d-flex">
                             <div class="d-flex align-items-center">
                                 <i class="iconoir-table mr-2"></i>
-                                <h3 class="card-title">Dashboard Dokter</h3>
+                                <h3 class="card-title">Antrean Pasien <b>{{ \Carbon\Carbon::now()->locale('id')->translatedFormat('l, d-m-Y') }}</b></h3>
                             </div>
                         </div>
                         <div class="card-body">
@@ -49,7 +49,6 @@
                                         <th>Dokter</th>
                                         <th>Pasien</th>
                                         <th>Waktu Periksa</th>
-                                        <th>Hari, Tanggal</th>
                                         <th>Status</th>
                                     </tr>
                                 </thead>
@@ -64,7 +63,6 @@
                                                 -
                                                 {{ \Carbon\Carbon::createFromFormat('H:i:s', $queue->end_time)->format('H:i') }}
                                             </td>
-                                            <td>{{ \Carbon\Carbon::parse($queue->tgl_periksa)->locale('id')->translatedFormat('l') }}, {{ $queue->tgl_periksa }}</td>
                                             <td>
                                                 @if ($queue->status == 'booking')
                                                     <a class="btn btn-warning btn-sm">Booking</a>

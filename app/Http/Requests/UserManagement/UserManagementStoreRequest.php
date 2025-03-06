@@ -23,7 +23,7 @@ class UserManagementStoreRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string'],
-            'email' => ['required', 'email', 'unique:doctors,email'],
+            'email' => ['required', 'email', 'unique:users,email'],
             'password' => ['required', 'string', 'min:8'],
             'konfirmasi_password' => ['required', 'same:password'],
             'role' => ['required', 'string']

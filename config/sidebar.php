@@ -75,18 +75,18 @@ return [
 
     [
         'text' => 'Riwayat Antrean Pasien',
-        'url' => '/data-patient/queue-history',
+        'url' => '/history/queue',
         'role' => ['pasien', 'dokter', 'admin'],
         'icon' => 'iconoir-ease-curve-control-points',
     ],
 
     [
-        'text' => 'Account',
+        'text' => 'Pengguna',
         'role' => ['admin'],
         'is_header' => true,
     ],
     [
-        'text' => 'User Management',
+        'text' => 'Manajemen Pengguna',
         'url' => '/admin/user-management',
         'role' => ['admin'],
         'icon' => 'iconoir-settings',
