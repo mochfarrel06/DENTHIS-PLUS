@@ -90,10 +90,10 @@ Route::group(['prefix' => 'history', 'as' => 'history', 'middleware' => 'role:ad
 Route::group(['prefix' => 'doctor', 'as' => 'doctor.', 'middleware' => 'role:dokter'], function () {
     Route::get('dashboard', [DoctorDashboardController::class, 'index'])->name('dashboard');
 
-    Route::get('/medical-records', [MedicalRecordController::class, 'index'])->name('medical-record.index');
+    Route::get('/medical-record', [MedicalRecordController::class, 'index'])->name('medical-record.index');
     Route::get('/medical-record/create', [MedicalRecordController::class, 'create'])->name('medical-record.create');
     Route::post('/medical-record/store', [MedicalRecordController::class, 'store'])->name('medical-record.store');
-    Route::get('/medical-record/{queueId}', [MedicalRecordController::class, 'show'])->name('medical-record.show');
+    Route::get('/medical-record/{id}', [MedicalRecordController::class, 'show'])->name('medical-record.show');
 
     Route::get('/medical-record/{id}/pdf', [MedicalRecordController::class, 'generatePDF'])->name('medical-record.pdf');
 });

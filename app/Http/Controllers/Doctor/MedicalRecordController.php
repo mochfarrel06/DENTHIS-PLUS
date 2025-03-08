@@ -32,7 +32,6 @@ class MedicalRecordController extends Controller
 
             MedicalRecord::create([
                 'user_id' => $queue->user_id,
-                // 'doctor_id' => $queue->user_id,
                 'queue_id' => $queue->id,
                 'tgl_periksa' => now(),
                 'diagnosis' => $request->diagnosis,
@@ -60,9 +59,9 @@ class MedicalRecordController extends Controller
         return $pdf->stream('rekam_medis_' . $medicalRecord->patient->name . '.pdf');
     }
 
-    // public function show($queueId)
-    // {
-    //     $medicalRecord = MedicalRecord::where('queue_id', $queueId)->firstOrFail();
-    //     return view('doctor.medical_record.show', compact('medicalRecord'));
-    // }
+    public function show(string $id)
+    {
+        $medicalRecord = MedicalRecord::findOrFail($id);
+        return view('doctor.medical-record.show', compact('medicalRecord'));
+    }
 }

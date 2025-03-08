@@ -61,8 +61,13 @@
                                                     </a>
                                                     <ul class="dropdown-menu">
                                                         <li><a class="dropdown-item"
-                                                                href="{{ route('doctor.medical-record.pdf', $record->id) }}" target="_blank"><i
-                                                                    class="iconoir-download mr-2"></i> Download</a>
+                                                                href="{{ route('doctor.medical-record.show', $record->id) }}"><i class="iconoir-eye-solid mr-2"></i>
+                                                                Detail</a>
+                                                        </li>
+                                                        <li><a class="dropdown-item"
+                                                                href="{{ route('doctor.medical-record.pdf', $record->id) }}"
+                                                                target="_blank"><i class="iconoir-download mr-2"></i>
+                                                                Download</a>
                                                         </li>
                                                     </ul>
                                                 </div>
