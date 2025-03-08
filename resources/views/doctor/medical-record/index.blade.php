@@ -43,7 +43,7 @@
                                 <thead>
                                     <tr>
                                         <th>Tanggal Periksa</th>
-                                        <th>Dokter</th>
+                                        <th>Pasien</th>
                                         <th>Diagnosis</th>
                                         <th>Aksi</th>
                                     </tr>
@@ -60,18 +60,10 @@
                                                         <i class="iconoir-more-vert"></i>
                                                     </a>
                                                     <ul class="dropdown-menu">
-                                                        {{-- <li><a class="dropdown-item"
-                                                                href="{{ route('admin.user-management.edit', $user->id) }}"><i
-                                                                    class="iconoir-edit-pencil mr-2"></i> Edit</a>
-                                                        </li>
-                                                        <li><a class="dropdown-item delete-item"
-                                                                href="{{ route('admin.user-management.destroy', $user->id) }}"><i
-                                                                    class="iconoir-trash-solid mr-2"></i> Hapus</a>
-                                                        </li> --}}
                                                         <li><a class="dropdown-item"
-                                                            href="{{ route('doctor.medical-record.pdf', $record->id) }}"><i
-                                                                class="iconoir-download mr-2"></i> Download</a>
-                                                    </li>
+                                                                href="{{ route('doctor.medical-record.pdf', $record->id) }}" target="_blank"><i
+                                                                    class="iconoir-download mr-2"></i> Download</a>
+                                                        </li>
                                                     </ul>
                                                 </div>
                                             </td>
@@ -80,7 +72,6 @@
                                 </tbody>
                             </table>
                         </div>
-                        <!-- /.card-body -->
                     </div>
                 </section>
             </div>

@@ -10,11 +10,15 @@
             font-size: 14px;
         }
         .header {
-            text-align: center;
-            font-size: 18px;
-            font-weight: bold;
             margin-bottom: 20px;
         }
+
+        .header .title {
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
         .info {
             margin-bottom: 10px;
         }
@@ -33,32 +37,68 @@
             padding: 8px;
             text-align: left;
         }
+
+        .table-header {
+            width: 100%;
+            border-collapse: collapse;
+            padding: 0;
+        }
+
+        .table-header, .table-header th, .table-header td {
+            border: none;
+        }
     </style>
 </head>
 <body>
-    <div class="header">Rekam Medis Pasien</div>
-
-    <div class="info">
-        <label>Nama Pasien:</label> {{ $medicalRecord->patient->name }} <br>
-        <label>Tanggal Periksa:</label> {{ $medicalRecord->tgl_periksa }} <br>
+    <div class="header">
+        <h1 class="title">REKAM MEDIS PASIEN</h1>
+        <table class="table">
+            <tr>
+                <td style="width: 50%; vertical-align: top;">KLINIK GIGI DENTHIS PLUS</td>
+                <td style="width: 50%; padding: 0">
+                    <table class="table-header">
+                        <tr>
+                            <td style="width: 25%; padding: 4px">Nama</td>
+                            <td style="padding: 4px">: {{ $medicalRecord->patient->name }}</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 25%; padding: 4px">Umur</td>
+                            <td style="padding: 4px">: {{ \Carbon\Carbon::parse($medicalRecord->queue->patient->tgl_lahir)->age }} tahun</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 25%; padding: 4px">Alamat</td>
+                            <td style="padding: 4px">: {{ $medicalRecord->queue->patient->alamat }}</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 25%; padding: 4px">Tgl Periksa</td>
+                            <td style="padding: 4px">: {{ $medicalRecord->queue->tgl_periksa }}</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
     </div>
 
-    <table class="table">
+    <table class="table" style="margin-bottom: 10px">
         <tr>
-            <th>Diagnosis</th>
-            <td>{{ $medicalRecord->diagnosis }}</td>
-        </tr>
-        <tr>
-            <th>Resep</th>
-            <td>{{ $medicalRecord->resep }}</td>
-        </tr>
-        <tr>
-            <th>Catatan Medis</th>
-            <td>{{ $medicalRecord->catatan_medis }}</td>
+            <td style="width: 20%; vertical-align: top;">Keluhan Pasien:</td>
+            <td>{{ $medicalRecord->tgl_periksa }}</td>
         </tr>
     </table>
 
-    <br><br>
-    <p><i>Dokumen ini dihasilkan secara otomatis oleh sistem.</i></p>
+    <table class="table">
+        <tr>
+            <th style="width: 20%;"">Diagnosis</th>
+            <td>{{ $medicalRecord->diagnosis }}</td>
+        </tr>
+        <tr>
+            <th style="width: 20%;"">Resep</th>
+            <td>{{ $medicalRecord->resep }}</td>
+        </tr>
+        <tr>
+            <th style="width: 20%;"">Catatan Medis</th>
+            <td>{{ $medicalRecord->catatan_medis }}</td>
+        </tr>
+    </table>
 </body>
 </html>

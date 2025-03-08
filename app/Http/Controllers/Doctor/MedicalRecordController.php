@@ -57,7 +57,7 @@ class MedicalRecordController extends Controller
         $pdf = Pdf::loadView('doctor.medical-record.pdf', compact('medicalRecord'))
             ->setPaper('a4', 'portrait');
 
-        return $pdf->download('rekam_medis_' . $medicalRecord->patient->name . '.pdf');
+        return $pdf->stream('rekam_medis_' . $medicalRecord->patient->name . '.pdf');
     }
 
     // public function show($queueId)
