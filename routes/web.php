@@ -11,6 +11,7 @@ use App\Http\Controllers\Doctor\MedicalRecordController;
 use App\Http\Controllers\Patient\DashboardController as PatientDashboardController;
 use App\Http\Controllers\Patient\QueueController;
 use App\Http\Controllers\Patient\QueueHistoryController;
+use App\Http\Controllers\Profile\ProfileController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,6 +30,7 @@ Route::get('/', function () {
     return redirect()->route('home');
 });
 
+// 1. Route Auth
 Route::get('login', [LoginController::class, 'index'])->name('login');
 Route::post('login', [LoginController::class, 'store'])->name('login.store');
 Route::post('logout', [LoginController::class, 'destroy'])->name('login.destroy');
@@ -37,10 +39,12 @@ Route::get('register', [LoginController::class, 'indexRegister'])->name('registe
 Route::post('register', [LoginController::class, 'storeRegister'])->name('register.store');
 Route::get('forgot-password', [LoginController::class, 'indexForgot'])->name('forgot-password');
 
+// 2. Route User
 Route::get('/', [UserController::class, 'index'])->name('home');
 Route::get('/dokter', [UserController::class, 'indexDokter'])->name('index-dokter');
 Route::get('/tentang-kami', [UserController::class, 'indexTentangKami'])->name('index-tentangKami');
 
+// 3. Route admin
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'role:admin'], function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
@@ -63,10 +67,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'role:admin
     Route::delete('user-management/{id}', [UserManagementController::class, 'destroy'])->name('user-management.destroy');
 });
 
+// 4. Route patient
 Route::group(['prefix' => 'patient', 'as' => 'patient.', 'middleware' => 'role:pasien'], function () {
     Route::get('dashboard', [PatientDashboardController::class, 'index'])->name('dashboard');
 });
 
+// 5. Route queue
 Route::group([
     'prefix' => 'data-patient',
     'as' => 'data-patient.',
@@ -78,15 +84,17 @@ Route::group([
     Route::post('queue', [QueueController::class, 'store'])->name('queue.store')->middleware('role:pasien');
     Route::get('queue/{id}', [QueueController::class, 'show'])->name('queue.show');
     Route::delete('queue/{id}', [QueueController::class, 'destroy'])->name('queue.destroy')->middleware('role:pasien,admin');
-    Route::post('call-patient/{id}', [QueueController::class, 'callPatient'])->middleware('role:admin');
+    Route::post('call-patient/{id}', [QueueController::class, 'callPatient'])->name('queue.callPatient')->middleware('role:admin');
     Route::get('/queue/check-status', [QueueController::class, 'checkQueueStatus'])->name('queue.checkStatus');
-    Route::post('selesai-periksa/{id}', [QueueController::class, 'selesaiPeriksa']);
+    Route::post('selesai-periksa/{id}', [QueueController::class, 'selesaiPeriksa'])->name('queue.selesaiPeriksa');
 });
 
+// 6. Route history
 Route::group(['prefix' => 'history', 'as' => 'history', 'middleware' => 'role:admin,dokter,pasien'], function() {
     Route::get('/queue', [QueueHistoryController::class, 'index'])->name('history.index');
 });
 
+// 7. Route doctor
 Route::group(['prefix' => 'doctor', 'as' => 'doctor.', 'middleware' => 'role:dokter'], function () {
     Route::get('dashboard', [DoctorDashboardController::class, 'index'])->name('dashboard');
 
@@ -96,4 +104,9 @@ Route::group(['prefix' => 'doctor', 'as' => 'doctor.', 'middleware' => 'role:dok
     Route::get('/medical-record/{id}', [MedicalRecordController::class, 'show'])->name('medical-record.show');
 
     Route::get('/medical-record/{id}/pdf', [MedicalRecordController::class, 'generatePDF'])->name('medical-record.pdf');
+});
+
+// 8. Route Profil
+Route::group(['prefix' => 'profile', 'as' => 'profile.', 'middleware' => 'role:pasien,admin,dokter'], function () {
+    Route::get('dashboard', [ProfileController::class, 'index'])->name('profile.index');
 });

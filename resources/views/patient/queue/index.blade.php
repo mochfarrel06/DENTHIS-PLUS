@@ -38,6 +38,7 @@
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
+                                        <th>No</th>
                                         <th>Dokter</th>
                                         <th>Pasien</th>
                                         <th>Hari, Tanggal</th>
@@ -49,6 +50,7 @@
                                 <tbody>
                                     @foreach ($queues as $queue)
                                         <tr>
+                                            <td>{{ $loop->iteration }}</td>
                                             <td>{{ $queue->doctor->nama_depan }} {{ $queue->doctor->nama_belakang }}</td>
                                             <td>{{ $queue->patient->nama_depan }} {{ $queue->patient->nama_belakang }}</td>
                                             <td>{{ \Carbon\Carbon::parse($queue->tgl_periksa)->locale('id')->translatedFormat('l') }}, {{ $queue->tgl_periksa }}</td>
@@ -75,19 +77,17 @@
                                                         <li><a class="dropdown-item" href="{{ route('data-patient.queue.show', $queue->id) }}"><i
                                                                     class="iconoir-eye-solid mr-2"></i> Detail</a>
                                                         </li>
-                                                        @if (auth()->user()->role == 'dokter' && $queue->status == 'periksa')
+                                                        {{-- @if (auth()->user()->role == 'dokter' && $queue->status == 'periksa')
                                                             <li>
                                                                 <a class="dropdown-item" href=""
                                                                     onclick="selesaiPeriksa({{ $queue->id }})"><i
                                                                         class="iconoir-check mr-2"></i> Selesai Periksa</a>
-                                                            </li>
-                                                        @elseif (auth()->user()->role == 'admin' || auth()->user()->role == 'pasien')
+                                                            </li> --}}
+                                                        @if (auth()->user()->role == 'admin' || auth()->user()->role == 'pasien')
                                                             <li><a class="dropdown-item delete-item"
                                                                     href="{{ route('data-patient.queue.destroy', $queue->id) }}"><i
                                                                         class="iconoir-trash-solid mr-2"></i> Hapus</a>
                                                             </li>
-                                                        @elseif (auth()->user()->role != 'pasien' || auth()->user()->id == $queue->patient_id)
-
                                                         @endif
                                                     </ul>
                                                 </div>

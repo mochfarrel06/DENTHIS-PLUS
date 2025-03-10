@@ -9,7 +9,6 @@ use App\Models\Doctor;
 use App\Models\User;
 use App\Traits\ProfileUploadTrait;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
 
 class DoctorController extends Controller
 {

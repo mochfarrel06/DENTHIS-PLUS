@@ -28,7 +28,7 @@
             <div class="row">
                 <section class="col-lg-12">
                     <div class="card">
-                        <form method="POST" action="{{ route('admin.doctor-schedules.update', $doctor->id) }}">
+                        <form method="POST" id="main-form" action="{{ route('admin.doctor-schedules.update', $doctor->id) }}">
                             @csrf
                             @method('PUT')
 
@@ -102,6 +102,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                <hr>
                                 <div class="row">
                                     @php
                                         $dayMapping = [

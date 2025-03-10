@@ -35,7 +35,8 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Dokter</label>
-                                            <select class="custom-select @error('doctor_id') is-invalid @enderror" name="doctor_id" id="doctor_id">
+                                            <select class="custom-select @error('doctor_id') is-invalid @enderror"
+                                                name="doctor_id" id="doctor_id">
                                                 <option value="">-- Pilih Dokter --</option>
                                                 @foreach ($doctors as $doctor)
                                                     <option value="{{ $doctor->id }}">{{ $doctor->nama_depan }}
@@ -50,7 +51,8 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="">Waktu Jeda</label>
-                                            <select name="waktu_jeda" id="waktu_jeda" class="form-control @error('waktu_jeda') is-invalid @enderror"
+                                            <select name="waktu_jeda" id="waktu_jeda"
+                                                class="form-control @error('waktu_jeda') is-invalid @enderror"
                                                 @error('waktu_jeda') is-invalid @enderror">
                                                 <option value="">-- Pilih Waktu Jeda --</option>
                                                 <option value="5">5 Menit</option>
@@ -67,7 +69,8 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="">Waktu Pertemuan</label>
-                                            <select name="waktu_periksa" id="waktu_periksa" class="form-control @error('waktu_periksa') is-invalid @enderror"
+                                            <select name="waktu_periksa" id="waktu_periksa"
+                                                class="form-control @error('waktu_periksa') is-invalid @enderror"
                                                 @error('waktu_periksa') is-invalid @enderror">
                                                 <option value="">-- Pilih Waktu Periksa --</option>
                                                 <option value="5">5 Menit</option>
@@ -94,7 +97,7 @@
                                             'Thursday' => 'Kamis',
                                             'Friday' => 'Jumat',
                                             'Saturday' => 'Sabtu',
-                                            'Sunday' => 'Minggu'
+                                            'Sunday' => 'Minggu',
                                         ];
                                     @endphp
 
@@ -115,19 +118,23 @@
                                                 <!-- Checkbox di paling kiri -->
                                                 <div class="col-md-2">
                                                     <div class="form-check">
-                                                        <input type="checkbox" name="hari[]" value="{{ $day }}" id="{{ $day }}"
+                                                        <input type="checkbox" name="hari[]" value="{{ $day }}"
+                                                            id="{{ $day }}"
                                                             onchange="toggleTimeInputs('{{ $day }}')">
-                                                        <label class="form-check-label" for="{{ $day }}">{{ $dayMapping[$day] }}</label>
+                                                        <label class="form-check-label"
+                                                            for="{{ $day }}">{{ $dayMapping[$day] }}</label>
                                                     </div>
                                                 </div>
 
                                                 <!-- Waktu Mulai -->
                                                 <div class="col-md-5">
                                                     <label for="start_time_{{ $day }}">Waktu Mulai</label>
-                                                    <select name="jam_mulai[{{ $day }}]" id="start_time_{{ $day }}" class="form-control">
+                                                    <select name="jam_mulai[{{ $day }}]"
+                                                        id="start_time_{{ $day }}" class="form-control">
                                                         <option value="">-- Pilih Waktu Mulai --</option>
                                                         @foreach ($times as $time)
-                                                            <option value="{{ $time }}">{{ $time }}</option>
+                                                            <option value="{{ $time }}">{{ $time }}
+                                                            </option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -135,10 +142,12 @@
                                                 <!-- Waktu Selesai -->
                                                 <div class="col-md-5">
                                                     <label for="end_time_{{ $day }}">Waktu Selesai</label>
-                                                    <select name="jam_selesai[{{ $day }}]" id="end_time_{{ $day }}" class="form-control">
+                                                    <select name="jam_selesai[{{ $day }}]"
+                                                        id="end_time_{{ $day }}" class="form-control">
                                                         <option value="">-- Pilih Waktu Selesai --</option>
                                                         @foreach ($times as $time)
-                                                            <option value="{{ $time }}">{{ $time }}</option>
+                                                            <option value="{{ $time }}">{{ $time }}
+                                                            </option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -187,7 +196,7 @@
     </script>
 
     <script>
-        document.getElementById('main-form').addEventListener('submit', function (event) {
+        document.getElementById('main-form').addEventListener('submit', function(event) {
             let doctor = document.getElementById('doctor_id').value;
             let waktuJeda = document.getElementById('waktu_jeda').value;
             let waktuPeriksa = document.getElementById('waktu_periksa').value;
@@ -198,11 +207,32 @@
                 if (checkedDays.length === 0) {
                     event.preventDefault();
 
-                     // Tampilkan SweetAlert2
+                    // Tampilkan SweetAlert2
                     Swal.fire({
                         icon: 'warning',
                         title: 'Oops...',
                         text: 'Harap pilih setidaknya satu hari untuk jadwal dokter!',
+                    });
+                }
+
+                let errorFound = false; // Flag untuk mendeteksi error
+
+                checkedDays.forEach(function(checkbox) {
+                    let day = checkbox.value;
+                    let startTime = document.getElementById(`start_time_${day}`).value;
+                    let endTime = document.getElementById(`end_time_${day}`).value;
+
+                    if (!startTime || !endTime) {
+                        errorFound = true;
+                    }
+                });
+
+                if (errorFound) {
+                    event.preventDefault();
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Oops...',
+                        text: 'Harap isi waktu mulai dan waktu selesai untuk semua hari yang dicentang!',
                     });
                 }
             }

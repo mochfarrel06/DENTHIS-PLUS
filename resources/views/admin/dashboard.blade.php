@@ -74,6 +74,7 @@
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
+                                        <th>No</th>
                                         <th>Kode Pasien</th>
                                         <th>Dokter</th>
                                         <th>Pasien</th>
@@ -84,6 +85,7 @@
                                 <tbody>
                                     @foreach ($antreanHariIni as $queue)
                                         <tr>
+                                            <td>{{ $loop->iteration }}</td>
                                             <td>{{ $queue->patient->kode_pasien }}</td>
                                             <td>{{ $queue->doctor->nama_depan }} {{ $queue->doctor->nama_belakang }}</td>
                                             <td>{{ $queue->patient->nama_depan }} {{ $queue->patient->nama_belakang }}

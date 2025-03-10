@@ -42,6 +42,7 @@
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
+                                        <th>No</th>
                                         <th>Kode Dokter</th>
                                         <th>Dokter</th>
                                         <th>Spesialisasi</th>
@@ -51,6 +52,7 @@
                                 <tbody>
                                     @foreach ($schedules as $schedule)
                                         <tr>
+                                            <td>{{ $loop->iteration }}</td>
                                             <td>{{ $schedule->doctor->kode_dokter }}</td>
                                             <td>{{ $schedule->doctor->nama_depan }} {{ $schedule->doctor->nama_belakang }}
                                             </td>
