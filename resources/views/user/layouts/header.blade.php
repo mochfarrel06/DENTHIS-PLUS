@@ -3,13 +3,17 @@
     <div class="topbar d-flex align-items-center">
         <div class="container d-flex justify-content-center justify-content-md-between">
             <div class="contact-info d-flex align-items-center">
-                <i class="bi bi-envelope d-flex align-items-center"><a href="">denthis@gmail.com</a></i>
-                <i class="bi bi-phone d-flex align-items-center ms-4"><span>+62 858503750132</span></i>
+                <!-- Link untuk mengirim email -->
+                <i class="bi bi-envelope d-flex align-items-center">
+                    <a href="mailto:denthis@gmail.com" target="_blank">denthis@gmail.com</a>
+                </i>
+
+                <!-- Link untuk membuka WhatsApp -->
+                <i class="bi bi-phone d-flex align-items-center ms-4">
+                    <a href="https://wa.me/62858503750132" target="_blank">+62858503750132</a>
+                </i>
             </div>
-            <div class="social-links d-none d-md-flex align-items-center">
-                <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-                <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-            </div>
+
         </div>
     </div>
     <!-- End Top Bar -->
@@ -31,7 +35,7 @@
                             class="{{ request()->routeIs('index-dokter') ? 'active' : '' }}">Dokter</a></li>
                     <li><a href="{{ route('index-tentangKami') }}"
                             class="{{ request()->routeIs('index-tentangKami') ? 'active' : '' }}">Tentang Kami</a></li>
-                    <li><a href="{{ route('login') }}" class="btn-login">Login</a></li>
+                    <li><a href="{{ route('login') }}">Login</a></li>
                 </ul>
                 <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
             </nav>

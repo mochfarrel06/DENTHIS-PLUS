@@ -1,7 +1,7 @@
 @extends('user.layouts.master')
 
 @section('content')
-    <section id="team" class="team section" style="margin-top: 5em; margin-bottom: 5em">
+    <section id="team" class="team section">
         <div class="container section-title" data-aos="fade-up">
             <h2>Dokter Kami</h2>
             <p>

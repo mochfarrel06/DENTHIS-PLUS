@@ -274,7 +274,7 @@ h6 {
 @media (max-width: 575px) {
   .header .topbar .contact-info i a,
   .header .topbar .contact-info i span {
-    font-size: 13px;
+    font-size: 11px;
   }
 }
 
@@ -311,6 +311,11 @@ h6 {
 .header .logo img {
   max-height: 36px;
   margin-right: 8px;
+}
+
+.img-hero {
+    max-width: 100%;
+    height: auto;
 }
 
 .header .logo h1 {
@@ -468,12 +473,20 @@ h6 {
 /* Mobile Navigation */
 @media (max-width: 1199px) {
   .mobile-nav-toggle {
-    color: var(--nav-color);
+    color: #000;
     font-size: 28px;
     line-height: 0;
     margin-right: 10px;
     cursor: pointer;
     transition: color 0.3s;
+  }
+
+  .hero h2 {
+    font-size: 44px;
+}
+
+  .header .logo h1 {
+    font-size: 26px;
   }
 
   .navmenu {
@@ -591,6 +604,16 @@ h6 {
   }
 }
 
+@media (max-width: 982px) {
+    .header .logo h1 {
+        font-size: 23px;
+    }
+
+    .img-hero {
+        max-width: 80%;
+    }
+}
+
 /*--------------------------------------------------------------
 # Global Footer
 --------------------------------------------------------------*/
@@ -617,7 +640,7 @@ h6 {
 
 .footer .footer-about .logo span {
   color: #fff;
-  font-size: 30px;
+  font-size: 22px;
   font-weight: 700;
   letter-spacing: 1px;
   font-family: var(--heading-font);
@@ -778,6 +801,7 @@ h6 {
   visibility: visible;
   opacity: 1;
   bottom: 15px;
+  background: #ffc107;
 }
 
 /*--------------------------------------------------------------
@@ -852,7 +876,7 @@ section,
 .section {
   color: var(--default-color);
   background-color: var(--background-color);
-  padding: 60px 0;
+  /* padding: 60px 0; */
   scroll-margin-top: 112px;
   overflow: clip;
 }
@@ -904,7 +928,7 @@ section,
 .hero {
   width: 100%;
   position: relative;
-  padding: 140px 0 0 0;
+  padding: 180px 0 0 0;
   background-color: #0091d5;
 }
 
@@ -955,7 +979,7 @@ section,
 
 @media (max-width: 640px) {
   .hero h2 {
-    font-size: 36px;
+    font-size: 34px;
   }
 
   .hero .btn-get-started,
@@ -1030,6 +1054,10 @@ section,
 /*--------------------------------------------------------------
 # About Section
 --------------------------------------------------------------*/
+.about {
+    padding: 70px 0;
+}
+
 .about h3 {
   font-weight: 700;
   font-size: 28px;
@@ -1274,6 +1302,10 @@ section,
 /*--------------------------------------------------------------
 # Services Section
 --------------------------------------------------------------*/
+.services {
+    padding: 70px 0;
+}
+
 .services .service-item {
   background-color: var(--surface-color);
   padding: 40px;
@@ -1492,6 +1524,87 @@ section,
     font-size: 14px;
     margin: 0 5px;
   }
+
+  .hero h2 {
+    font-size: 30px;
+  }
+
+  .header .logo h1 {
+    font-size: 22px;
+  }
+
+  .hero .btn-get-started, .hero .btn-watch-video {
+    font-size: 12px;
+    }
+
+    .hero .icon-box .title {
+        font-size: 18px;
+    }
+
+    .hero .desk-card {
+        font-size: 0.7em;
+    }
+
+    .hero .icon-box {
+        padding: 40px 30px;
+    }
+
+    .hero .icon-box .icon {
+        font-size: 45px;
+    }
+
+    .section-title h2 {
+        font-size: 28px;
+    }
+
+    .section-title p {
+        margin-bottom: 0;
+        font-size: 15px;
+    }
+
+    .about h3 {
+        font-size: 22px;
+    }
+
+    .contact .info-item h3 {
+        font-size: 15px !important;
+    }
+
+    .footer .footer-top span {
+        font-size: 20px !important;
+    }
+
+    .footer .footer-about p {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero .icon-box .title {
+        font-size: 16px;
+    }
+
+    .hero .desk-card {
+        font-size: 0.68em;
+    }
+
+    .hero .icon-box {
+        padding: 30px 30px;
+    }
+
+    .hero .icon-box .icon {
+        font-size: 40px;
+    }
+}
+
+@media (max-width: 341px) {
+    .hero h2 {
+        font-size: 25px;
+    }
+
+    .hero .btn-get-started, .hero .btn-watch-video {
+        font-size: 11px;
+        }
 }
 
 .portfolio .portfolio-content {
@@ -1545,6 +1658,10 @@ section,
 /*--------------------------------------------------------------
 # Team Section
 --------------------------------------------------------------*/
+.team {
+    padding: 140px 0;
+}
+
 .team .member {
   background-color: var(--surface-color);
   box-shadow: 0px 2px 25px rgba(0, 0, 0, 0.1);
@@ -1905,6 +2022,10 @@ section,
 /*--------------------------------------------------------------
 # Contact Section
 --------------------------------------------------------------*/
+.contact {
+    padding: 70px 0;
+}
+
 .contact .info-container {
   background-color: var(--accent-color);
   height: 100%;

@@ -11,21 +11,6 @@
                     memberikan perawatan kesehatan gigi dan mulut terbaik kepada
                     setiap pasien.
                 </p>
-                <div class="social-links d-flex mt-4">
-                    <a href=""><i class="bi bi-facebook"></i></a>
-                    <a href=""><i class="bi bi-instagram"></i></a>
-                </div>
-            </div>
-
-            <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
-                <h4>Kontak Kami</h4>
-                <p>A108 Adam Street</p>
-                <p>New York, NY 535022</p>
-                <p>United States</p>
-                <p class="mt-4">
-                    <strong>Phone:</strong> <span>+1 5589 55488 55</span>
-                </p>
-                <p><strong>Email:</strong> <span>info@example.com</span></p>
             </div>
         </div>
     </div>

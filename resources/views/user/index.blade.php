@@ -1,9 +1,8 @@
 @extends('user.layouts.master')
 
 @section('content')
-    <!-- Hero Section -->
     <section id="hero" class="hero section">
-        <div class="container position-relative" data-aos="fade-up" data-aos-delay="100">
+        <div class="container position-relative">
             <div class="row gy-5 justify-content-between">
                 <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center">
                     <h2>Lindungi Kesehatan Gigi Anda</h2>
@@ -12,8 +11,8 @@
                         <a href="#about" class="btn-get-started">Ayo Ambil Antrian</a>
                     </div>
                 </div>
-                <div class="col-lg-5 order-1 order-lg-2">
-                    <img src="{{ asset('assets/user/img/hero/coba2.svg') }}" class="img-fluid" alt="" />
+                <div class="col-lg-5 order-1 order-lg-2 d-flex justify-content-center">
+                    <img src="{{ asset('assets/user/img/hero/coba2.svg') }}" class="img-hero" alt="" />
                 </div>
             </div>
         </div>
@@ -53,7 +52,7 @@
 
                     <div class="col-xl-4 col-md-6">
                         <div class="icon-box">
-                            <div class="icon"><i class="bi bi-gem"></i></div>
+                            <div class="icon"><i class="bi bi-hospital"></i></div>
                             <h4 class="title">
                                 <a href="" class="stretched-link">Dokter Spesialis Gigi</a>
                                 <p class="desk-card">
@@ -64,8 +63,6 @@
                             </h4>
                         </div>
                     </div>
-
-                    <!--End Icon Box -->
                 </div>
             </div>
         </div>
@@ -139,11 +136,8 @@
                         </div>
                         <h3>Pendaftaran</h3>
                         <p>
-                            Pasien dapat melakukan pendaftaran dari sini dengan informasi
-                            dasar.
+                            Pasien dapat melakukan pendaftaran terlebih dahulu untuk melakukan perawatan
                         </p>
-                        <a href="service-details.html" class="readmore stretched-link">Read more <i
-                                class="bi bi-arrow-right"></i></a>
                     </div>
                 </div>
                 <!-- End Service Item -->
@@ -155,11 +149,8 @@
                         </div>
                         <h3>Buat Janji Temu</h3>
                         <p>
-                            Pasien dapat memesan janji temu dengan dokter dari halaman
-                            utama atau dari panel login miliknya.
+                            Pasien dapat memesan janji temu dengan dokter di halaman pasien
                         </p>
-                        <a href="service-details.html" class="readmore stretched-link">Read more <i
-                                class="bi bi-arrow-right"></i></a>
                     </div>
                 </div>
                 <!-- End Service Item -->
@@ -174,8 +165,6 @@
                             Dokter dapat berinteraksi dengan pasien dan melakukan
                             perawatan terkait.
                         </p>
-                        <a href="service-details.html" class="readmore stretched-link">Read more <i
-                                class="bi bi-arrow-right"></i></a>
                     </div>
                 </div>
                 <!-- End Service Item -->
@@ -243,12 +232,12 @@
                         data-aos-delay="100">
                         <div class="row gy-4">
                             <div class="col-md-6">
-                                <input type="text" name="name" class="form-control" placeholder="Your Name"
+                                <input type="text" name="name" class="form-control" placeholder="Nama Lengkap"
                                     required="" />
                             </div>
 
                             <div class="col-md-6">
-                                <input type="email" class="form-control" name="email" placeholder="Your Email"
+                                <input type="email" class="form-control" name="email" placeholder="Email"
                                     required="" />
                             </div>
 
@@ -258,7 +247,7 @@
                             </div>
 
                             <div class="col-md-12">
-                                <textarea class="form-control" name="message" rows="8" placeholder="Message" required=""></textarea>
+                                <textarea class="form-control" name="message" rows="8" placeholder="Pesan" required=""></textarea>
                             </div>
 
                             <div class="col-md-12 text-center">
@@ -268,7 +257,7 @@
                                     Your message has been sent. Thank you!
                                 </div>
 
-                                <button type="submit">Send Message</button>
+                                <button type="submit">Kirim</button>
                             </div>
                         </div>
                     </form>
