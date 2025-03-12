@@ -12,7 +12,7 @@
                     </div>
                 </div>
                 <div class="col-lg-5 order-1 order-lg-2 d-flex justify-content-center">
-                    <img src="{{ asset('assets/user/img/hero/coba2.svg') }}" class="img-hero" alt="" />
+                    <img src="{{ asset('assets/user/img/hero/coba2.svg') }}" class="img-fluid" alt="" />
                 </div>
             </div>
         </div>
