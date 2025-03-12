@@ -5,7 +5,7 @@
         <div class="container position-relative">
             <div class="row gy-5 justify-content-between">
                 <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center">
-                    <h2>Lindungi Kesehatan Gigi Anda</h2>
+                    <h2>Lindungi Kesehatan Gigi Andi</h2>
                     <p>Kami Menyediakan Solusi Perawatan Kesehatan Gigi</p>
                     <div class="d-flex">
                         <a href="#about" class="btn-get-started">Ayo Ambil Antrian</a>
