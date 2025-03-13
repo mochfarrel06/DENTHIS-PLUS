@@ -77,13 +77,19 @@
                                                         <li><a class="dropdown-item" href="{{ route('data-patient.queue.show', $queue->id) }}"><i
                                                                     class="iconoir-eye-solid mr-2"></i> Detail</a>
                                                         </li>
-                                                        {{-- @if (auth()->user()->role == 'dokter' && $queue->status == 'periksa')
+                                                        @if (auth()->user()->role == 'dokter' && $queue->status == 'booking')
+                                                        <li>
+                                                            <a class="dropdown-item" href=""
+                                                                onclick="periksaPasien({{ $queue->id }})"><i
+                                                                    class="iconoir-check mr-2"></i> Periksa</a>
+                                                        </li>
+                                                        {{-- @elseif (auth()->user()->role == 'dokter' && $queue->status == 'periksa')
                                                             <li>
                                                                 <a class="dropdown-item" href=""
                                                                     onclick="selesaiPeriksa({{ $queue->id }})"><i
                                                                         class="iconoir-check mr-2"></i> Selesai Periksa</a>
                                                             </li> --}}
-                                                        @if (auth()->user()->role == 'admin' || auth()->user()->role == 'pasien')
+                                                        @elseif (auth()->user()->role == 'admin' || auth()->user()->role == 'pasien')
                                                             <li><a class="dropdown-item delete-item"
                                                                     href="{{ route('data-patient.queue.destroy', $queue->id) }}"><i
                                                                         class="iconoir-trash-solid mr-2"></i> Hapus</a>
@@ -118,6 +124,25 @@
                 .then(data => {
                     if (data.status === 'success') {
                         alert('Pasien telah selesai periksa');
+                        location.reload();
+                    } else {
+                        alert('Gagal selesai!');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        function periksaPasien(queueId) {
+            fetch(`/data-patient/periksa-pasien/${queueId}`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        'Content-Type': 'application/json'
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
                         location.reload();
                     } else {
                         alert('Gagal selesai!');

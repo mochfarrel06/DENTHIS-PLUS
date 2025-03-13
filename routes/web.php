@@ -87,6 +87,7 @@ Route::group([
     Route::post('call-patient/{id}', [QueueController::class, 'callPatient'])->name('queue.callPatient')->middleware('role:admin');
     Route::get('/queue/check-status', [QueueController::class, 'checkQueueStatus'])->name('queue.checkStatus');
     Route::post('selesai-periksa/{id}', [QueueController::class, 'selesaiPeriksa'])->name('queue.selesaiPeriksa');
+    Route::post('periksa-pasien/{id}', [QueueController::class, 'periksaPasien'])->name('queue.periksaPasien');
 });
 
 // 6. Route history

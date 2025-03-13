@@ -16,8 +16,25 @@ class QueueController extends Controller
 {
     public function index()
     {
-        $queues = Queue::with('doctor')->get();
-        $userQueue = Queue::where('user_id', auth()->id())->where('status', 'called')->first();
+        // $queues = Queue::with('doctor')->get();
+        // $userQueue = Queue::where('user_id', auth()->id())->where('status', 'called')->first();
+        // return view('patient.queue.index', compact('queues', 'userQueue'));
+
+        // Ambil role pengguna yang sedang login
+        $user = auth()->user();
+        $role = $user->role; // Pastikan ada kolom 'role' di tabel users
+
+        // Jika user adalah admin atau dokter, tampilkan semua antrian
+        if ($role === 'admin' || $role === 'dokter') {
+            $queues = Queue::with('doctor')->get();
+        } else {
+            // Jika user adalah pasien, hanya tampilkan antrian miliknya
+            $queues = Queue::with('doctor')->where('user_id', $user->id)->get();
+        }
+
+        // Ambil antrian pasien yang statusnya 'called' berdasarkan user_id
+        $userQueue = Queue::where('user_id', $user->id)->where('status', 'called')->first();
+
         return view('patient.queue.index', compact('queues', 'userQueue'));
     }
 
@@ -175,6 +192,15 @@ class QueueController extends Controller
 
         $queue->save();
         return response()->json(['status' => 'success', 'message' => 'Antrean pasien ini telah selesai']);
+    }
+
+    public function periksaPasien($id)
+    {
+        $queue = Queue::findOrFail($id);
+        $queue->status = 'periksa';
+
+        $queue->save();
+        return response()->json(['status' => 'success', 'message' => 'Pasien sedang di periksa']);
     }
 
     public function show(string $id) {

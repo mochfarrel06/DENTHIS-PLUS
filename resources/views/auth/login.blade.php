@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Login</title>
 
+    <link href="{{ asset('assets/user/img/hospital.svg') }}" rel="icon" />
+
     <link rel="stylesheet" href="{{ asset('assets/admin/plugins/fontawesome-free/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/admin/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/admin/dist/css/adminlte.min.css') }}">
@@ -60,21 +62,21 @@
                     </div>
                 </form>
 
-                <p class="mb-1 mt-2">
+                {{-- <p class="mb-1 mt-2">
                     <a href="{{ route('forgot-password') }}">Lupa Password?</a>
-                </p>
-                <p class="mb-1">
+                </p> --}}
+                <p class="mb-1 mt-1">
                     <a href="{{ route('register') }}">Buat akun baru?</a>
                 </p>
 
-                <div class="mt-3 text-center">
+                {{-- <div class="mt-3 text-center">
                     <button class="btn btn-secondary"
                         onclick="fillLogin('admin@example.com', '123456789')">Admin</button>
                     <button class="btn btn-secondary"
                         onclick="fillLogin('pasien@example.com', 'password')">Pasien</button>
                     <button class="btn btn-secondary"
                         onclick="fillLogin('dokter@example.com', 'password')">Dokter</button>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>

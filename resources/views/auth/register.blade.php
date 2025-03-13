@@ -4,7 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Login</title>
+    <title>Register</title>
+
+    <link href="{{ asset('assets/user/img/hospital.svg') }}" rel="icon" />
 
     <link rel="stylesheet" href="{{ asset('assets/admin/plugins/fontawesome-free/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/admin/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
@@ -23,8 +25,11 @@
     <div class="container py-5">
         <div class="row justify-content-center">
             <div class="col-lg-8 col-md-10 col-sm-12">
+                <div class="login-logo">
+                    <a><b>DENTHIS.PLUS</b></a>
+                </div>
                 <div class="card shadow-sm p-4">
-                    <h3 class="text-center mb-4">Buat Akun Baru</h3>
+                    <h4 class="text-center mb-5">Buat Akun Baru</h4>
                     <form id="main-form" method="POST" action="{{ route('register.store') }}">
                         @csrf
 
@@ -134,6 +139,10 @@
                             <button type="submit" id="submit-btn" class="btn btn-primary w-100">Daftar</button>
                         </div>
                     </form>
+
+                    <p class="mb-1 mt-2">
+                        <a href="{{ route('login') }}">Sudah memiliki akun?</a>
+                    </p>
                 </div>
             </div>
         </div>

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title-page')</title>
-    <link rel="icon" type="image/png" href="{{ asset('assets/admin/dist/img/AdminLTELogo.png') }}">
+    <link href="{{ asset('assets/user/img/hospital.svg') }}" rel="icon" />
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
