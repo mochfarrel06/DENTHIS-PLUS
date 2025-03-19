@@ -55,7 +55,7 @@
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $doctor->kode_dokter }}</td>
                                             <td>{{ $doctor->nama_depan }} {{ $doctor->nama_belakang }}</td>
-                                            <td>{{ $doctor->spesialisasi }}</td>
+                                            <td>{{ $doctor->specialization->name }}</td>
                                             <td>
                                                 <div class="btn-group">
                                                     <a data-toggle="dropdown">

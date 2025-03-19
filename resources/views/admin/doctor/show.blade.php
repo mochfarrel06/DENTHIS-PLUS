@@ -125,6 +125,15 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Spesialisasi</label>
+                                            <input type="text" class="form-control"
+                                                value="{{ $doctor->specialization->name }}" disabled>
+                                        </div>
+                                    </div>
+                                </div>
 
                                 <h5 class="font-bolder mt-4 fs-4">Informasi Alamat</h5>
                                 <div class="row">

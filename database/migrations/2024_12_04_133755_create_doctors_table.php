@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('doctors', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('specialization_id')->constrained()->onDelete('cascade');
             $table->string('kode_dokter')->unique();
             $table->string('nama_depan');
             $table->string('nama_belakang');
@@ -21,7 +22,6 @@ return new class extends Migration
             $table->string('konfirmasi_password')->nullable();
             $table->string('no_hp');
             $table->date('tgl_lahir');
-            $table->string('spesialisasi')->default('Gigi');
             $table->integer('pengalaman');
             $table->string('jenis_kelamin');
             $table->string('golongan_darah');

@@ -23,6 +23,7 @@ class DoctorUpdateRequest extends FormRequest
     {
         $doctorsId = $this->route('doctor');
         return [
+            'specialization_id' => ['required', 'exists:specializations,id'],
             'nama_depan' => ['required', 'string'],
             'nama_belakang' => ['required', 'string'],
             'email' => ['required', 'email', 'unique:doctors,email,' . $doctorsId . ',id'],
@@ -45,6 +46,7 @@ class DoctorUpdateRequest extends FormRequest
     public function messages()
     {
         return [
+            'specialization_id.required' => 'Spesialisasi tidak boleh kosong',
             'nama_depan.required' => 'Nama depan tidak boleh kosong',
             'nama_belakang.required' => 'Nama belakang tidak boleh kosong',
             'email.required' => 'Email tidak boleh kosong',

@@ -1,4 +1,4 @@
-@extends('admin.layouts.master')
+@extends('layouts.master')
 
 @section('title-page')
     Detail
@@ -13,8 +13,8 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('specializations.index') }}">Spesialisasi</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.specializations.index') }}">Spesialisasi</a></li>
                         <li class="breadcrumb-item active">Detail</li>
                     </ol>
                 </div>
@@ -36,7 +36,7 @@
                             </div>
 
                             <div class="card-footer">
-                                <a href="{{ route('specializations.index') }}" class="btn btn-warning">Kembali</a>
+                                <a href="{{ route('admin.specializations.index') }}" class="btn btn-warning">Kembali</a>
                             </div>
                         </form>
                     </div>

@@ -1,4 +1,4 @@
-@extends('admin.layouts.master')
+@extends('layouts.master')
 
 @section('title-page')
     Edit
@@ -13,8 +13,8 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('specializations.index') }}">Spesialisasi</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.specializations.index') }}">Spesialisasi</a></li>
                         <li class="breadcrumb-item active">Edit</li>
                     </ol>
                 </div>
@@ -27,7 +27,7 @@
             <div class="row">
                 <section class="col-lg-12">
                     <div class="card">
-                        <form id="main-form" action="{{ route('specializations.update', $specialization->id) }}"
+                        <form id="main-form" action="{{ route('admin.specializations.update', $specialization->id) }}"
                             method="POST">
                             @csrf
                             @method('PUT')
@@ -43,7 +43,7 @@
 
                             <div class="card-footer">
                                 <button type="submit" id="submit-btn" class="btn btn-primary mr-2">Simpan</button>
-                                <a href="{{ route('specializations.index') }}" class="btn btn-warning">Kembali</a>
+                                <a href="{{ route('admin.specializations.index') }}" class="btn btn-warning">Kembali</a>
                             </div>
                         </form>
                     </div>
@@ -76,13 +76,13 @@
                         sessionStorage.setItem('success',
                             'spesialisasi berhasil disubmit.');
                         window.location.href =
-                            "{{ route('specializations.index') }}"; // Redirect to index page
+                            "{{ route('admin.specializations.index') }}"; // Redirect to index page
                     } else if (response.info) {
                         // Flash message info
                         sessionStorage.setItem('info',
                             'Tidak melakukan perubahan data pada spesialisasi.');
                         window.location.href =
-                            "{{ route('specializations.index') }}"; // Redirect to index page
+                            "{{ route('admin.specializations.index') }}"; // Redirect to index page
                     } else {
                         // Flash message error
                         $('#flash-messages').html('<div class="alert alert-danger">' +

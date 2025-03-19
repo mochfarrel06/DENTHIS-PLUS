@@ -10,6 +10,7 @@ class Doctor extends Model
     use HasFactory;
 
     protected $fillable = [
+        'specialization_id',
         'kode_dokter',
         'nama_depan',
         'nama_belakang',
@@ -18,7 +19,6 @@ class Doctor extends Model
         'konfirmasi_password',
         'no_hp',
         'tgl_lahir',
-        'spesialisasi',
         'pengalaman',
         'jenis_kelamin',
         'golongan_darah',
@@ -44,5 +44,10 @@ class Doctor extends Model
         $uniqueCode = $prefix . $newNumber;
 
         return $uniqueCode;
+    }
+
+    public function specialization()
+    {
+        return $this->belongsTo(Specialization::class);
     }
 }

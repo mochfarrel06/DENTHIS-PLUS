@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DoctorController;
 use App\Http\Controllers\Admin\DoctorScheduleController;
 use App\Http\Controllers\Admin\PatientController;
+use App\Http\Controllers\Admin\SpecializationController;
 use App\Http\Controllers\Admin\UserManagementController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Doctor\DashboardController as DoctorDashboardController;
@@ -58,6 +59,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'role:admin
     Route::delete('doctor-schedules/{doctorId}', [DoctorScheduleController::class, 'destroy'])->name('doctor-schedules.destroy');
 
     Route::resource('patients', PatientController::class);
+    Route::resource('specializations', SpecializationController::class);
 
     Route::get('user-management', [UserManagementController::class, 'index'])->name('user-management.index');
     Route::get('user-management/create', [UserManagementController::class, 'create'])->name('user-management.create');

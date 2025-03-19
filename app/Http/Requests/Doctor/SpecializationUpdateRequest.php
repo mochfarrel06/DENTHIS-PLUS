@@ -21,15 +21,17 @@ class SpecializationUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
+        $specializationsId = $this->route('specialization');
         return [
-            'name' => ['required', 'string']
+            'name' => ['required', 'string', 'unique:specializations,name,'. $specializationsId .',id']
         ];
     }
 
     public function messages()
     {
         return [
-            'name.required' => 'Spesialisasi tidak boleh kosong'
+            'name.required' => 'Spesialisasi tidak boleh kosong',
+            'name.unique' => 'Spesialisasi sudah di tambahkan'
         ];
     }
 }

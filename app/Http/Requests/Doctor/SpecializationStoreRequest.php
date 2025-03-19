@@ -22,14 +22,15 @@ class SpecializationStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string']
+            'name' => ['required', 'string', 'unique:specializations,name']
         ];
     }
 
     public function messages()
     {
         return [
-            'name' => 'Spesialisasi tidak boleh kosong'
+            'name.required' => 'Spesialisasi tidak boleh kosong',
+            'name.unique' => 'Spesialisasi sudah di tambahkan'
         ];
     }
 }

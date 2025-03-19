@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Doctor\DoctorStoreRequest;
 use App\Http\Requests\Doctor\DoctorUpdateRequest;
 use App\Models\Doctor;
+use App\Models\Specialization;
 use App\Models\User;
 use App\Traits\ProfileUploadTrait;
 use Illuminate\Support\Facades\Hash;
@@ -23,15 +24,18 @@ class DoctorController extends Controller
 
     public function create()
     {
-        return view('admin.doctor.create');
+        $specializations = Specialization::all();
+        return view('admin.doctor.create', compact('specializations'));
     }
 
     public function store(DoctorStoreRequest $request)
     {
         try {
+            // dd($request->all());
             $imagePath = $this->uploadImage($request, 'foto_dokter');
 
             $doctor = new Doctor([
+                'specialization_id' => $request->specialization_id,
                 'kode_dokter' => Doctor::generateKodeDokterGigi(),
                 'nama_depan' => $request->nama_depan,
                 'nama_belakang' => $request->nama_belakang,
@@ -77,8 +81,9 @@ class DoctorController extends Controller
     public function edit(string $id)
     {
         $doctor = Doctor::findOrFail($id);
+        $specializations = Specialization::all();
 
-        return view('admin.doctor.edit', compact('doctor'));
+        return view('admin.doctor.edit', compact('doctor', 'specializations'));
     }
 
     public function update(DoctorUpdateRequest $request, string $id)

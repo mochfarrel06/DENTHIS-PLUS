@@ -1,4 +1,4 @@
-@extends('admin.layouts.master')
+@extends('layouts.master')
 
 @section('title-page')
     Spesialisasi
@@ -13,7 +13,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
                         <li class="breadcrumb-item active">Spesialisasi</li>
                     </ol>
                 </div>
@@ -33,7 +33,7 @@
                             </div>
 
                             <div class="ml-auto">
-                                <a href="{{ route('specializations.create') }}"
+                                <a href="{{ route('admin.specializations.create') }}"
                                     class="btn btn-primary d-flex align-items-center"><i
                                         class="iconoir-plus-circle mr-2"></i> Tambah</a>
                             </div>
@@ -60,13 +60,16 @@
                                                     </a>
                                                     <ul class="dropdown-menu">
                                                         <li><a class="dropdown-item"
-                                                                href="{{ route('specializations.show', $specialization->id) }}">Detail</a>
+                                                                href="{{ route('admin.specializations.show', $specialization->id) }}"><i
+                                                                    class="iconoir-eye-solid mr-2"></i> Detail</a>
                                                         </li>
                                                         <li><a class="dropdown-item"
-                                                                href="{{ route('specializations.edit', $specialization->id) }}">Edit</a>
+                                                                href="{{ route('admin.specializations.edit', $specialization->id) }}"><i
+                                                                    class="iconoir-edit-pencil mr-2"></i> Edit</a>
                                                         </li>
                                                         <li><a class="dropdown-item delete-item"
-                                                                href="{{ route('specializations.destroy', $specialization->id) }}">Hapus</a>
+                                                                href="{{ route('admin.specializations.destroy', $specialization->id) }}"><i
+                                                                    class="iconoir-trash-solid mr-2"></i> Hapus</a>
                                                         </li>
                                                     </ul>
                                                 </div>

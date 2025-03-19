@@ -1,4 +1,4 @@
-@extends('admin.layouts.master')
+@extends('layouts.master')
 
 @section('title-page')
     Tambah
@@ -13,8 +13,8 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('specializations.index') }}">Spesialisasi</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('admin.specializations.index') }}">Spesialisasi</a></li>
                         <li class="breadcrumb-item active">Tambah</li>
                     </ol>
                 </div>
@@ -27,7 +27,7 @@
             <div class="row">
                 <section class="col-lg-12">
                     <div class="card">
-                        <form id="main-form" method="POST" action="{{ route('specializations.store') }}">
+                        <form id="main-form" method="POST" action="{{ route('admin.specializations.store') }}">
                             @csrf
                             <div class="card-body">
                                 <div class="form-group">
@@ -40,7 +40,7 @@
 
                             <div class="card-footer">
                                 <button type="submit" id="submit-btn" class="btn btn-primary mr-2">Simpan</button>
-                                <a href="{{ route('specializations.index') }}" class="btn btn-warning">Kembali</a>
+                                <a href="{{ route('admin.specializations.index') }}" class="btn btn-warning">Kembali</a>
                             </div>
                         </form>
                     </div>
@@ -73,7 +73,7 @@
                             sessionStorage.setItem('success',
                                 'Data Spesialisasi berhasil disubmit.');
                             window.location.href =
-                                "{{ route('specializations.index') }}";
+                                "{{ route('admin.specializations.index') }}";
                         } else {
                             $('#flash-messages').html('<div class="alert alert-danger">' +
                                 response.error + '</div>');

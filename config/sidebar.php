@@ -15,13 +15,18 @@ return [
     ],
     [
         'text' => 'Dokter',
-        'url' => ['/admin/doctors', '/admin/doctor-schedules'],
+        'url' => ['/admin/doctors', '/admin/specializations', '/admin/doctor-schedules'],
         'role' => ['admin'],
         'icon' => 'iconoir-group',
         'children' => [
             [
                 'text' => 'Dokter',
                 'url' => '/admin/doctors',
+                'role' => ['admin'],
+            ],
+            [
+                'text' => 'Spesialisasi',
+                'url' => '/admin/specializations',
                 'role' => ['admin'],
             ],
             [
