@@ -112,4 +112,5 @@ Route::group(['prefix' => 'doctor', 'as' => 'doctor.', 'middleware' => 'role:dok
 // 8. Route Profil
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'middleware' => 'role:pasien,admin,dokter'], function () {
     Route::get('dashboard', [ProfileController::class, 'index'])->name('profile.index');
+    Route::put('update', [ProfileController::class, 'update'])->name('profile.update');
 });

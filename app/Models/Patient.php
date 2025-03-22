@@ -10,6 +10,7 @@ class Patient extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
         'kode_pasien',
         'nama_depan',
         'nama_belakang',
@@ -40,5 +41,9 @@ class Patient extends Model
         $uniqueCode = $prefix . $newNumber;
 
         return $uniqueCode;
+    }
+
+    public function user() {
+        return $this->belongsTo(User::class);
     }
 }

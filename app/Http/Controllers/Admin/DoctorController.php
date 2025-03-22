@@ -34,7 +34,25 @@ class DoctorController extends Controller
             // dd($request->all());
             $imagePath = $this->uploadImage($request, 'foto_dokter');
 
+            $user = User::create([
+                'nama_depan' => $request->nama_depan,
+                'nama_belakang' => $request->nama_belakang,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'role' => 'dokter',
+                'no_hp' => $request->no_hp,
+                'tgl_lahir' => $request->tgl_lahir,
+                'jenis_kelamin' => $request->jenis_kelamin,
+                'foto' => isset($imagePath) ? $imagePath : 'foto_dokter',
+                'alamat' => $request->alamat,
+                'negara' => $request->negara,
+                'provinsi' => $request->provinsi,
+                'kota' => $request->kota,
+                'kodepos' => $request->kodepos,
+            ]);
+
             $doctor = new Doctor([
+                'user_id' => $user->id,
                 'specialization_id' => $request->specialization_id,
                 'kode_dokter' => Doctor::generateKodeDokterGigi(),
                 'nama_depan' => $request->nama_depan,
@@ -55,13 +73,6 @@ class DoctorController extends Controller
             ]);
 
             $doctor->save();
-
-            User::create([
-                'name' => $request->nama_depan . ' ' . $request->nama_belakang,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                'role' => 'dokter'
-            ]);
 
             session()->flash('success', 'Berhasil menambahkan data dokter');
             return response()->json(['success' => true], 200);
@@ -90,7 +101,10 @@ class DoctorController extends Controller
     {
         try {
             $doctor = Doctor::findOrFail($id);
+            $user = User::findOrFail($doctor->user_id);
+
             $doctors = $request->except(['foto_dokter', 'password']);
+            $userData = $request->only(['nama_depan', 'nama_belakang', 'email', 'no_hp', 'tgl_lahir', 'jenis_kelamin', 'alamat', 'negara', 'provinsi', 'kota', 'kodepos']);
 
             if ($request->hasFile('foto_dokter')) {
                 if ($doctor->foto_dokter && file_exists(public_path($doctor->foto_dokter))) {
@@ -110,6 +124,7 @@ class DoctorController extends Controller
 
             if ($doctor->isDirty()) {
                 $doctor->save();
+                $user->update($userData);
 
                 session()->flash('success', 'Berhasil melakukan perubahan pada data dokter');
                 return response()->json(['success' => true], 200);

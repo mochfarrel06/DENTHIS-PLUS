@@ -18,10 +18,20 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'nama_depan',
+        'nama_belakang',
         'email',
         'password',
-        'role'
+        'role',
+        'foto',
+        'no_hp',
+        'tgl_lahir',
+        'jenis_kelamin',
+        'alamat',
+        'negara',
+        'provinsi',
+        'kota',
+        'kodepos'
     ];
 
     /**
@@ -43,4 +53,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function doctor() {
+        return $this->hasOne(Doctor::class);
+    }
+
+    public function patient() {
+        return $this->hasOne(Patient::class);
+    }
 }

@@ -10,6 +10,7 @@ class Doctor extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
         'specialization_id',
         'kode_dokter',
         'nama_depan',
@@ -49,5 +50,9 @@ class Doctor extends Model
     public function specialization()
     {
         return $this->belongsTo(Specialization::class);
+    }
+
+    public function user() {
+        return $this->belongsTo(User::class);
     }
 }

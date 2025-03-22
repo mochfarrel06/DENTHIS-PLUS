@@ -54,7 +54,24 @@ class LoginController extends Controller
     public function storeRegister(PatientStoreRequest $request)
     {
         try {
+            $user = User::create([
+                'nama_depan' => $request->nama_depan,
+                'nama_belakang' => $request->nama_belakang,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'role' => 'pasien',
+                'no_hp' => $request->no_hp,
+                'tgl_lahir' => $request->tgl_lahir,
+                'jenis_kelamin' => $request->jenis_kelamin,
+                'alamat' => $request->alamat,
+                'negara' => $request->negara,
+                'provinsi' => $request->provinsi,
+                'kota' => $request->kota,
+                'kodepos' => $request->kodepos,
+            ]);
+
             $patient = new Patient([
+                'user_id' => $user->id,
                 'kode_pasien' => Patient::generateKodePasien(),
                 'nama_depan' => $request->nama_depan,
                 'nama_belakang' => $request->nama_belakang,
@@ -71,13 +88,6 @@ class LoginController extends Controller
             ]);
 
             $patient->save();
-
-            User::create([
-                'name' => $request->nama_depan . ' ' . $request->nama_belakang,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                'role' => 'pasien'
-            ]);
 
             session()->flash('success', 'Berhasil membuat akun pasien');
             return response()->json(['success' => true], 200);
