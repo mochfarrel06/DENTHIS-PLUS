@@ -93,8 +93,9 @@ Route::group([
 });
 
 // 6. Route history
-Route::group(['prefix' => 'history', 'as' => 'history', 'middleware' => 'role:admin,dokter,pasien'], function() {
+Route::group(['prefix' => 'history', 'as' => 'history.', 'middleware' => 'role:admin,dokter,pasien'], function() {
     Route::get('/queue', [QueueHistoryController::class, 'index'])->name('history.index');
+    Route::get('/queue/pdf', [QueueHistoryController::class, 'exportPdf'])->name('pdf');
 });
 
 // 7. Route doctor

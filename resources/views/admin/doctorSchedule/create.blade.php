@@ -118,10 +118,10 @@
                                                 <!-- Checkbox di paling kiri -->
                                                 <div class="col-md-2">
                                                     <div class="form-check">
-                                                        <input type="checkbox" name="hari[]" value="{{ $day }}"
+                                                        <input type="checkbox" name="hari[]" value="{{ $day }}" class="form-check-input custom-checkbox""
                                                             id="{{ $day }}"
-                                                            onchange="toggleTimeInputs('{{ $day }}')">
-                                                        <label class="form-check-label"
+                                                            onchange="toggleTimeInputs('{{ $day }}')" style="width: 18px; height: 18px; cursor: pointer;">
+                                                        <label class="form-check-label ml-2"
                                                             for="{{ $day }}">{{ $dayMapping[$day] }}</label>
                                                     </div>
                                                 </div>

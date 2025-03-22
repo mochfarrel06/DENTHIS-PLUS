@@ -22,7 +22,8 @@ class UserManagementStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string'],
+            'nama_depan' => ['required', 'string'],
+            'nama_belakang' => ['required', 'string'],
             'email' => ['required', 'email', 'unique:users,email'],
             'password' => ['required', 'string', 'min:8'],
             'konfirmasi_password' => ['required', 'same:password'],
@@ -33,7 +34,8 @@ class UserManagementStoreRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'Nama tidak boleh kosong',
+            'nama_depan.required' => 'Nama depan tidak boleh kosong',
+            'nama_belakang.required' => 'Nama belakang tidak boleh kosong',
             'email.required' => 'Email tidak boleh kosong',
             'email.unique' => 'Email sudah di tambahkan',
             'password.required' => 'Password tidak boleh kosong',

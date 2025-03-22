@@ -31,16 +31,27 @@
                             @csrf
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="name">Nama</label>
-                                            <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" placeholder="Masukkan Nama Depan">
-                                            @error('name')
+                                            <label for="nama_depan">Nama Depan</label>
+                                            <input type="text" class="form-control @error('nama_depan') is-invalid @enderror" name="nama_depan" id="nama_depan" placeholder="Masukkan Nama Depan">
+                                            @error('nama_depan')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="nama_belakang">Nama Belakang</label>
+                                            <input type="text" class="form-control @error('nama_belakang') is-invalid @enderror" name="nama_belakang" id="nama_belakang" placeholder="Masukkan Nama Belakang">
+                                            @error('nama_belakang')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="email">Email</label>
                                             <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="email" placeholder="Masukkan Email">
@@ -49,7 +60,7 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="role">Role</label>
                                             <select name="role" id="role" class="form-control @error('role') is-invalid @enderror">
@@ -138,7 +149,7 @@
                             '</div>');
                     },
                     complete: function() {
-                        $submitBtn.prop('disabled', false).text('Tambah');
+                        $submitBtn.prop('disabled', false).text('Simpan');
                     }
                 });
             });

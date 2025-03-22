@@ -33,7 +33,7 @@
                             @method('PUT')
 
                             <div class="card-body">
-                                <div class="row mb-4">
+                                {{-- <div class="row mb-4">
                                     <div class="col-md-2">
                                         <img class="profile-user-img img-fluid img-circle"
                                             src="{{ $doctor->foto_dokter ? asset($doctor->foto_dokter) : asset('assets/admin/dist/img/avatar.png') }}"
@@ -45,7 +45,7 @@
                                         <h3>{{ $doctor->nama_depan }} {{ $doctor->nama_belakang }}</h3>
                                         <p>{{ $doctor->email }}</p>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">

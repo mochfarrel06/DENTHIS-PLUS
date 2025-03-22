@@ -79,6 +79,8 @@ class PatientController extends Controller
         try {
             $patient = Patient::findOrFail($id);
             $patients = $request->except('password');
+            $user = User::findOrFail($patient->user_id);
+            $userData = $request->only(['nama_depan', 'nama_belakang', 'email', 'no_hp', 'tgl_lahir', 'jenis_kelamin', 'alamat', 'negara', 'provinsi', 'kota', 'kodepos']);
 
             // Handle password update
             if ($request->filled('password')) {
@@ -89,6 +91,7 @@ class PatientController extends Controller
 
             if ($patient->isDirty()) {
                 $patient->save();
+                $user->update($userData);
 
                 session()->flash('success', 'Berhasil melakukan perubahan pada data pasien');
                 return response()->json(['success' => true], 200);

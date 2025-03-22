@@ -16,8 +16,8 @@
                 <div class="ml-2 d-flex flex-column" style="max-width: 120px;">
                     <!-- Nama dengan ellipsis jika terlalu panjang -->
                     <span class="text-truncate" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
-                        data-toggle="tooltip" title="{{ auth()->user()->name }}">
-                        {{ auth()->user()->name }}
+                        data-toggle="tooltip" title="{{ auth()->user()->nama_depan }}">
+                        {{ auth()->user()->nama_depan }}
                     </span>
                     <!-- Role pengguna -->
                     <small class="text-muted text-capitalize">{{ auth()->user()->role }}</small>

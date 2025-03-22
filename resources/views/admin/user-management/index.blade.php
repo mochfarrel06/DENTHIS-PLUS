@@ -52,7 +52,7 @@
                                     @foreach ($users as $user)
                                         <tr>
                                             <td class="index">{{ $loop->index + 1 }}</td>
-                                            <td>{{ $user->name }}</td>
+                                            <td>{{ $user->nama_depan }} {{ $user->nama_belakang }}</td>
                                             <td>{{ $user->role }}</td>
                                             <td>
                                                 <div class="btn-group">

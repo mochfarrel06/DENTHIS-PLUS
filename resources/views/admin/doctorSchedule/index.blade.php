@@ -56,7 +56,7 @@
                                             <td>{{ $schedule->doctor->kode_dokter }}</td>
                                             <td>{{ $schedule->doctor->nama_depan }} {{ $schedule->doctor->nama_belakang }}
                                             </td>
-                                            <td>{{ $schedule->doctor->spesialisasi }}</td>
+                                            <td>{{ $schedule->doctor->specialization->name }}</td>
                                             <td>
                                                 <div class="btn-group">
                                                     <a data-toggle="dropdown">

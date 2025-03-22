@@ -45,16 +45,19 @@
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
+                                        <th>No</th>
                                         <th>Kode Pasien</th>
                                         <th>Dokter</th>
                                         <th>Pasien</th>
                                         <th>Waktu Periksa</th>
                                         <th>Status</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($antreanHariIni as $queue)
                                         <tr>
+                                            <td>{{ $loop->iteration }}</td>
                                             <td>{{ $queue->patient->kode_pasien }}</td>
                                             <td>{{ $queue->doctor->nama_depan }} {{ $queue->doctor->nama_belakang }}</td>
                                             <td>{{ $queue->patient->nama_depan }} {{ $queue->patient->nama_belakang }}
@@ -74,6 +77,26 @@
                                                     <a class="btn btn-danger btn-sm">Batal</a>
                                                 @endif
                                             </td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <a data-toggle="dropdown">
+                                                        <i class="iconoir-more-vert"></i>
+                                                    </a>
+
+                                                    <ul class="dropdown-menu">
+                                                        <li><a class="dropdown-item" href="{{ route('data-patient.queue.show', $queue->id) }}"><i
+                                                            class="iconoir-eye-solid mr-2"></i> Detail</a>
+                                                        </li>
+                                                        @if ($queue->status == 'booking')
+                                                            <li>
+                                                                <a class="dropdown-item" href=""
+                                                                    onclick="periksaPasien({{ $queue->id }})"><i
+                                                                        class="iconoir-check mr-2"></i> Periksa</a>
+                                                            </li>
+                                                        @endif
+                                                    </ul>
+                                                </div>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -85,3 +108,26 @@
         </div>
     </section>
 @endsection
+
+@push('scripts')
+    <script>
+        function periksaPasien(queueId) {
+            fetch(`/data-patient/periksa-pasien/${queueId}`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        'Content-Type': 'application/json'
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        location.reload();
+                    } else {
+                        alert('Gagal selesai!');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
+@endpush

@@ -24,7 +24,8 @@ class UserManagementUpdateRequest extends FormRequest
         $userId = $this->route('id');
 
         return [
-            'name' => ['required', 'string'],
+            'nama_depan' => ['required', 'string'],
+            'nama_belakang' => ['required', 'string'],
             'email' => ['required', 'email', 'unique:users,email,' . $userId . ',id'],
             'password' => ['nullable', 'string', 'min:8'],
             'konfirmasi_password' => ['nullable', 'same:password'],
@@ -35,7 +36,8 @@ class UserManagementUpdateRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'Nama tidak boleh kosong',
+            'nama_depan.required' => 'Nama depan tidak boleh kosong',
+            'nama_belakang.required' => 'Nama belakang tidak boleh kosong',
             'email.required' => 'Email tidak boleh kosong',
             'email.unique' => 'Email sudah di tambahkan',
             'password.min' => 'Password minimal 8 karakter',

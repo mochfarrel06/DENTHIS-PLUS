@@ -25,7 +25,8 @@ class UserManagementController extends Controller
     {
         try {
             $user = new User([
-                'name' => $request->name,
+                'nama_depan' => $request->nama_depan,
+                'nama_belakang' => $request->nama_belakang,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
                 'role' => $request->role

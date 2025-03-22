@@ -25,24 +25,34 @@
                                 <i class="iconoir-table mr-2"></i>
                                 <h3 class="card-title">Riwayat Antrean Pasien</h3>
                             </div>
+                            <div class="ml-auto">
+                                <a href="{{ route('history.pdf') }}"
+                                    class="btn btn-primary d-flex align-items-center" target="_blank"><i
+                                        class="iconoir-plus-circle mr-2"></i> Export</a>
+                            </div>
                         </div>
                         <div class="card-body">
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
+                                        <th>No</th>
+                                        <th>Pasien</th>
                                         <th>Tanggal Periksa</th>
                                         <th>Jam</th>
                                         <th>Dokter</th>
-                                        <th>Status</th>
                                         <th>Keterangan</th>
+                                        <th>Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($queueHistories as $queue)
                                         <tr>
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $queue->patient->nama_depan }} {{ $queue->patient->nama_belakang }}</td>
                                             <td>{{ $queue->tgl_periksa }}</td>
                                             <td>{{ \Carbon\Carbon::createFromFormat('H:i:s', $queue->start_time)->format('H:i') }} - {{ \Carbon\Carbon::createFromFormat('H:i:s', $queue->end_time)->format('H:i') }}</td>
                                             <td>{{ $queue->doctor->nama_depan }} {{ $queue->doctor->nama_belakang }}</td>
+                                            <td>{{ $queue->keterangan }}</td>
                                             <td>@if ($queue->status == 'booking')
                                                 <a class="btn btn-warning btn-sm">Booking</a>
                                             @elseif ($queue->status == 'periksa')
@@ -52,7 +62,6 @@
                                             @elseif ($queue->status == 'batal')
                                                 <a class="btn btn-danger btn-sm">Batal</a>
                                             @endif</td>
-                                            <td>{{ $queue->keterangan }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
