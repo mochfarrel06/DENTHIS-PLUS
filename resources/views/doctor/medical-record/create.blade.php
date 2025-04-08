@@ -72,7 +72,7 @@
                             </div>
 
                             <div class="card-footer">
-                                <button type="submit" id="submit-btn" class="btn btn-primary mr-2">Submit</button>
+                                <button type="submit" id="submit-btn" class="btn btn-primary mr-2">Simpan</button>
                                 <a href="{{ route('doctor.medical-record.index') }}" class="btn btn-warning">Kembali</a>
                             </div>
                         </form>
@@ -129,7 +129,7 @@
                             '</div>');
                     },
                     complete: function() {
-                        $submitBtn.prop('disabled', false).text('Tambah');
+                        $submitBtn.prop('disabled', false).text('Simpan');
                     }
                 });
             });

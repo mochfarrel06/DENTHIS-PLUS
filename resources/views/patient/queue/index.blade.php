@@ -32,6 +32,12 @@
                                         class="btn btn-primary d-flex align-items-center"><i
                                             class="iconoir-plus-circle mr-2"></i> Tambah</a>
                                 </div>
+                            @elseif (auth()->user() && auth()->user()->role == 'dokter')
+                                <div class="ml-auto">
+                                    <a href="{{ route('data-patient.createAntreanKhusus') }}"
+                                        class="btn btn-primary d-flex align-items-center"><i
+                                            class="iconoir-plus-circle mr-2"></i> Tambah</a>
+                                </div>
                             @endif
                         </div>
                         <div class="card-body">

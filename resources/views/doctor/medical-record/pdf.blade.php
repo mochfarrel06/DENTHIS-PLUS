@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rekam Medis - {{ $medicalRecord->patient->name }}</title>
+    <title>Rekam Medis - {{ $medicalRecord->patient->nama_depan }}</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -59,7 +59,7 @@
                     <table class="table-header">
                         <tr>
                             <td style="width: 25%; padding: 4px">Nama</td>
-                            <td style="padding: 4px">: {{ $medicalRecord->patient->name }}</td>
+                            <td style="padding: 4px">: {{ $medicalRecord->user->nama_depan }} {{ $medicalRecord->user->nama_belakang }}</td>
                         </tr>
                         <tr>
                             <td style="width: 25%; padding: 4px">Umur</td>
@@ -82,7 +82,7 @@
     <table class="table" style="margin-bottom: 10px">
         <tr>
             <td style="width: 20%; vertical-align: top;">Keluhan Pasien:</td>
-            <td>{{ $medicalRecord->tgl_periksa }}</td>
+            <td>{{ $medicalRecord->queue->keterangan }}</td>
         </tr>
     </table>
 

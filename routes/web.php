@@ -83,13 +83,16 @@ Route::group([
     // Route::resource('queue', QueueController::class);
     Route::get('queue', [QueueController::class, 'index'])->name('queue.index');
     Route::get('queue/create', [QueueController::class, 'create'])->name('queue.create')->middleware('role:pasien');
-    Route::post('queue', [QueueController::class, 'store'])->name('queue.store')->middleware('role:pasien');
+    Route::post('queue', [QueueController::class, 'store'])->name('queue.store')->middleware('role:pasien,dokter');
     Route::get('queue/{id}', [QueueController::class, 'show'])->name('queue.show');
     Route::delete('queue/{id}', [QueueController::class, 'destroy'])->name('queue.destroy')->middleware('role:pasien,admin');
     Route::post('call-patient/{id}', [QueueController::class, 'callPatient'])->name('queue.callPatient')->middleware('role:admin');
     Route::get('/queue/check-status', [QueueController::class, 'checkQueueStatus'])->name('queue.checkStatus');
     Route::post('selesai-periksa/{id}', [QueueController::class, 'selesaiPeriksa'])->name('queue.selesaiPeriksa');
     Route::post('periksa-pasien/{id}', [QueueController::class, 'periksaPasien'])->name('queue.periksaPasien');
+
+    Route::get('create-antrean-khusus', [QueueController::class, 'createAntreanKhusus'])->name('createAntreanKhusus');
+    Route::post('store-antrean-khusus', [QueueController::class, 'storeAntreanKhusus'])->name('storeAntreanKhusus');
 });
 
 // 6. Route history

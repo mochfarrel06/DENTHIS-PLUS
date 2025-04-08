@@ -33,13 +33,13 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Nama Pasien</label>
-                                            <input type="text" class="form-control" value="{{ $medicalRecord->user->name }}" disabled>
+                                            <input type="text" class="form-control" value="{{ $medicalRecord->user->nama_depan }} {{ $medicalRecord->user->nama_belakang }}" disabled>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Umur</label>
-                                            <input type="text" class="form-control" value="{{ \Carbon\Carbon::parse($medicalRecord->queue->patient->tgl_lahir)->age }}" disabled>
+                                            <input type="text" class="form-control" value="{{ \Carbon\Carbon::parse($medicalRecord->queue->patient->tgl_lahir)->age }} tahun" disabled>
                                         </div>
                                     </div>
                                 </div>

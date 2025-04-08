@@ -9,6 +9,7 @@ use App\Models\DoctorSchedule;
 use App\Models\Patient;
 use App\Models\Queue;
 use App\Models\QueueHistory;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -47,15 +48,15 @@ class QueueController extends Controller
             $doctorId = $request->input('doctor_id');
             $date = $request->input('date');
 
-            $dayOfWeek = \Carbon\Carbon::parse($date)->format('l');
+            $dayOfWeek = Carbon::parse($date)->format('l');
             $doctorSchedules = DoctorSchedule::where('doctor_id', $doctorId)
                 ->where('hari', $dayOfWeek)
                 ->get();
 
             $slots = [];
             foreach ($doctorSchedules as $schedule) {
-                $start = \Carbon\Carbon::parse($schedule->jam_mulai);
-                $end = \Carbon\Carbon::parse($schedule->jam_selesai);
+                $start = Carbon::parse($schedule->jam_mulai);
+                $end = Carbon::parse($schedule->jam_selesai);
 
                 $waktuPeriksa = $schedule->waktu_periksa ?? 30;
                 $waktuJeda = $schedule->waktu_jeda ?? 10;
@@ -203,9 +204,102 @@ class QueueController extends Controller
         return response()->json(['status' => 'success', 'message' => 'Pasien sedang di periksa']);
     }
 
-    public function show(string $id) {
+    public function show(string $id)
+    {
         $queue = Queue::findOrFail($id);
 
         return view('patient.queue.show', compact('queue'));
+    }
+
+    public function createAntreanKhusus(Request $request)
+    {
+        $user = auth()->user();
+        $doctor = Doctor::where('user_id', $user->id)->first(); // Sesuaikan jika tabelnya berbeda
+
+        $doctorId = $doctor->id;
+        $patients = Patient::all();
+
+        if ($request->has('date')) {
+            $date = $request->input('date');
+            $dayOfWeek = Carbon::parse($date)->format('l');
+
+            $doctorSchedules = DoctorSchedule::where('doctor_id', $doctorId)
+                ->where('hari', $dayOfWeek)
+                ->get();
+
+            $slots = [];
+            foreach ($doctorSchedules as $schedule) {
+                $start = Carbon::parse($schedule->jam_mulai);
+                $end = Carbon::parse($schedule->jam_selesai);
+                $waktuPeriksa = $schedule->waktu_periksa ?? 30;
+                $waktuJeda = $schedule->waktu_jeda ?? 10;
+
+                while ($start->copy()->addMinutes($waktuPeriksa)->lte($end)) {
+                    $slotStart = $start->format('H:i');
+                    $slotEnd = $start->copy()->addMinutes($waktuPeriksa)->format('H:i');
+
+                    $isBooked = Queue::where('doctor_id', $doctorId)
+                        ->where('tgl_periksa', $date)
+                        ->where('start_time', $slotStart)
+                        ->exists();
+
+                    $slots[] = [
+                        'start' => $slotStart,
+                        'end' => $slotEnd,
+                        'is_booked' => $isBooked
+                    ];
+
+                    $start->addMinutes($waktuPeriksa + $waktuJeda);
+                }
+            }
+
+            return response()->json($slots);
+        }
+
+        return view('patient.queue.createAntreanKhusus', compact('doctorId', 'patients', 'doctor'));
+    }
+
+    public function storeAntreanKhusus(Request $request)
+    {
+        //dd($request->all());
+
+        // Validasi request
+        $request->validate([
+            'doctor_id' => 'required|exists:doctors,id',
+            'patient_id' => 'required|exists:patients,id',
+            'tgl_periksa' => 'required|array',
+            'tgl_periksa.*' => 'date|after_or_equal:today',
+            'start_time' => 'required|array',
+            'start_time.*' => 'required',
+            'end_time' => 'required|array',
+            'end_time.*' => 'required',
+            'keterangan' => 'nullable|string',
+        ]);
+
+        // Loop untuk menyimpan multiple appointment
+        foreach ($request->tgl_periksa as $index => $tgl_periksa) {
+            $existingQueue = Queue::where('doctor_id', $request->doctor_id)
+                ->where('tgl_periksa', $tgl_periksa)
+                ->where('start_time', $request->start_time[$index])
+                ->exists();
+
+            if ($existingQueue) {
+                return redirect()->back()->withErrors(['error' => "Slot waktu $tgl_periksa - {$request->start_time[$index]} sudah dipesan."]);
+            }
+
+            Queue::create([
+                'user_id' => $request->user_id,
+                'doctor_id' => $request->doctor_id,
+                'patient_id' => $request->patient_id,
+                'tgl_periksa' => $tgl_periksa,
+                'start_time' => $request->start_time[$index],
+                'end_time' => $request->end_time[$index],
+                'keterangan' => $request->keterangan,
+                'status' => 'booking',
+                'is_booked' => true
+            ]);
+        }
+
+        return redirect()->route('data-patient.queue.index')->with('success', 'Antrean berhasil ditambahkan.');
     }
 }

@@ -42,6 +42,7 @@
                             <table id="example1" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
+                                        <th>No</th>
                                         <th>Tanggal Periksa</th>
                                         <th>Pasien</th>
                                         <th>Diagnosis</th>
@@ -51,8 +52,9 @@
                                 <tbody>
                                     @foreach ($medicalRecords as $record)
                                         <tr>
+                                            <td class="index">{{ $loop->index + 1 }}</td>
                                             <td>{{ $record->tgl_periksa }}</td>
-                                            <td>{{ $record->user->name }}</td>
+                                            <td>{{ $record->user->nama_depan }} {{ $record->user->nama_belakang }}</td>
                                             <td>{{ Str::limit($record->diagnosis, 30) }}</td>
                                             <td>
                                                 <div class="btn-group">
