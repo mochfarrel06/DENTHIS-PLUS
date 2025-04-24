@@ -42,6 +42,7 @@
                                         <th>Dokter</th>
                                         <th>Keterangan</th>
                                         <th>Status</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -62,6 +63,20 @@
                                             @elseif ($queue->status == 'batal')
                                                 <a class="btn btn-danger btn-sm">Batal</a>
                                             @endif</td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <a data-toggle="dropdown">
+                                                        <i class="iconoir-more-vert"></i>
+                                                    </a>
+                                                    <ul class="dropdown-menu dropdown-menu-right">
+                                                        <li><a class="dropdown-item"
+                                                                href="{{ route('history.history-medical.pdf', $queue->id) }}"
+                                                                target="_blank"><i class="iconoir-download mr-2"></i>
+                                                                Download</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>

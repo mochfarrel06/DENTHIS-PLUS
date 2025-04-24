@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Patient;
 
 use App\Http\Controllers\Controller;
+use App\Models\MedicalRecord;
 use App\Models\QueueHistory;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
@@ -38,5 +39,15 @@ class QueueHistoryController extends Controller
             ->setPaper('a4', 'landscape');
 
         return $pdf->stream('riwaayat_antrean.pdf');
+    }
+
+    public function generatePDF($id)
+    {
+        $medicalRecord = MedicalRecord::with(['patient', 'queue'])->findOrFail($id);
+
+        $pdf = Pdf::loadView('doctor.medical-record.pdf', compact('medicalRecord'))
+            ->setPaper('a4', 'portrait');
+
+        return $pdf->stream('rekam_medis.pdf');
     }
 }
