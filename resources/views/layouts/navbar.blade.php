@@ -10,7 +10,7 @@
     <ul class="navbar-nav ml-auto">
         <li class="nav-item dropdown">
             <a class="nav-link d-flex align-items-center" data-toggle="dropdown" href="#" role="button">
-                <img src="{{ asset('assets/admin/dist/img/avatar.png') }}" alt="User Profile"
+                <img src="{{ asset(auth()->user()->foto) }}" alt="User Profile"
                     class="img-circle elevation-2" style="width: 40px; height: 40px;">
 
                 <div class="ml-2 d-flex flex-column" style="max-width: 120px;">

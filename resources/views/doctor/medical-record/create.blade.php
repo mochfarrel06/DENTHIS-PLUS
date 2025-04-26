@@ -9,12 +9,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Tambah Data Dokter</h1>
+                    <h1 class="m-0">Tambah Data Rekam Medis</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ route('doctor.dashboard') }}">Dashboard</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('doctor.medical-record.index') }}">Dokter</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('doctor.medical-record.index') }}">Rekam Medis</a></li>
                         <li class="breadcrumb-item active">Tambah</li>
                     </ol>
                 </div>
@@ -48,7 +48,7 @@
 
                                 <div class="form-group">
                                     <label for="diagnosis">Diagnosis</label>
-                                    <textarea name="diagnosis" class="form-control @error('diagnosis') is-invalid @enderror"></textarea>
+                                    <textarea name="diagnosis" class="form-control @error('diagnosis') is-invalid @enderror" placeholder="Masukkan diagnosis pasien"></textarea>
                                     @error('diagnosis')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -56,7 +56,7 @@
 
                                 <div class="form-group">
                                     <label for="resep">Perawatan</label>
-                                    <textarea name="resep" class="form-control @error('resep') is-invalid @enderror"></textarea>
+                                    <textarea name="resep" class="form-control @error('resep') is-invalid @enderror" placeholder="Masukkan perawatan pasien"></textarea>
                                     @error('resep')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -64,7 +64,7 @@
 
                                 <div class="form-group">
                                     <label for="catatan_medis">Catatan Medis</label>
-                                    <textarea name="catatan_medis" class="form-control @error('catatan_medis') is-invalid @enderror"></textarea>
+                                    <textarea name="catatan_medis" class="form-control @error('catatan_medis') is-invalid @enderror" placeholder="Masukkan catatan pasien"></textarea>
                                     @error('catatan_medis')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror

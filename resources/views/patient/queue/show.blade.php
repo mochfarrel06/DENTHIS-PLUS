@@ -26,11 +26,11 @@
                     <div class="card card-primary card-outline">
                         <div class="card-body box-profile">
                             <div class="text-center">
-                                <img class="profile-user-img img-fluid img-circle" style="width: 150px; height: 150px;"
+                                <img class="profile-user-img img-fluid img-circle" style="width: 100px; height: 100px;"
                                     src="{{ asset($queue->doctor->foto_dokter) }}" alt="User profile picture">
                             </div>
 
-                            <h3 class="profile-username text-center">{{ $queue->doctor->nama_depan }}
+                            <h3 class="profile-username text-center" style="font-size: 17px">{{ $queue->doctor->nama_depan }}
                                 {{ $queue->doctor->nama_belakang }}</h3>
 
                             <p class="text-muted text-center">{{ $queue->doctor->spesialisasi }}</p>
@@ -68,7 +68,7 @@
                                     <div class="info-box bg-warning">
                                         <div class="info-box-content">
                                             <span class="info-box-text text-center">Hari, Tanggal</span>
-                                            <span class="info-box-number text-center mb-0">{{ \Carbon\Carbon::parse($queue->tgl_periksa)->locale('id')->translatedFormat('l') }}, {{ $queue->tgl_periksa }}</span>
+                                            <span class="info-box-number text-center mb-0">{{ \Carbon\Carbon::parse($queue->tgl_periksa)->locale('id')->translatedFormat('l') }}, {{ \Carbon\Carbon::parse($queue->tgl_periksa)->format('d-m-Y') }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -76,7 +76,7 @@
                                     <div class="info-box bg-success">
                                         <div class="info-box-content">
                                             <span class="info-box-text text-center">Status</span>
-                                            <span class="info-box-number text-center mb-0">{{ $queue->status }}</span>
+                                            <span class="info-box-number text-center mb-0 text-capitalize">{{ $queue->status }}</span>
                                         </div>
                                     </div>
                                 </div>

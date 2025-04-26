@@ -31,7 +31,7 @@ class MedicalRecordController extends Controller
         try {
             $queue = Queue::findOrFail($request->queue_id);
 
-            MedicalRecord::create([
+            $medicalRecord = MedicalRecord::create([
                 'user_id' => $queue->user_id,
                 'queue_id' => $queue->id,
                 'tgl_periksa' => now(),
@@ -45,6 +45,7 @@ class MedicalRecordController extends Controller
             QueueHistory::create([
                 'queue_id' => $queue->id,
                 'user_id' => $queue->user_id,
+                'medical_id' => $medicalRecord->id,
                 'doctor_id' => $queue->doctor_id,
                 'patient_id' => $queue->patient_id,
                 'tgl_periksa' => $queue->tgl_periksa,

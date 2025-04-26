@@ -11,7 +11,7 @@ class QueueHistory extends Model
     protected $fillable = [
         'queue_id', 'user_id', 'doctor_id', 'patient_id',
         'tgl_periksa', 'start_time', 'end_time', 'keterangan',
-        'status', 'is_booked'
+        'status', 'is_booked', 'medical_id'
     ];
 
     public function queue()

@@ -14,6 +14,7 @@ class QueueHistoryController extends Controller
     {
         $user = auth()->user();
         $role = $user->role;
+        $jumlahhistory = QueueHistory::count();
 
         if ($role === 'admin' || $role === 'dokter') {
             $queueHistories = QueueHistory::all();
@@ -21,7 +22,7 @@ class QueueHistoryController extends Controller
             $queueHistories = QueueHistory::where('user_id', $user->id)->get();
         }
 
-        return view('patient.queue-history.index', compact('queueHistories'));
+        return view('patient.queue-history.index', compact('queueHistories', 'jumlahhistory'));
     }
 
     public function exportPdf()

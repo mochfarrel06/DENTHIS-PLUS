@@ -22,16 +22,14 @@
                     <div class="card card-primary card-outline">
                         <div class="card-body box-profile">
                             <div class="text-center">
-                                @if ($user->role == 'dokter' || $user->role == 'pasien')
-                                    {{-- <div class="text-center">
-                                        <img id="profileImage" class="profile-user-img img-fluid img-circle"
-                                            src="{{ $user->foto ? asset($user->foto) : asset('assets/admin/dist/img/avatar.png') }}"
-                                            alt="User profile picture"
-                                            style="cursor: pointer; object-fit: cover; width: 120px; height: 120px; border-radius: 50%;">
-                                        <input type="file" id="foto" name="foto" style="display: none;"
-                                            accept="image/*">
-                                    </div> --}}
-                                @endif
+                                <div class="text-center">
+                                    <img id="profileImage" class="profile-user-img img-fluid img-circle"
+                                        src="{{ $user->foto ? asset($user->foto) : asset('assets/admin/dist/img/avatar.png') }}"
+                                        alt="User profile picture"
+                                        style="cursor: pointer; object-fit: cover; width: 100px; height: 100px; border-radius: 50%;">
+                                    <input type="file" id="foto" name="foto" style="display: none;"
+                                        accept="image/*">
+                                </div>
 
                                 <h3 class="profile-username text-center">{{ $user->nama_depan }} {{ $user->nama_belakang }}
                                 </h3>

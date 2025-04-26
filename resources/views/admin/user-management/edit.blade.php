@@ -33,77 +33,68 @@
                             @method('PUT')
 
                             <div class="card-body">
-                                @if ($user->role == 'admin')
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="nama_depan">Nama Depan</label>
-                                                <input type="text"
-                                                    class="form-control @error('nama_depan') is-invalid @enderror"
-                                                    name="nama_depan" id="nama_depan" value="{{ $user->nama_depan }}">
-                                                @error('nama_depan')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="nama_belakang">Nama Belakang</label>
-                                                <input type="text"
-                                                    class="form-control @error('nama_belakang') is-invalid @enderror"
-                                                    name="nama_belakang" id="nama_belakang"
-                                                    value="{{ $user->nama_belakang }}">
-                                                @error('nama_belakang')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                @enderror
-                                            </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="nama_depan">Nama Depan</label>
+                                            <input type="text"
+                                                class="form-control @error('nama_depan') is-invalid @enderror"
+                                                name="nama_depan" id="nama_depan" value="{{ $user->nama_depan }}">
+                                            @error('nama_depan')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="email">Email</label>
-                                                <input type="email"
-                                                    class="form-control @error('email') is-invalid @enderror" name="email"
-                                                    id="email" value="{{ old('email', $user->email) }}"
-                                                    placeholder="Masukkan Email">
-                                                @error('email')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="role">Role</label>
-                                                <select name="role" id="role"
-                                                    class="form-control @error('role') is-invalid @enderror">
-                                                    @if ($user->role == 'admin')
-                                                        <option value="admin"
-                                                            {{ $user->role === 'admin' ? 'selected' : '' }}>Admin</option>
-                                                    @elseif ($user->role == 'dokter')
-                                                        <option value="dokter"
-                                                            {{ $user->role === 'dokter' ? 'selected' : '' }}>Dokter
-                                                        </option>
-                                                    @elseif ($user->role == 'pasien')
-                                                        <option value="pasien"
-                                                            {{ $user->role === 'pasien' ? 'selected' : '' }}>Pasien
-                                                        </option>
-                                                    @endif
-                                                </select>
-                                                @error('role')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                @enderror
-                                            </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="nama_belakang">Nama Belakang</label>
+                                            <input type="text"
+                                                class="form-control @error('nama_belakang') is-invalid @enderror"
+                                                name="nama_belakang" id="nama_belakang"
+                                                value="{{ $user->nama_belakang }}">
+                                            @error('nama_belakang')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
                                         </div>
                                     </div>
-                                @endif
-
-                                {{-- Data request --}}
-                                <input type="hidden" class="form-control" name="nama_depan" id="nama_depan" value="{{ $user->nama_depan }}">
-                                <input type="hidden" class="form-control" name="nama_belakang" id="nama_belakang" value="{{ $user->nama_belakang }}">
-                                <input type="hidden" class="form-control" name="email" id="email" value="{{ $user->email }}">
-                                <input type="hidden" class="form-control" name="role" id="role" value="{{ $user->role }}">
-
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="email">Email</label>
+                                            <input type="email"
+                                                class="form-control @error('email') is-invalid @enderror" name="email"
+                                                id="email" value="{{ old('email', $user->email) }}"
+                                                placeholder="Masukkan Email">
+                                            @error('email')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="role">Role</label>
+                                            <select name="role" id="role"
+                                                class="form-control @error('role') is-invalid @enderror">
+                                                @if ($user->role == 'admin')
+                                                    <option value="admin"
+                                                        {{ $user->role === 'admin' ? 'selected' : '' }}>Admin</option>
+                                                @elseif ($user->role == 'dokter')
+                                                    <option value="dokter"
+                                                        {{ $user->role === 'dokter' ? 'selected' : '' }}>Dokter
+                                                    </option>
+                                                @elseif ($user->role == 'pasien')
+                                                    <option value="pasien"
+                                                        {{ $user->role === 'pasien' ? 'selected' : '' }}>Pasien
+                                                    </option>
+                                                @endif
+                                            </select>
+                                            @error('role')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">

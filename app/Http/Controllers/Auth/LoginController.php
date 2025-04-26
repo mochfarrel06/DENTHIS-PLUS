@@ -11,6 +11,8 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\File;
 
 class LoginController extends Controller
 {
@@ -54,6 +56,12 @@ class LoginController extends Controller
     public function storeRegister(PatientStoreRequest $request)
     {
         try {
+            $defaultFotoPath = public_path('uploads/foto_dokter/default2.jpg');
+            $newFotoName = Str::random(20) . '.jpg'; // nama file unik
+            $destinationPath = public_path('uploads/foto_pasien/' . $newFotoName);
+
+            File::copy($defaultFotoPath, $destinationPath);
+
             $user = User::create([
                 'nama_depan' => $request->nama_depan,
                 'nama_belakang' => $request->nama_belakang,
@@ -68,6 +76,7 @@ class LoginController extends Controller
                 'provinsi' => $request->provinsi,
                 'kota' => $request->kota,
                 'kodepos' => $request->kodepos,
+                'foto' => '/uploads/foto_pasien/' . $newFotoName,
             ]);
 
             $patient = new Patient([
@@ -85,6 +94,7 @@ class LoginController extends Controller
                 'provinsi' => $request->provinsi,
                 'kota' => $request->kota,
                 'kodepos' => $request->kodepos,
+                'foto' => '/uploads/foto_pasien/' . $newFotoName,
             ]);
 
             $patient->save();

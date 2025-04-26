@@ -26,9 +26,11 @@
                                 <h3 class="card-title">Riwayat Antrean Pasien</h3>
                             </div>
                             <div class="ml-auto">
-                                <a href="{{ route('history.pdf') }}"
-                                    class="btn btn-primary d-flex align-items-center" target="_blank"><i
-                                        class="iconoir-download mr-2"></i> Export</a>
+                                <a href="{{ $jumlahhistory > 0 ? route('history.pdf') : '#' }}"
+                                    class="btn btn-primary d-flex align-items-center {{ $jumlahhistory <= 0 ? 'disabled' : '' }}"
+                                    target="_blank">
+                                    <i class="iconoir-download mr-2"></i> Export
+                                </a>
                             </div>
                         </div>
                         <div class="card-body">
@@ -70,7 +72,7 @@
                                                     </a>
                                                     <ul class="dropdown-menu dropdown-menu-right">
                                                         <li><a class="dropdown-item"
-                                                                href="{{ route('history.history-medical.pdf', $queue->id) }}"
+                                                                href="{{ route('history.history-medical.pdf', $queue->medical_id) }}"
                                                                 target="_blank"><i class="iconoir-download mr-2"></i>
                                                                 Download</a>
                                                         </li>
