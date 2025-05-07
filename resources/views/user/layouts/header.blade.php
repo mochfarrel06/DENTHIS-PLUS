@@ -7,13 +7,13 @@
         <div class="container d-flex justify-content-center justify-content-md-between">
             <div class="contact-info d-flex align-items-center">
                 <!-- Link untuk mengirim email -->
-                {{-- <i class="bi bi-envelope d-flex align-items-center">
+                <i class="bi bi-envelope d-flex align-items-center">
                     <a href="mailto:denthis@gmail.com" target="_blank">denthis@gmail.com</a>
-                </i> --}}
-
-                <i class="bi {{ $setting->topbar_email_icon }} d-flex align-items-center">
-                    <a href="{{ $setting->topbar_email_link }}" target="_blank">{{ $setting->topbar_email_text }}</a>
                 </i>
+
+                {{-- <i class="bi {{ $setting->topbar_email_icon }} d-flex align-items-center">
+                    <a href="{{ $setting->topbar_email_link }}" target="_blank">{{ $setting->topbar_email_text }}</a>
+                </i> --}}
 
                 <!-- Link untuk membuka WhatsApp -->
                 <i class="bi bi-phone d-flex align-items-center ms-4">
