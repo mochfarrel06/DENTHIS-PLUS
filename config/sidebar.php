@@ -97,6 +97,37 @@ return [
         'icon' => 'iconoir-settings',
     ],
 
+
+    // Setting Front end
+    [
+        'text' => 'Master Halaman',
+        'role' => ['admin'],
+        'is_header' => true,
+    ],
+    [
+        'text' => 'Master Halaman',
+        'url' => ['/admin/header-setting'],
+        'role' => ['admin'],
+        'icon' => 'iconoir-group',
+        'children' => [
+            [
+                'text' => 'Header',
+                'url' => '/admin/header-setting',
+                'role' => ['admin'],
+            ],
+            // [
+            //     'text' => 'Spesialisasi',
+            //     'url' => '/admin/specializations',
+            //     'role' => ['admin'],
+            // ],
+            // [
+            //     'text' => 'Jadwal Dokter',
+            //     'url' => '/admin/doctor-schedules',
+            //     'role' => ['admin'],
+            // ]
+        ],
+    ],
+
     // Antrean
     // [
     //     'text' => 'ANTREAN',

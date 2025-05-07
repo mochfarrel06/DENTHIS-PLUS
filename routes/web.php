@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\DoctorController;
 use App\Http\Controllers\Admin\DoctorScheduleController;
 use App\Http\Controllers\Admin\PatientController;
+use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SpecializationController;
 use App\Http\Controllers\Admin\UserManagementController;
 use App\Http\Controllers\Auth\LoginController;
@@ -67,6 +68,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'role:admin
     Route::get('user-management/{id}/edit', [UserManagementController::class, 'edit'])->name('user-management.edit');
     Route::put('user-management/{id}', [UserManagementController::class, 'update'])->name('user-management.update');
     Route::delete('user-management/{id}', [UserManagementController::class, 'destroy'])->name('user-management.destroy');
+
+    Route::get('header-setting', [SettingController::class, 'edit_header'])->name('header-setting.edit');
+    Route::put('header-setting', [SettingController::class, 'update_header'])->name('header-setting.update');
 });
 
 // 4. Route patient

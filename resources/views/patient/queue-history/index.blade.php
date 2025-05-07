@@ -71,11 +71,11 @@
                                                         <i class="iconoir-more-vert"></i>
                                                     </a>
                                                     <ul class="dropdown-menu dropdown-menu-right">
-                                                        <li><a class="dropdown-item"
+                                                        {{-- <li><a class="dropdown-item"
                                                                 href="{{ route('history.history-medical.pdf', $queue->medical_id) }}"
                                                                 target="_blank"><i class="iconoir-download mr-2"></i>
                                                                 Download</a>
-                                                        </li>
+                                                        </li> --}}
                                                     </ul>
                                                 </div>
                                             </td>

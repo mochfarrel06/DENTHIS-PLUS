@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Patient;
 
 use App\Http\Controllers\Controller;
 use App\Models\MedicalRecord;
+use App\Models\Queue;
 use App\Models\QueueHistory;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
@@ -17,9 +18,14 @@ class QueueHistoryController extends Controller
         $jumlahhistory = QueueHistory::count();
 
         if ($role === 'admin' || $role === 'dokter') {
-            $queueHistories = QueueHistory::all();
+            $queueHistories = Queue::with('doctor')
+                ->where('status', '!=', 'batal')
+                ->get();
         } else {
-            $queueHistories = QueueHistory::where('user_id', $user->id)->get();
+            $queueHistories = Queue::with('doctor')
+                ->where('user_id', $user->id)
+                ->where('status', '!=', 'batal')
+                ->get();
         }
 
         return view('patient.queue-history.index', compact('queueHistories', 'jumlahhistory'));

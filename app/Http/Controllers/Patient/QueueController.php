@@ -17,23 +17,20 @@ class QueueController extends Controller
 {
     public function index()
     {
-        // $queues = Queue::with('doctor')->get();
-        // $userQueue = Queue::where('user_id', auth()->id())->where('status', 'called')->first();
-        // return view('patient.queue.index', compact('queues', 'userQueue'));
-
-        // Ambil role pengguna yang sedang login
         $user = auth()->user();
-        $role = $user->role; // Pastikan ada kolom 'role' di tabel users
+        $role = $user->role;
 
-        // Jika user adalah admin atau dokter, tampilkan semua antrian
         if ($role === 'admin' || $role === 'dokter') {
-            $queues = Queue::with('doctor')->get();
+            $queues = Queue::with('doctor')
+                ->where('status', '!=', 'batal')
+                ->get();
         } else {
-            // Jika user adalah pasien, hanya tampilkan antrian miliknya
-            $queues = Queue::with('doctor')->where('user_id', $user->id)->get();
+            $queues = Queue::with('doctor')
+                ->where('user_id', $user->id)
+                ->where('status', '!=', 'batal')
+                ->get();
         }
 
-        // Ambil antrian pasien yang statusnya 'called' berdasarkan user_id
         $userQueue = Queue::where('user_id', $user->id)->where('status', 'called')->first();
 
         return view('patient.queue.index', compact('queues', 'userQueue'));
