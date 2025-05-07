@@ -23,11 +23,13 @@ class QueueController extends Controller
         if ($role === 'admin' || $role === 'dokter') {
             $queues = Queue::with('doctor')
                 ->where('status', '!=', 'batal')
+                ->where('status', '!=', 'selesai')
                 ->get();
         } else {
             $queues = Queue::with('doctor')
                 ->where('user_id', $user->id)
                 ->where('status', '!=', 'batal')
+                ->where('status', '!=', 'selesai')
                 ->get();
         }
 
@@ -114,6 +116,8 @@ class QueueController extends Controller
             'start_time' => $request->start_time,
             'end_time' => $request->end_time,
             'keterangan' => $request->keterangan,
+            'waktu_mulai' => $request->start_time,
+            'waktu_selesai' => $request->end_time,
             // 'urutan' => $newUrutan,
             'status' => 'booking',
             'is_booked' => true
@@ -128,22 +132,27 @@ class QueueController extends Controller
             $queue = Queue::findOrFail($id);
             $userId = Auth::id();
 
-            QueueHistory::create([
-                'queue_id' => $queue->id,
-                'user_id' => $userId,
-                'doctor_id' => $queue->doctor_id,
-                'patient_id' => $queue->patient_id,
-                'tgl_periksa' => $queue->tgl_periksa,
-                'start_time' => $queue->start_time,
-                'end_time' => $queue->end_time,
-                'keterangan' => $queue->keterangan,
+            // QueueHistory::create([
+            //     'queue_id' => $queue->id,
+            //     'user_id' => $userId,
+            //     'doctor_id' => $queue->doctor_id,
+            //     'patient_id' => $queue->patient_id,
+            //     'tgl_periksa' => $queue->tgl_periksa,
+            //     'start_time' => $queue->start_time,
+            //     'end_time' => $queue->end_time,
+            //     'keterangan' => $queue->keterangan,
+            //     'status' => 'batal',
+            //     'is_booked' => $queue->is_booked,
+            // ]);
+
+            // $queue->delete();
+            $queue->update([
                 'status' => 'batal',
-                'is_booked' => $queue->is_booked,
+                'start_time' => null,
+                'end_time' => null,
             ]);
 
-            $queue->delete();
-
-            return response(['status' => 'success', 'message' => 'Berhasil menghapus data pasien']);
+            return response(['status' => 'success', 'message' => 'Berhasil membatalkan antrean pasien']);
         } catch (\Exception $e) {
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
         }

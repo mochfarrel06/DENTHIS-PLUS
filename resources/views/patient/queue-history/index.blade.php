@@ -53,7 +53,7 @@
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $queue->patient->nama_depan }} {{ $queue->patient->nama_belakang }}</td>
                                             <td>{{ $queue->tgl_periksa }}</td>
-                                            <td>{{ \Carbon\Carbon::createFromFormat('H:i:s', $queue->start_time)->format('H:i') }} - {{ \Carbon\Carbon::createFromFormat('H:i:s', $queue->end_time)->format('H:i') }}</td>
+                                            <td>{{ \Carbon\Carbon::createFromFormat('H:i:s', $queue->start_time ?? $queue->waktu_mulai)->format('H:i') }} - {{ \Carbon\Carbon::createFromFormat('H:i:s', $queue->end_time ?? $queue->waktu_selesai)->format('H:i') }}</td>
                                             <td>{{ $queue->doctor->nama_depan }} {{ $queue->doctor->nama_belakang }}</td>
                                             <td>{{ $queue->keterangan }}</td>
                                             <td>@if ($queue->status == 'booking')
@@ -71,11 +71,16 @@
                                                         <i class="iconoir-more-vert"></i>
                                                     </a>
                                                     <ul class="dropdown-menu dropdown-menu-right">
-                                                        {{-- <li><a class="dropdown-item"
+                                                        <li><a class="dropdown-item" href="{{ route('history.queue-history.show', $queue->id) }}"><i
+                                                            class="iconoir-eye-solid mr-2"></i> Detail</a>
+                                                        </li>
+                                                        @if ($queue->status == 'selesai' && $queue->medical_id)
+                                                            <li><a class="dropdown-item"
                                                                 href="{{ route('history.history-medical.pdf', $queue->medical_id) }}"
                                                                 target="_blank"><i class="iconoir-download mr-2"></i>
                                                                 Download</a>
-                                                        </li> --}}
+                                                            </li>
+                                                        @endif
                                                     </ul>
                                                 </div>
                                             </td>

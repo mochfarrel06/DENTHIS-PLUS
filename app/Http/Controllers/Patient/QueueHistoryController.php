@@ -19,13 +19,13 @@ class QueueHistoryController extends Controller
 
         if ($role === 'admin' || $role === 'dokter') {
             $queueHistories = Queue::with('doctor')
-                ->where('status', '!=', 'batal')
+                ->where('status', '!=', 'booking')
                 ->get();
         } else {
             $queueHistories = Queue::with('doctor')
-                ->where('user_id', $user->id)
-                ->where('status', '!=', 'batal')
-                ->get();
+            ->where('user_id', $user->id)
+            ->where('status', '!=', 'booking')
+            ->get();
         }
 
         return view('patient.queue-history.index', compact('queueHistories', 'jumlahhistory'));
@@ -56,5 +56,12 @@ class QueueHistoryController extends Controller
             ->setPaper('a4', 'portrait');
 
         return $pdf->stream('rekam_medis.pdf');
+    }
+
+    public function show(string $id)
+    {
+        $queue = Queue::findOrFail($id);
+
+        return view('patient.queue-history.show', compact('queue'));
     }
 }

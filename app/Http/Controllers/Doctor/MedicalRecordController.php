@@ -40,21 +40,24 @@ class MedicalRecordController extends Controller
                 'catatan_medis' => $request->catatan_medis,
             ]);
 
-            $queue->update(['status' => 'selesai']);
-
-            QueueHistory::create([
-                'queue_id' => $queue->id,
-                'user_id' => $queue->user_id,
+            $queue->update([
+                'status' => 'selesai',
                 'medical_id' => $medicalRecord->id,
-                'doctor_id' => $queue->doctor_id,
-                'patient_id' => $queue->patient_id,
-                'tgl_periksa' => $queue->tgl_periksa,
-                'start_time' => $queue->start_time,
-                'end_time' => $queue->end_time,
-                'keterangan' => $queue->keterangan,
-                'status' => $queue->status,
-                'is_booked' => $queue->is_booked,
             ]);
+
+            // QueueHistory::create([
+            //     'queue_id' => $queue->id,
+            //     'user_id' => $queue->user_id,
+            //     'medical_id' => $medicalRecord->id,
+            //     'doctor_id' => $queue->doctor_id,
+            //     'patient_id' => $queue->patient_id,
+            //     'tgl_periksa' => $queue->tgl_periksa,
+            //     'start_time' => $queue->start_time,
+            //     'end_time' => $queue->end_time,
+            //     'keterangan' => $queue->keterangan,
+            //     'status' => $queue->status,
+            //     'is_booked' => $queue->is_booked,
+            // ]);
 
             session()->flash('success', 'Berhasil menambahkan data rekam medis');
             return response()->json(['success' => true], 200);
