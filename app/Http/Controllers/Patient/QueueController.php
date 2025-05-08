@@ -282,6 +282,9 @@ class QueueController extends Controller
             'keterangan' => 'nullable|string',
         ]);
 
+        $patient = Patient::findOrFail($request->patient_id);
+        $userId = $patient->user_id;
+
         // Loop untuk menyimpan multiple appointment
         foreach ($request->tgl_periksa as $index => $tgl_periksa) {
             $existingQueue = Queue::where('doctor_id', $request->doctor_id)
@@ -294,12 +297,14 @@ class QueueController extends Controller
             }
 
             Queue::create([
-                'user_id' => $request->user_id,
+                'user_id' => $userId,
                 'doctor_id' => $request->doctor_id,
                 'patient_id' => $request->patient_id,
                 'tgl_periksa' => $tgl_periksa,
                 'start_time' => $request->start_time[$index],
                 'end_time' => $request->end_time[$index],
+                'waktu_mulai' => $request->start_time[$index],
+                'waktu_selesai' => $request->end_time[$index],
                 'keterangan' => $request->keterangan,
                 'status' => 'booking',
                 'is_booked' => true

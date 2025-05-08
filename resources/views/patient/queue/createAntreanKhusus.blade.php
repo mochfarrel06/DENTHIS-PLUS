@@ -42,7 +42,6 @@
                                                 <option value="">-- Pilih Pasien --</option>
                                                 @foreach ($patients as $patient)
                                                     <option value="{{ $patient->id }}">{{ $patient->nama_depan }} {{ $patient->nama_belakang }}</option>
-                                                    <input type="hidden" name="user_id" id="user_id" value="{{ $patient->user_id }}">
                                                 @endforeach
                                             </select>
                                         </div>

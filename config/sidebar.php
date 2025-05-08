@@ -43,6 +43,14 @@ return [
         'icon' => 'iconoir-user-square',
     ],
 
+    // 3. PASIEN
+    [
+        'text' => 'Dashboard',
+        'url' => '/patient/dashboard',
+        'role' => ['pasien'],
+        'icon' => 'iconoir-dashboard-speed',
+    ],
+
     // 2. Dokter
     [
         'text' => 'Dashboard',
@@ -53,17 +61,11 @@ return [
     [
         'text' => 'Rekam Medis',
         'url' => '/doctor/medical-record',
-        'role' => ['dokter'],
+        'role' => ['dokter', 'pasien'],
         'icon' => 'iconoir-book',
     ],
 
-    // 3. PASIEN
-    [
-        'text' => 'Dashboard',
-        'url' => '/patient/dashboard',
-        'role' => ['pasien'],
-        'icon' => 'iconoir-dashboard-speed',
-    ],
+
 
 
     [

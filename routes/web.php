@@ -108,13 +108,13 @@ Route::group(['prefix' => 'history', 'as' => 'history.', 'middleware' => 'role:a
 });
 
 // 7. Route doctor
-Route::group(['prefix' => 'doctor', 'as' => 'doctor.', 'middleware' => 'role:dokter'], function () {
-    Route::get('dashboard', [DoctorDashboardController::class, 'index'])->name('dashboard');
+Route::group(['prefix' => 'doctor', 'as' => 'doctor.', 'middleware' => 'role:dokter,pasien'], function () {
+    Route::get('dashboard', [DoctorDashboardController::class, 'index'])->name('dashboard')->middleware('role:dokter');
 
-    Route::get('/medical-record', [MedicalRecordController::class, 'index'])->name('medical-record.index');
-    Route::get('/medical-record/create', [MedicalRecordController::class, 'create'])->name('medical-record.create');
-    Route::post('/medical-record/store', [MedicalRecordController::class, 'store'])->name('medical-record.store');
-    Route::get('/medical-record/{id}', [MedicalRecordController::class, 'show'])->name('medical-record.show');
+    Route::get('/medical-record', [MedicalRecordController::class, 'index'])->name('medical-record.index')->middleware('role:pasien,dokter');
+    Route::get('/medical-record/create', [MedicalRecordController::class, 'create'])->name('medical-record.create')->middleware('role:dokter');
+    Route::post('/medical-record/store', [MedicalRecordController::class, 'store'])->name('medical-record.store')->middleware('role:dokter');
+    Route::get('/medical-record/{id}', [MedicalRecordController::class, 'show'])->name('medical-record.show')->middleware('role:pasien,dokter');
 
     Route::get('/medical-record/{id}/pdf', [MedicalRecordController::class, 'generatePDF'])->name('medical-record.pdf');
 });
