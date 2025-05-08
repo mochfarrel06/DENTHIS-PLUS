@@ -25,13 +25,13 @@
                                 <i class="iconoir-table mr-2"></i>
                                 <h3 class="card-title">Riwayat Antrean Pasien</h3>
                             </div>
-                            <div class="ml-auto">
+                            {{-- <div class="ml-auto">
                                 <a href="{{ $jumlahhistory > 0 ? route('history.pdf') : '#' }}"
                                     class="btn btn-primary d-flex align-items-center {{ $jumlahhistory <= 0 ? 'disabled' : '' }}"
                                     target="_blank">
                                     <i class="iconoir-download mr-2"></i> Export
                                 </a>
-                            </div>
+                            </div> --}}
                         </div>
                         <div class="card-body">
                             <table id="example1" class="table table-bordered table-striped">
