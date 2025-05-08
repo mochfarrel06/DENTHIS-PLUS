@@ -15,7 +15,14 @@ class MedicalRecordController extends Controller
 {
     public function index()
     {
-        $medicalRecords = MedicalRecord::all();
+        $user = auth()->user();
+        $role = $user->role;
+
+        if ($role === 'admin' || $role === 'dokter') {
+            $medicalRecords = MedicalRecord::all();
+        } else {
+            $medicalRecords = MedicalRecord::where('user_id', $user->id)->get();
+        }
 
         return view('doctor.medical-record.index', compact('medicalRecords'));
     }
