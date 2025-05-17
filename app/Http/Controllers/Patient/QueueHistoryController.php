@@ -20,11 +20,13 @@ class QueueHistoryController extends Controller
         if ($role === 'admin' || $role === 'dokter') {
             $queueHistories = Queue::with('doctor')
                 ->where('status', '!=', 'booking')
+                ->where('status', '!=', 'periksa')
                 ->get();
         } else {
             $queueHistories = Queue::with('doctor')
             ->where('user_id', $user->id)
             ->where('status', '!=', 'booking')
+            ->where('status', '!=', 'periksa')
             ->get();
         }
 

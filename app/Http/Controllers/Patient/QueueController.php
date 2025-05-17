@@ -12,6 +12,7 @@ use App\Models\QueueHistory;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 
 class QueueController extends Controller
 {
@@ -130,22 +131,24 @@ class QueueController extends Controller
     {
         try {
             $queue = Queue::findOrFail($id);
-            $userId = Auth::id();
 
-            // QueueHistory::create([
-            //     'queue_id' => $queue->id,
-            //     'user_id' => $userId,
-            //     'doctor_id' => $queue->doctor_id,
-            //     'patient_id' => $queue->patient_id,
-            //     'tgl_periksa' => $queue->tgl_periksa,
-            //     'start_time' => $queue->start_time,
-            //     'end_time' => $queue->end_time,
-            //     'keterangan' => $queue->keterangan,
-            //     'status' => 'batal',
-            //     'is_booked' => $queue->is_booked,
-            // ]);
+            $queue->update([
+                'status' => 'batal',
+                'start_time' => null,
+                'end_time' => null,
+            ]);
 
-            // $queue->delete();
+            return response(['status' => 'success', 'message' => 'Berhasil membatalkan antrean pasien']);
+        } catch (\Exception $e) {
+            return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
+        }
+    }
+
+    public function batalAntrean(string $id)
+    {
+        try {
+            $queue = Queue::findOrFail($id);
+
             $queue->update([
                 'status' => 'batal',
                 'start_time' => null,
@@ -207,7 +210,28 @@ class QueueController extends Controller
         $queue->status = 'periksa';
 
         $queue->save();
-        return response()->json(['status' => 'success', 'message' => 'Pasien sedang di periksa']);
+
+        $phone = $queue->patient->no_hp;
+        $message = "Halo, pasien dengan nama {$queue->patient->nama_depan} Bisa periksa sekarang";
+
+
+        $response = Http::withHeaders([
+            'Authorization' => 'QPwX1ySyYbPhmV4MAzJ8', // Ganti dengan API Key Fonnte
+            'Content-Type'  => 'application/json',
+        ])->post('https://api.fonnte.com/send', [
+            'target'      => $phone,
+            'message'     => $message,
+            'countryCode' => '62', // Indonesia
+        ]);
+
+        $fonnteResponse = $response->json();
+
+        // Kirim response JSON ke JavaScript
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Berhasil melakukan pemanggil antrean pasien.',
+            'fonnte' => $fonnteResponse
+        ]);
     }
 
     public function show(string $id)

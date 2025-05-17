@@ -51,6 +51,7 @@ class Kernel extends ConsoleKernel
     {
         $appointments = Queue::where('tgl_periksa', today())
             ->where('start_time', Carbon::now()->addMinutes($minutesBefore)->format('H:i'))
+            ->where('status', 'booking')
             ->get();
 
         foreach ($appointments as $appointment) {
