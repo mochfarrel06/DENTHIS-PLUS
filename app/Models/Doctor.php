@@ -52,7 +52,13 @@ class Doctor extends Model
         return $this->belongsTo(Specialization::class);
     }
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(User::class);
+    }
+
+    public function queues()
+    {
+        return $this->hasMany(Queue::class);
     }
 }

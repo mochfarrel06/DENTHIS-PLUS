@@ -11,11 +11,15 @@ class DashboardController extends Controller
 {
     public function index()
     {
+        $doctorId = auth()->user()->doctor->id;
+
         $jumlahAntrean = Queue::whereDate('tgl_periksa', Carbon::today())
+            ->where('doctor_id', $doctorId)
             ->whereIn('status', ['booking', 'periksa']) // Menambahkan filter status booking dan periksa
             ->count();
 
         $antreanHariIni = Queue::whereDate('tgl_periksa', Carbon::today())
+            ->where('doctor_id', $doctorId)
             ->orderBy('start_time', 'asc')
             ->where('status', '!=', 'selesai')
             ->where('status', '!=', 'batal')

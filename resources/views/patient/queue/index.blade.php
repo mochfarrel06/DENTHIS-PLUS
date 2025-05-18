@@ -103,7 +103,7 @@
                                                                         class="iconoir-trash-solid mr-2"></i> Batal</a>
                                                             </li> --}}
                                                         @endif
-                                                        <li><a class="dropdown-item"
+                                                        <li style="cursor: pointer"><a class="dropdown-item"
                                                                 onclick="batalAntrean({{ $queue->id }})"><i
                                                                     class="iconoir-xmark mr-2"></i> Batal</a>
                                                         </li>

@@ -29,7 +29,10 @@ class MedicalRecordController extends Controller
 
     public function create()
     {
-        $queues = Queue::where('status', 'periksa')->get();
+        $user = auth()->user();
+        $queues = Queue::where('status', 'periksa')
+            ->where('doctor_id', $user->doctor->id)
+            ->get();
         return view('doctor.medical-record.create', compact('queues'));
     }
 

@@ -21,8 +21,14 @@ class QueueController extends Controller
         $user = auth()->user();
         $role = $user->role;
 
-        if ($role === 'admin' || $role === 'dokter') {
+        if ($role === 'admin') {
             $queues = Queue::with('doctor')
+                ->where('status', '!=', 'batal')
+                ->where('status', '!=', 'selesai')
+                ->get();
+        } elseif ($role === 'dokter') {
+            $queues = Queue::with('doctor')
+                ->where('doctor_id', $user->doctor->id)
                 ->where('status', '!=', 'batal')
                 ->where('status', '!=', 'selesai')
                 ->get();
@@ -95,17 +101,30 @@ class QueueController extends Controller
         $patient = Patient::where('email', $userEmail)->first();
 
         if (!$patient) {
-            return redirect()->back()->withErrors(['error' => 'Data pasien tidak ditemukan untuk pengguna ini.']);
+            return redirect()->back()->with('warning', 'Data pasien tidak ditemukan untuk pengguna ini.');
         }
 
         // Cek apakah slot waktu sudah dipesan
-        $existingQueue = Queue::where('doctor_id', $request->doctor_id)
+        $existingQueue = Queue::where('user_id', $userId)
             ->where('tgl_periksa', $request->tgl_periksa)
-            ->where('start_time', $request->start_time)
+            ->whereNotNull('start_time')
+            ->whereNotNull('end_time')
+            ->where('status', '!=', 'batal') // Tambahan: hanya antrean aktif
             ->exists();
 
         if ($existingQueue) {
-            return redirect()->back()->withErrors(['error' => 'Slot waktu ini sudah dipesan.']);
+             return redirect()->back()->with('warning', 'Antrean hanya dapat dilakukan sehari 1 kali saja');
+        }
+
+        if ($request->start_time && $request->end_time) {
+            $existingQueue = Queue::where('doctor_id', $request->doctor_id)
+                ->where('tgl_periksa', $request->tgl_periksa)
+                ->where('start_time', $request->start_time)
+                ->exists();
+
+            if ($existingQueue) {
+                return redirect()->back()->withErrors(['error' => 'Slot waktu ini sudah dipesan.']);
+            }
         }
 
         // Simpan data antrean
@@ -119,7 +138,6 @@ class QueueController extends Controller
             'keterangan' => $request->keterangan,
             'waktu_mulai' => $request->start_time,
             'waktu_selesai' => $request->end_time,
-            // 'urutan' => $newUrutan,
             'status' => 'booking',
             'is_booked' => true
         ]);
@@ -155,7 +173,29 @@ class QueueController extends Controller
                 'end_time' => null,
             ]);
 
-            return response(['status' => 'success', 'message' => 'Berhasil membatalkan antrean pasien']);
+            $phone = $queue->patient->no_hp;
+            $message = "Halo, pasien dengan nama {$queue->patient->nama_depan} {$queue->patient->nama_belakang} antrean anda tanggal {$queue->tgl_periksa} pada pukul " .
+                Carbon::parse($queue->waktu_mulai)->format('H:i') . " - " .
+                Carbon::parse($queue->waktu_selesai)->format('H:i') . " kami batalkan";
+
+
+            $response = Http::withHeaders([
+                'Authorization' => 'QPwX1ySyYbPhmV4MAzJ8', // Ganti dengan API Key Fonnte
+                'Content-Type'  => 'application/json',
+            ])->post('https://api.fonnte.com/send', [
+                'target'      => $phone,
+                'message'     => $message,
+                'countryCode' => '62', // Indonesia
+            ]);
+
+            $fonnteResponse = $response->json();
+
+            // Kirim response JSON ke JavaScript
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Berhasil membatalkan antrean pasien.',
+                'fonnte' => $fonnteResponse
+            ]);
         } catch (\Exception $e) {
             return response()->json(['status' => 'error', 'message' => $e->getMessage()]);
         }

@@ -60,7 +60,8 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="time-slots">Janji Temu Tersedia</label>
-                                            <div class="time-slot-box @error('start_time') is-invalid @enderror @error('end_time') is-invalid @enderror">
+                                            <div
+                                                class="time-slot-box @error('start_time') is-invalid @enderror @error('end_time') is-invalid @enderror">
                                                 <div class="container-time" id="time-slots"></div>
                                             </div>
                                             @error('start_time')
@@ -70,15 +71,18 @@
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
                                         </div>
-                                        <input type="hidden" name="start_time" id="selected-start-time" value="{{ old('start_time') }}">
-                                        <input type="hidden" name="end_time" id="selected-end-time" value="{{ old('end_time') }}">
+                                        <input type="hidden" name="start_time" id="selected-start-time"
+                                            value="{{ old('start_time') }}">
+                                        <input type="hidden" name="end_time" id="selected-end-time"
+                                            value="{{ old('end_time') }}">
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label for="keterangan">Keterangan Periksa</label>
-                                            <textarea name="keterangan" id="keterangan" cols="20" rows="5" class="form-control @error('keterangan') is-invalid @enderror"></textarea>
+                                            <textarea name="keterangan" id="keterangan" cols="20" rows="5"
+                                                class="form-control @error('keterangan') is-invalid @enderror"></textarea>
                                             @error('keterangan')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
@@ -141,5 +145,16 @@
             });
         });
         document.getElementById('date').min = new Date().toISOString().split('T')[0];
+    </script>
+
+    <script>
+        @if (session('warning'))
+            Swal.fire({
+                icon: 'warning',
+                title: 'Peringatan',
+                text: '{{ session('warning') }}',
+                confirmButtonText: 'OK'
+            });
+        @endif
     </script>
 @endpush
