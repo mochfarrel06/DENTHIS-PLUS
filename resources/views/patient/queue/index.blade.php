@@ -97,16 +97,16 @@
                                                                     onclick="selesaiPeriksa({{ $queue->id }})"><i
                                                                         class="iconoir-check mr-2"></i> Selesai Periksa</a>
                                                             </li> --}}
-                                                            {{-- @elseif ((auth()->user()->role == 'admin' && $queue->status == 'booking') || (auth()->user()->role == 'pasien' && $queue->status == 'booking'))
-                                                            <li><a class="dropdown-item delete-item"
-                                                                    href="{{ route('data-patient.queue.destroy', $queue->id) }}"><i
-                                                                        class="iconoir-trash-solid mr-2"></i> Batal</a>
-                                                            </li> --}}
+                                                        @elseif (auth()->user()->role == 'admin' || auth()->user()->role == 'pasien')
+                                                            <li style="cursor: pointer"><a class="dropdown-item"
+                                                                    onclick="batalAntrean({{ $queue->id }})"><i
+                                                                        class="iconoir-xmark mr-2"></i> Batal</a>
+                                                            </li>
                                                         @endif
-                                                        <li style="cursor: pointer"><a class="dropdown-item"
+                                                        {{-- <li style="cursor: pointer"><a class="dropdown-item"
                                                                 onclick="batalAntrean({{ $queue->id }})"><i
                                                                     class="iconoir-xmark mr-2"></i> Batal</a>
-                                                        </li>
+                                                        </li> --}}
                                                     </ul>
                                                 </div>
                                             </td>
