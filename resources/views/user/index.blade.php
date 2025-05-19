@@ -174,7 +174,7 @@
     <!-- /Services Section -->
 
     <!-- Contact Section -->
-    {{-- <section id="contact" class="contact section">
+    <section id="contact" class="contact section">
         <!-- Section Title -->
         <div class="container section-title" data-aos="fade-up">
             <h2>Kontak</h2>
@@ -187,7 +187,7 @@
 
         <div class="container" data-aos="fade-up" data-aos-delay="100">
             <div class="row gx-lg-0 gy-4">
-                <div class="col-lg-4">
+                <div class="col-lg-12">
                     <div class="info-container d-flex flex-column align-items-center justify-content-center">
                         <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="200">
                             <i class="bi bi-geo-alt flex-shrink-0"></i>
@@ -202,7 +202,7 @@
                             <i class="bi bi-telephone flex-shrink-0"></i>
                             <div>
                                 <h3>Nomor</h3>
-                                <p>+628233222832</p>
+                                <p>+62858503750132</p>
                             </div>
                         </div>
                         <!-- End Info Item -->
@@ -211,7 +211,7 @@
                             <i class="bi bi-envelope flex-shrink-0"></i>
                             <div>
                                 <h3>Email Us</h3>
-                                <p>denthis.plus@gmail.com</p>
+                                <p>denthis@gmail.com</p>
                             </div>
                         </div>
                         <!-- End Info Item -->
@@ -220,14 +220,14 @@
                             <i class="bi bi-clock flex-shrink-0"></i>
                             <div>
                                 <h3>Jam Buka</h3>
-                                <p>Senin-Minggu: 08.00 - 16:00</p>
+                                <p>Senin-Minggu: 08.00 - 22.00</p>
                             </div>
                         </div>
                         <!-- End Info Item -->
                     </div>
                 </div>
 
-                <div class="col-lg-8">
+                {{-- <div class="col-lg-8">
                     <form action="forms/contact.php" method="post" class="php-email-form" data-aos="fade"
                         data-aos-delay="100">
                         <div class="row gy-4">
@@ -261,10 +261,10 @@
                             </div>
                         </div>
                     </form>
-                </div>
+                </div> --}}
                 <!-- End Contact Form -->
             </div>
         </div>
-    </section> --}}
+    </section>
     <!-- /Contact Section -->
 @endsection
