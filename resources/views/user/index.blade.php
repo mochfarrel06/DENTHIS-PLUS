@@ -8,7 +8,7 @@
                     <h2>Lindungi Kesehatan Gigi</h2>
                     <p>Kami Menyediakan Solusi Perawatan Kesehatan Gigi</p>
                     <div class="d-flex">
-                        <a href="#about" class="btn-get-started">Ayo Ambil Antrian</a>
+                        <a href="{{ route('login') }}" class="btn-get-started">Ayo Ambil Antrian</a>
                     </div>
                 </div>
                 <div class="col-lg-5 order-1 order-lg-2 d-flex justify-content-center">
