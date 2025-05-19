@@ -5,8 +5,7 @@
         <div class="container section-title" data-aos="fade-up">
             <h2>Dokter Kami</h2>
             <p>
-                Necessitatibus eius consequatur ex aliquid fuga eum quidem sint
-                consectetur velit
+                Temui dokter terpercaya kami, siap memberikan layanan kesehatan terbaik dengan profesionalisme dan empati
             </p>
         </div>
 
