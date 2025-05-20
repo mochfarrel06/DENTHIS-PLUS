@@ -103,10 +103,10 @@
                                                                         class="iconoir-xmark mr-2"></i> Batal</a>
                                                             </li>
                                                         @endif
-                                                        {{-- <li style="cursor: pointer"><a class="dropdown-item"
+                                                        <li style="cursor: pointer"><a class="dropdown-item"
                                                                 onclick="batalAntrean({{ $queue->id }})"><i
                                                                     class="iconoir-xmark mr-2"></i> Batal</a>
-                                                        </li> --}}
+                                                        </li>
                                                     </ul>
                                                 </div>
                                             </td>

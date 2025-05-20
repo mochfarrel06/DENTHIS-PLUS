@@ -136,7 +136,7 @@
                 let row = $(this).closest('tr'); // Get the row to be deleted
 
                 Swal.fire({
-                    title: "Apakah anda ingin membatalkan antrean?",
+                    title: "Apakah anda ingin menghapus?",
                     text: "",
                     icon: "warning",
                     showCancelButton: true,
