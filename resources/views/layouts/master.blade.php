@@ -136,13 +136,13 @@
                 let row = $(this).closest('tr'); // Get the row to be deleted
 
                 Swal.fire({
-                    title: "Apakah anda ingin membatalkan antrean?",
+                    title: "Apakah anda ingin menghapus?",
                     text: "",
                     icon: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#3085d6",
                     cancelButtonColor: "#d33",
-                    confirmButtonText: 'Ya, batalkan antrean!',
+                    confirmButtonText: 'Ya!',
                     cancelButtonText: 'Batal'
                 }).then((result) => {
                     if (result.isConfirmed) {
