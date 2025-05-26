@@ -52,22 +52,36 @@ class Kernel extends ConsoleKernel
         $appointments = Queue::where('tgl_periksa', today())
             ->where('start_time', Carbon::now()->addMinutes($minutesBefore)->format('H:i'))
             ->where('status', 'booking')
+            ->orderBy('start_time')
             ->get();
 
         foreach ($appointments as $appointment) {
-            $phone = $appointment->patient->no_hp; // Pastikan ini ada di database
-            $message = ($minutesBefore == 0)
-                ? "Halo {$appointment->patient_name}, waktunya untuk pemeriksaan! Silakan datang ke lokasi."
-                : "Halo {$appointment->patient_name}, antrean Anda kurang 10 menit lagi. Mohon bersiap.";
-
-            // Kirim pesan ke WhatsApp menggunakan API Fonnte
-            $this->sendWhatsAppMessage($phone, $message);
+            $phone = $appointment->patient->no_hp;
+            $message = "";
 
             if ($minutesBefore == 0) {
-                $appointment->update(['status' => 'periksa']);
+                // Cek antrean sebelumnya berdasarkan waktu dan dokter yang sama
+                $previousQueue = Queue::where('tgl_periksa', today())
+                    ->where('doctor_id', $appointment->doctor_id)
+                    ->where('start_time', '<', $appointment->start_time)
+                    ->whereIn('status', ['booking', 'periksa'])
+                    ->orderByDesc('start_time')
+                    ->first();
+
+                if ($previousQueue) {
+                    $message = "Halo {$appointment->patient_name}, antrean sebelumnya belum selesai. Mohon ditunggu, antrean Anda akan dipanggil sebentar lagi.";
+                } else {
+                    $message = "Halo {$appointment->patient_name}, waktunya untuk pemeriksaan! Silakan datang ke lokasi.";
+                    $appointment->update(['status' => 'periksa']);
+                }
+            } else {
+                $message = "Halo {$appointment->patient_name}, antrean Anda kurang 10 menit lagi. Mohon bersiap.";
             }
+
+            $this->sendWhatsAppMessage($phone, $message);
         }
     }
+
 
     protected function sendWhatsAppMessage($phone, $message)
     {

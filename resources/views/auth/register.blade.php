@@ -54,7 +54,7 @@
                             </div>
                             <div class="col-md-6">
                                 <label for="no_hp" class="form-label">Nomor Kontak</label>
-                                <input type="text" class="form-control @error('no_hp') is-invalid @enderror" name="no_hp" id="no_hp"
+                                <input type="number" class="form-control @error('no_hp') is-invalid @enderror" name="no_hp" id="no_hp"
                                     placeholder="Masukkan Nomor Kontak">
                             </div>
                         </div>
@@ -181,59 +181,6 @@
     </script>
 
 <script>
-    $(document).ready(function() {
-        const $submitBtn = $('#submit-btn');
-        $('#main-form').on('submit', function(event) {
-            event.preventDefault();
-
-            const form = $(this)[0];
-            const formData = new FormData(form);
-
-            $submitBtn.prop('disabled', true).text('Loading...');
-
-            $.ajax({
-                url: form.action,
-                method: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function(response) {
-                    if (response.success) {
-                        sessionStorage.setItem('success',
-                            'Data dokter berhasil disubmit.');
-                        window.location.href =
-                            "{{ route('login') }}";
-                    } else {
-                        $('#flash-messages').html('<div class="alert alert-danger">' +
-                            response.error + '</div>');
-                    }
-                },
-                error: function(response) {
-                    const errors = response.responseJSON.errors;
-                    for (let field in errors) {
-                        let input = $('[name=' + field + ']');
-                        let error = errors[field][0];
-                        input.addClass('is-invalid');
-                        input.next('.invalid-feedback').remove();
-                        input.after('<div class="invalid-feedback">' + error + '</div>');
-                    }
-
-                    const message = response.responseJSON.message ||
-                        'Terdapat kesalahan pada proses dokter';
-                    $('#flash-messages').html('<div class="alert alert-danger">' + message +
-                        '</div>');
-                },
-                complete: function() {
-                    $submitBtn.prop('disabled', false).text('Tambah');
-                }
-            });
-        });
-
-        $('input, select, textarea').on('input change', function() {
-            $(this).removeClass('is-invalid');
-            $(this).next('.invalid-feedback').text('');
-        });
-    });
 </script>
 </body>
 

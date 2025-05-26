@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SpecializationController;
 use App\Http\Controllers\Admin\UserManagementController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Doctor\DashboardController as DoctorDashboardController;
 use App\Http\Controllers\Doctor\MedicalRecordController;
 use App\Http\Controllers\Patient\DashboardController as PatientDashboardController;
@@ -40,6 +41,13 @@ Route::post('logout', [LoginController::class, 'destroy'])->name('login.destroy'
 Route::get('register', [LoginController::class, 'indexRegister'])->name('register');
 Route::post('register', [LoginController::class, 'storeRegister'])->name('register.store');
 Route::get('forgot-password', [LoginController::class, 'indexForgot'])->name('forgot-password');
+
+
+// Verification
+Route::group(['middleware' => ['role:pasien']], function() {
+    Route::get('verify', [VerificationController::class, 'index'])->name('verify');
+    Route::post('send-otp',[VerificationController::class, 'send_otp'])->name('send_otp');
+});
 
 // 2. Route User
 Route::get('/', [UserController::class, 'index'])->name('home');
@@ -74,7 +82,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'role:admin
 });
 
 // 4. Route patient
-Route::group(['prefix' => 'patient', 'as' => 'patient.', 'middleware' => 'role:pasien'], function () {
+Route::group(['prefix' => 'patient', 'as' => 'patient.', 'middleware' => ['role:pasien', 'check.status']], function () {
     Route::get('dashboard', [PatientDashboardController::class, 'index'])->name('dashboard');
 });
 

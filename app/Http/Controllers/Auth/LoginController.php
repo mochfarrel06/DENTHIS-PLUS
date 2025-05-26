@@ -8,11 +8,13 @@ use App\Http\Requests\Patient\PatientStoreRequest;
 use App\Models\Patient;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Mail;
 
 class LoginController extends Controller
 {
@@ -26,16 +28,36 @@ class LoginController extends Controller
         $request->authenticate();
         $request->session()->regenerate();
 
-        if ($request->user()->role === 'admin') {
+        $user = $request->user();
+
+        if ($user->role === 'admin') {
             session()->flash('success', 'Berhasil masuk aplikasi');
             return redirect()->intended(RouteServiceProvider::ADMIN);
-        } else if ($request->user()->role === 'dokter') {
+        } elseif ($user->role === 'dokter') {
             session()->flash('success', 'Berhasil masuk aplikasi');
             return redirect()->intended(RouteServiceProvider::DOCTOR);
-        } else if ($request->user()->role === 'pasien') {
-            session()->flash('success', 'Berhasil masuk aplikasi');
-            return redirect()->intended(RouteServiceProvider::PATIENT);
+        } elseif ($user->role === 'pasien') {
+            if ($user->status === 'active') {
+                session()->flash('success', 'Berhasil masuk aplikasi');
+                return redirect()->intended(RouteServiceProvider::PATIENT);
+            } elseif ($user->status === 'verify') {
+                auth()->logout();
+                return redirect()->route('login')->withErrors([
+                    'email' => 'Akun Anda belum diverifikasi. Silakan verifikasi terlebih dahulu.',
+                ]);
+            } elseif ($user->status === 'banned') {
+                auth()->logout();
+                return redirect()->route('login')->withErrors([
+                    'email' => 'Akun Anda telah diblokir. Silakan hubungi administrator.',
+                ]);
+            }
         }
+
+        // Default fallback jika role tidak dikenali
+        auth()->logout();
+        return redirect()->route('login')->withErrors([
+            'email' => 'Role tidak dikenali atau akses ditolak.',
+        ]);
     }
 
     public function destroy(Request $request)
@@ -49,7 +71,8 @@ class LoginController extends Controller
         return redirect('/login');
     }
 
-    public function indexRegister(){
+    public function indexRegister()
+    {
         return view('auth.register');
     }
 
@@ -62,52 +85,59 @@ class LoginController extends Controller
 
             File::copy($defaultFotoPath, $destinationPath);
 
+            // Buat user
             $user = User::create([
-                'nama_depan' => $request->nama_depan,
+                'nama_depan'    => $request->nama_depan,
                 'nama_belakang' => $request->nama_belakang,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                'role' => 'pasien',
-                'no_hp' => $request->no_hp,
-                'tgl_lahir' => $request->tgl_lahir,
+                'email'         => $request->email,
+                'password'      => Hash::make($request->password),
+                'role'          => 'pasien',
+                'status'        => 'verify', // status awal
+                'no_hp'         => $request->no_hp,
+                'tgl_lahir'     => $request->tgl_lahir,
                 'jenis_kelamin' => $request->jenis_kelamin,
-                'alamat' => $request->alamat,
-                'negara' => $request->negara,
-                'provinsi' => $request->provinsi,
-                'kota' => $request->kota,
-                'kodepos' => $request->kodepos,
-                'foto' => '/uploads/foto_pasien/' . $newFotoName,
+                'alamat'        => $request->alamat,
+                'negara'        => $request->negara,
+                'provinsi'      => $request->provinsi,
+                'kota'          => $request->kota,
+                'kodepos'       => $request->kodepos,
+                'foto'          => '/uploads/foto_pasien/' . $newFotoName,
             ]);
 
+            // Buat patient
             $patient = new Patient([
-                'user_id' => $user->id,
-                'kode_pasien' => Patient::generateKodePasien(),
-                'nama_depan' => $request->nama_depan,
+                'user_id'       => $user->id,
+                'kode_pasien'   => Patient::generateKodePasien(),
+                'nama_depan'    => $request->nama_depan,
                 'nama_belakang' => $request->nama_belakang,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                'no_hp' => $request->no_hp,
-                'tgl_lahir' => $request->tgl_lahir,
+                'email'         => $request->email,
+                'password'      => Hash::make($request->password),
+                'no_hp'         => $request->no_hp,
+                'tgl_lahir'     => $request->tgl_lahir,
                 'jenis_kelamin' => $request->jenis_kelamin,
-                'alamat' => $request->alamat,
-                'negara' => $request->negara,
-                'provinsi' => $request->provinsi,
-                'kota' => $request->kota,
-                'kodepos' => $request->kodepos,
-                'foto' => '/uploads/foto_pasien/' . $newFotoName,
+                'alamat'        => $request->alamat,
+                'negara'        => $request->negara,
+                'provinsi'      => $request->provinsi,
+                'kota'          => $request->kota,
+                'kodepos'       => $request->kodepos,
+                'foto'          => '/uploads/foto_pasien/' . $newFotoName,
             ]);
-
             $patient->save();
 
-            session()->flash('success', 'Berhasil membuat akun pasien');
-            return response()->json(['success' => true], 200);
+            // Login otomatis
+            Auth::login($user);
+
+            // Redirect ke dashboard pasien
+            session()->flash('success', 'Pendaftaran berhasil. Selamat datang!');
+            return redirect()->route('patient.dashboard');
         } catch (\Exception $e) {
             session()->flash('error', 'Terdapat kesalahan pada proses pembuatan akun: ' . $e->getMessage());
             return response()->json(['error' => $e->getMessage()], 400);
         }
     }
 
-    public function indexForgot(){
+    public function indexForgot()
+    {
         return view('auth.forgotPassword');
     }
 }
