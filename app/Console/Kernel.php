@@ -27,7 +27,7 @@ class Kernel extends ConsoleKernel
 
         $schedule->call(function () {
             $appointments = Queue::where('tgl_periksa', today())
-                ->where('start_time', '<=', Carbon::now()->subMinutes(60)->format('H:i'))
+                ->where('start_time', '<=', Carbon::now()->subMinutes(120)->format('H:i'))
                 ->whereNotIn('status', ['selesai', 'batal'])
                 ->get();
 
