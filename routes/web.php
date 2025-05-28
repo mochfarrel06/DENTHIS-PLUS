@@ -47,6 +47,8 @@ Route::get('forgot-password', [LoginController::class, 'indexForgot'])->name('fo
 Route::group(['middleware' => ['role:pasien']], function() {
     Route::get('verify', [VerificationController::class, 'index'])->name('verify');
     Route::post('send-otp',[VerificationController::class, 'send_otp'])->name('send_otp');
+    Route::get('verify/{unique_id}', [VerificationController::class, 'show'])->name('verify.show');
+    Route::put('verify/{unique_id}', [VerificationController::class, 'update'])->name('verify.update');
 });
 
 // 2. Route User

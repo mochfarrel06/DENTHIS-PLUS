@@ -15,22 +15,38 @@
 </head>
 
 <body class="hold-transition login-page">
+
     <div class="login-box">
         <div class="login-logo">
-            <a><b>Verfikasi Email</b></a>
+            <a><b>Verifikasi OTP Email</b></a>
         </div>
         <div class="card">
             <div class="card-body login-card-body" style="padding-bottom: 30px">
-                <p class="login-box-msg">Harap verifikasi akun Anda</p>
-                <form action="{{ route('send_otp') }}" method="POST">
-                    @csrf
-                    <input type="hidden" value="register" name="type">
+                <p class="login-box-msg">Harap masukkan kode otp email anda</p>
 
-                    <div class="d-flex justify-content-center">
-                        <button type="submit" class="btn btn-sm btn-primary">Kirim OTP Email</button>
+                <form action="{{ route('verify.update', $unique_id) }}" method="post">
+                    @csrf
+                    @method('PUT')
+
+
+                    <div class="mb-3">
+                        <input type="number" class="form-control @error('otp') is-invalid @enderror"
+                            placeholder="Masukkan OTP" name="otp" value="{{ old('otp') }}">
+                        @error('otp')
+                            <span class="text-danger text-sm">{{ $message }}</span>
+                        @enderror
                     </div>
 
+
+                    <div class="row mt-4">
+                        <div class="col-md-12">
+                            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                        </div>
+                    </div>
                 </form>
+                <p class="mb-1 mt-1">
+                    <a href="{{ route('verify') }}">Kirim otp lagi?</a>
+                </p>
             </div>
         </div>
     </div>
