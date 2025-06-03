@@ -51,6 +51,11 @@ Route::group(['middleware' => ['role:pasien']], function() {
     Route::put('verify/{unique_id}', [VerificationController::class, 'update'])->name('verify.update');
 });
 
+Route::get('/forgot-password', [VerificationController::class, 'forgotPasswordForm'])->name('forgot.password');
+Route::post('/forgot-password', [VerificationController::class, 'sendForgotPasswordOtp'])->name('forgot.password.send');
+Route::get('/reset-password/{unique_id}', [VerificationController::class, 'resetPasswordForm'])->name('reset.password');
+Route::post('/reset-password/{unique_id}', [VerificationController::class, 'resetPassword'])->name('reset.password.submit');
+
 // 2. Route User
 Route::get('/', [UserController::class, 'index'])->name('home');
 Route::get('/dokter', [UserController::class, 'indexDokter'])->name('index-dokter');

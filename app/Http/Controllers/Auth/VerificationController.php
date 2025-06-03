@@ -75,4 +75,62 @@ class VerificationController extends Controller
             return redirect('/verify/' . $verify->unique_id);
         }
     }
+
+    public function forgotPasswordForm()
+    {
+        return view('auth.auth-password');
+    }
+
+    public function sendForgotPasswordOtp(Request $request)
+    {
+        $request->validate(['email' => 'required|email']);
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user) {
+            return back()->with('error', 'Email tidak ditemukan');
+        }
+
+        $otp = rand(100000, 999999);
+        $verification = Verification::create([
+            'user_id' => $user->id,
+            'unique_id' => uniqid(),
+            'otp' => md5($otp),
+            'type' => 'reset_password',
+            'send_via' => 'email',
+        ]);
+
+        Mail::to($user->email)->queue(new OtpEmail($otp));
+
+        return redirect()->route('reset.password', $verification->unique_id)
+            ->with('success', 'OTP telah dikirim ke email Anda.');
+    }
+
+    public function resetPasswordForm($unique_id)
+    {
+        return view('auth.reset-password', compact('unique_id'));
+    }
+
+    public function resetPassword(Request $request, $unique_id)
+    {
+        $request->validate([
+            'otp' => 'required',
+            'password' => 'required|confirmed|min:6',
+        ]);
+
+        $verification = Verification::where('unique_id', $unique_id)
+            ->where('type', 'reset_password')
+            ->where('status', 'active')
+            ->first();
+
+        if (!$verification || md5($request->otp) !== $verification->otp) {
+            return back()->with('error', 'OTP salah atau tidak valid.');
+        }
+
+        $user = User::find($verification->user_id);
+        $user->update([
+            'password' => bcrypt($request->password),
+        ]);
+
+        return redirect()->route('login')->with('success', 'Password berhasil direset, silakan login kembali.');
+    }
 }

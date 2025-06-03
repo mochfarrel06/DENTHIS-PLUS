@@ -69,6 +69,10 @@
                     <a href="{{ route('register') }}">Buat akun baru?</a>
                 </p>
 
+                <p class="mb-1 mt-1">
+                    <a href="{{ route('forgot.password') }}">Lupa Password?</a>
+                </p>
+
                 {{-- <div class="mt-3 text-center">
                     <button class="btn btn-secondary"
                         onclick="fillLogin('admin@example.com', '123456789')">Admin</button>
