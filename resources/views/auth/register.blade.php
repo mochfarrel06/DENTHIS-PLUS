@@ -30,40 +30,61 @@
                 </div>
                 <div class="card shadow-sm p-4">
                     <h4 class="text-center mb-5">Buat Akun Baru</h4>
-                    <form id="main-form" method="POST" action="{{ route('register.store') }}">
+                    <form id="main-form" method="POST" action="{{ route('register.store') }}"
+                        enctype="multipart/form-data">
                         @csrf
+
+                        <div class="row g-3 mt-2">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Profil</label>
+                                    <div>
+                                        <img id="profileImage" class="profile-user-img img-fluid img-circle"
+                                            src="{{ asset('assets/admin/dist/img/avatar.png') }}"
+                                            alt="User profile picture"
+                                            style="cursor: pointer; object-fit: cover; width: 120px; height: 120px; border-radius: 50%;">
+                                        <input type="file" id="foto" name="foto" style="display: none;"
+                                            accept="image/*">
+                                    </div>
+                                    @error('foto')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <label for="nama_depan" class="form-label">Nama Depan</label>
-                                <input type="text" class="form-control @error('nama_depan') is-invalid @enderror" name="nama_depan" id="nama_depan"
-                                    placeholder="Masukkan Nama Depan">
+                                <input type="text" class="form-control @error('nama_depan') is-invalid @enderror"
+                                    name="nama_depan" id="nama_depan" placeholder="Masukkan Nama Depan">
                             </div>
                             <div class="col-md-6">
                                 <label for="nama_belakang" class="form-label">Nama Belakang</label>
-                                <input type="text" class="form-control @error('nama_belakang') is-invalid @enderror" name="nama_belakang" id="nama_belakang"
-                                    placeholder="Masukkan Nama Belakang">
+                                <input type="text" class="form-control @error('nama_belakang') is-invalid @enderror"
+                                    name="nama_belakang" id="nama_belakang" placeholder="Masukkan Nama Belakang">
                             </div>
                         </div>
 
                         <div class="row g-3 mt-2">
                             <div class="col-md-6">
                                 <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="email"
-                                    placeholder="Masukkan Email">
+                                <input type="email" class="form-control @error('email') is-invalid @enderror"
+                                    name="email" id="email" placeholder="Masukkan Email">
                             </div>
                             <div class="col-md-6">
                                 <label for="no_hp" class="form-label">Nomor Kontak</label>
-                                <input type="number" class="form-control @error('no_hp') is-invalid @enderror" name="no_hp" id="no_hp"
-                                    placeholder="Masukkan Nomor Kontak">
+                                <input type="number" class="form-control @error('no_hp') is-invalid @enderror"
+                                    name="no_hp" id="no_hp" placeholder="Masukkan Nomor Kontak">
                             </div>
                         </div>
 
                         <div class="row g-3 mt-2">
                             <div class="col-md-6">
                                 <label for="password" class="form-label">Password</label>
-                                <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" id="password"
-                                    placeholder="Masukkan Password">
+                                <input type="password" class="form-control @error('password') is-invalid @enderror"
+                                    name="password" id="password" placeholder="Masukkan Password">
                             </div>
                             <div class="col-md-6">
                                 <label for="konfirmasi_password" class="form-label">Konfirmasi Password</label>
@@ -75,7 +96,8 @@
                         <div class="row g-3 mt-2">
                             <div class="col-md-6">
                                 <label for="tgl_lahir" class="form-label">Tanggal Lahir</label>
-                                <input type="date" class="form-control @error('tgl_lahir') is-invalid @enderror" name="tgl_lahir" id="tgl_lahir">
+                                <input type="date" class="form-control @error('tgl_lahir') is-invalid @enderror"
+                                    name="tgl_lahir" id="tgl_lahir">
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label">Jenis Kelamin</label>
@@ -85,8 +107,7 @@
                                             class="custom-control-input custom-control-input-danger custom-control-input-outline"
                                             type="radio" id="customRadioLaki" name="jenis_kelamin"
                                             value="Laki-Laki">
-                                        <label for="customRadioLaki"
-                                            class="custom-control-label">Laki-Laki</label>
+                                        <label for="customRadioLaki" class="custom-control-label">Laki-Laki</label>
                                     </div>
                                     <div class="custom-control custom-radio">
                                         <input
@@ -104,34 +125,34 @@
                         <div class="row g-3">
                             <div class="col-md-6">
                                 <label for="alamat" class="form-label">Alamat</label>
-                                <input type="text" class="form-control @error('alamat') is-invalid @enderror" name="alamat" id="alamat"
-                                    placeholder="Masukkan Alamat">
+                                <input type="text" class="form-control @error('alamat') is-invalid @enderror"
+                                    name="alamat" id="alamat" placeholder="Masukkan Alamat">
                             </div>
                             <div class="col-md-6">
                                 <label for="negara" class="form-label">Negara</label>
-                                <input type="text" class="form-control @error('negara') is-invalid @enderror" name="negara" id="negara"
-                                    placeholder="Masukkan Negara">
+                                <input type="text" class="form-control @error('negara') is-invalid @enderror"
+                                    name="negara" id="negara" placeholder="Masukkan Negara">
                             </div>
                         </div>
 
                         <div class="row g-3 mt-2">
                             <div class="col-md-6">
                                 <label for="provinsi" class="form-label">Provinsi</label>
-                                <input type="text" class="form-control @error('provinsi') is-invalid @enderror" name="provinsi" id="provinsi"
-                                    placeholder="Masukkan Provinsi">
+                                <input type="text" class="form-control @error('provinsi') is-invalid @enderror"
+                                    name="provinsi" id="provinsi" placeholder="Masukkan Provinsi">
                             </div>
                             <div class="col-md-6">
                                 <label for="kota" class="form-label">Kota</label>
-                                <input type="text" class="form-control @error('kota') is-invalid @enderror" name="kota" id="kota"
-                                    placeholder="Masukkan Kota">
+                                <input type="text" class="form-control @error('kota') is-invalid @enderror"
+                                    name="kota" id="kota" placeholder="Masukkan Kota">
                             </div>
                         </div>
 
                         <div class="row g-3 mt-2">
                             <div class="col-md-6">
                                 <label for="kodepos" class="form-label">Kode Pos</label>
-                                <input type="number" class="form-control @error('kodepos') is-invalid @enderror" name="kodepos" id="kodepos"
-                                    placeholder="Masukkan Kode Pos">
+                                <input type="number" class="form-control @error('kodepos') is-invalid @enderror"
+                                    name="kodepos" id="kodepos" placeholder="Masukkan Kode Pos">
                             </div>
                         </div>
 
@@ -180,8 +201,32 @@
         });
     </script>
 
-<script>
-</script>
+    <script>
+        // Ambil elemen gambar dan input file
+        const profileImage = document.getElementById('profileImage');
+        const profileInput = document.getElementById('foto');
+
+        // Tambahkan event klik pada gambar
+        profileImage.addEventListener('click', function() {
+            profileInput.click(); // Simulasikan klik pada input file
+        });
+
+        // Update gambar saat file dipilih
+        profileInput.addEventListener('change', function(event) {
+            const file = event.target.files[0]; // Ambil file yang dipilih
+            if (file) {
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    profileImage.src = e.target.result; // Perbarui src gambar
+                };
+
+                reader.readAsDataURL(file); // Baca file sebagai data URL
+            }
+        });
+    </script>
+
+    <script></script>
 </body>
 
 </html>

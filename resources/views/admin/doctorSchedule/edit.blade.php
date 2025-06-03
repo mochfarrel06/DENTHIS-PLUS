@@ -28,7 +28,8 @@
             <div class="row">
                 <section class="col-lg-12">
                     <div class="card">
-                        <form method="POST" id="main-form" action="{{ route('admin.doctor-schedules.update', $doctor->id) }}">
+                        <form method="POST" id="main-form"
+                            action="{{ route('admin.doctor-schedules.update', $doctor->id) }}">
                             @csrf
                             @method('PUT')
 
@@ -68,6 +69,18 @@
                                                 <option value="60"
                                                     {{ $firstSchedule && $firstSchedule->waktu_jeda === 60 ? 'selected' : '' }}>
                                                     1 Jam</option>
+                                                <option value="75"
+                                                    {{ $firstSchedule && $firstSchedule->waktu_jeda === 75 ? 'selected' : '' }}>
+                                                    1 Jam 15 Menit</option>
+                                                <option value="90"
+                                                    {{ $firstSchedule && $firstSchedule->waktu_jeda === 90 ? 'selected' : '' }}>
+                                                    1 Jam 30 Menit</option>
+                                                <option value="105"
+                                                    {{ $firstSchedule && $firstSchedule->waktu_jeda === 105 ? 'selected' : '' }}>
+                                                    1 Jam 45 Menit</option>
+                                                <option value="120"
+                                                    {{ $firstSchedule && $firstSchedule->waktu_jeda === 120 ? 'selected' : '' }}>
+                                                    2 Jam</option>
                                             </select>
                                             @error('waktu_jeda')
                                                 <span class="text-danger">{{ $message }}</span>
@@ -95,6 +108,18 @@
                                                 <option value="60"
                                                     {{ $firstSchedule && $firstSchedule->waktu_periksa === 60 ? 'selected' : '' }}>
                                                     1 Jam</option>
+                                                <option value="75"
+                                                    {{ $firstSchedule && $firstSchedule->waktu_periksa === 75 ? 'selected' : '' }}>
+                                                    1 Jam 15 Menit</option>
+                                                <option value="90"
+                                                    {{ $firstSchedule && $firstSchedule->waktu_periksa === 90 ? 'selected' : '' }}>
+                                                    1 Jam 30 Menit</option>
+                                                <option value="105"
+                                                    {{ $firstSchedule && $firstSchedule->waktu_periksa === 105 ? 'selected' : '' }}>
+                                                    1 Jam 45 Menit</option>
+                                                <option value="120"
+                                                    {{ $firstSchedule && $firstSchedule->waktu_periksa === 120 ? 'selected' : '' }}>
+                                                    2 Jam</option>
                                             </select>
                                             @error('waktu_periksa')
                                                 <span class="text-danger">{{ $message }}</span>
@@ -133,7 +158,8 @@
                                                     <div class="form-check">
                                                         <input type="checkbox" name="hari[]" value="{{ $day }}"
                                                             id="{{ $day }}"
-                                                            {{ isset($formattedSchedules[$day]['jam_mulai']) ? 'checked' : '' }} onchange="toggleTimeInputs('{{ $day }}')">
+                                                            {{ isset($formattedSchedules[$day]['jam_mulai']) ? 'checked' : '' }}
+                                                            onchange="toggleTimeInputs('{{ $day }}')">
                                                         <label class="form-check-label"
                                                             for="{{ $day }}">{{ $dayMapping[$day] }}</label>
                                                     </div>
@@ -207,54 +233,53 @@
         });
     </script>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        let submitBtn = document.getElementById('submit-btn');
-        let waktuJeda = document.getElementById('waktu_jeda');
-        let waktuPeriksa = document.getElementById('waktu_periksa');
-        let checkboxes = document.querySelectorAll('input[name="hari[]"]');
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let submitBtn = document.getElementById('submit-btn');
+            let waktuJeda = document.getElementById('waktu_jeda');
+            let waktuPeriksa = document.getElementById('waktu_periksa');
+            let checkboxes = document.querySelectorAll('input[name="hari[]"]');
 
-        function checkFormValidity() {
-            let waktuJedaValue = waktuJeda.value;
-            let waktuPeriksaValue = waktuPeriksa.value;
-            let checkedDays = document.querySelectorAll('input[name="hari[]"]:checked').length > 0;
+            function checkFormValidity() {
+                let waktuJedaValue = waktuJeda.value;
+                let waktuPeriksaValue = waktuPeriksa.value;
+                let checkedDays = document.querySelectorAll('input[name="hari[]"]:checked').length > 0;
 
-            // Jika waktu jeda, waktu periksa diisi dan ada hari yang dipilih, enable tombol
-            if (waktuJedaValue && waktuPeriksaValue && checkedDays) {
-                submitBtn.removeAttribute("disabled");
-            } else {
-                submitBtn.setAttribute("disabled", "disabled");
+                // Jika waktu jeda, waktu periksa diisi dan ada hari yang dipilih, enable tombol
+                if (waktuJedaValue && waktuPeriksaValue && checkedDays) {
+                    submitBtn.removeAttribute("disabled");
+                } else {
+                    submitBtn.setAttribute("disabled", "disabled");
+                }
             }
-        }
 
-        // Event listener untuk dropdown waktu jeda & periksa
-        waktuJeda.addEventListener("change", checkFormValidity);
-        waktuPeriksa.addEventListener("change", checkFormValidity);
+            // Event listener untuk dropdown waktu jeda & periksa
+            waktuJeda.addEventListener("change", checkFormValidity);
+            waktuPeriksa.addEventListener("change", checkFormValidity);
 
-        // Event listener untuk checkbox hari
-        checkboxes.forEach(checkbox => {
-            checkbox.addEventListener("change", checkFormValidity);
+            // Event listener untuk checkbox hari
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener("change", checkFormValidity);
+            });
+
+            // Mencegah submit jika tidak ada checkbox yang dipilih
+            document.getElementById('main-form').addEventListener('submit', function(event) {
+                let checkedDays = document.querySelectorAll('input[name="hari[]"]:checked').length;
+
+                if (checkedDays === 0) {
+                    event.preventDefault();
+
+                    // Tampilkan SweetAlert2
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Oops...',
+                        text: 'Harap pilih setidaknya satu hari untuk jadwal dokter!',
+                    });
+                }
+            });
+
+            // Jalankan validasi awal
+            checkFormValidity();
         });
-
-        // Mencegah submit jika tidak ada checkbox yang dipilih
-        document.getElementById('main-form').addEventListener('submit', function (event) {
-            let checkedDays = document.querySelectorAll('input[name="hari[]"]:checked').length;
-
-            if (checkedDays === 0) {
-                event.preventDefault();
-
-                // Tampilkan SweetAlert2
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'Oops...',
-                    text: 'Harap pilih setidaknya satu hari untuk jadwal dokter!',
-                });
-            }
-        });
-
-        // Jalankan validasi awal
-        checkFormValidity();
-    });
-</script>
-
+    </script>
 @endpush

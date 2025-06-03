@@ -25,8 +25,8 @@ class DoctorScheduleUpdateRequest extends FormRequest
             'hari' => ['nullable', 'array', 'in:Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday'],
             'jam_mulai' => ['nullable', 'array'],
             'jam_selesai' => ['nullable', 'array'],
-            'waktu_periksa' => ['required', 'in:5,10,15,30,60'],
-            'waktu_jeda' => ['required', 'in:5,10,15,30,60'],
+            'waktu_periksa' => ['required', 'in:5,10,15,30,60,75,90,105,120'],
+            'waktu_jeda' => ['required', 'in:5,10,15,30,60,75,90,105,120'],
         ];
     }
 

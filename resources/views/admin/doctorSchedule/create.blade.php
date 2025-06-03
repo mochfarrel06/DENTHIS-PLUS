@@ -60,6 +60,10 @@
                                                 <option value="15">15 Menit</option>
                                                 <option value="30">30 Menit</option>
                                                 <option value="60">1 Jam</option>
+                                                <option value="75">1 Jam 15 Menit</option>
+                                                <option value="90">1 Jam 30 Menit</option>
+                                                <option value="105">1 Jam 45 Menit</option>
+                                                <option value="120">2 Jam</option>
                                             </select>
                                             @error('waktu_jeda')
                                                 <span class="text-danger">{{ $message }}</span>
@@ -78,6 +82,10 @@
                                                 <option value="15">15 Menit</option>
                                                 <option value="30">30 Menit</option>
                                                 <option value="60">1 Jam</option>
+                                                <option value="75">1 Jam 15 Menit</option>
+                                                <option value="90">1 Jam 30 Menit</option>
+                                                <option value="105">1 Jam 45 Menit</option>
+                                                <option value="120">2 Jam</option>
                                             </select>
                                             @error('waktu_periksa')
                                                 <span class="text-danger">{{ $message }}</span>

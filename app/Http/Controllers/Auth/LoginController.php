@@ -79,11 +79,22 @@ class LoginController extends Controller
     public function storeRegister(PatientStoreRequest $request)
     {
         try {
-            $defaultFotoPath = public_path('uploads/foto_dokter/default2.jpg');
-            $newFotoName = Str::random(20) . '.jpg'; // nama file unik
-            $destinationPath = public_path('uploads/foto_pasien/' . $newFotoName);
+            // $defaultFotoPath = public_path('uploads/foto_dokter/default2.jpg');
+            // $newFotoName = Str::random(20) . '.jpg'; // nama file unik
+            // $destinationPath = public_path('uploads/foto_pasien/' . $newFotoName);
 
-            File::copy($defaultFotoPath, $destinationPath);
+            // File::copy($defaultFotoPath, $destinationPath);
+
+            if ($request->hasFile('foto')) {
+                $file = $request->file('foto');
+                $newFotoName = Str::random(20) . '.' . $file->getClientOriginalExtension();
+                $file->move(public_path('uploads/foto_pasien'), $newFotoName);
+            } else {
+                // jika tidak upload, pakai default
+                $defaultFotoPath = public_path('uploads/foto_dokter/default2.jpg');
+                $newFotoName = Str::random(20) . '.jpg';
+                File::copy($defaultFotoPath, public_path('uploads/foto_pasien/' . $newFotoName));
+            }
 
             // Buat user
             $user = User::create([

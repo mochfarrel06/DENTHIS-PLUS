@@ -26,8 +26,8 @@ class DoctorScheduleStoreRequest extends FormRequest
             'hari' => ['nullable', 'array', 'in:Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday'],
             'jam_mulai' => ['nullable', 'array'],
             'jam_selesai' => ['nullable', 'array'],
-            'waktu_periksa' => ['required', 'in:5,10,15,30,60'],
-            'waktu_jeda' => ['required', 'in:5,10,15,30,60'],
+            'waktu_periksa' => ['required', 'in:5,10,15,30,60,75,90,105,120'],
+            'waktu_jeda' => ['required', 'in:5,10,15,30,60,75,90,105,120'],
         ];
     }
 
@@ -36,9 +36,9 @@ class DoctorScheduleStoreRequest extends FormRequest
         return [
             'doctor_id.required' => 'Dokter tidak boleh kosong',
             'waktu_periksa.required' => 'Waktu periksa tidak boleh kosong',
-            'waktu_periksa.in' => 'Waktu periksa harus berupa 5, 10, 15, 30, atau 60 menit',
+            'waktu_periksa.in' => 'Waktu periksa harus berupa 5, 10, 15, 30, 60, 75, 90, 105 atau 120 menit',
             'waktu_jeda.required' => 'Waktu jeda tidak boleh kosong',
-            'waktu_jeda.in' => 'Waktu jeda harus berupa 5, 10, 15, 30, atau 60 menit',
+            'waktu_jeda.in' => 'Waktu jeda harus berupa 5, 10, 15, 30, 60, 75, 90, 105 atau 120 menit',
         ];
     }
 }
