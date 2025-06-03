@@ -89,7 +89,7 @@ class MedicalRecordController extends Controller
 
     public function show(string $id)
     {
-        $medicalRecord = MedicalRecord::findOrFail($id);
+        $medicalRecord = MedicalRecord::with('patient')->findOrFail($id);
         return view('doctor.medical-record.show', compact('medicalRecord'));
     }
 }

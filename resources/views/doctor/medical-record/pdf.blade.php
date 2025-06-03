@@ -58,6 +58,11 @@
                 <td style="width: 50%; padding: 0">
                     <table class="table-header">
                         <tr>
+                            <td>
+                                <img src="{{ public_path($medicalRecord->user->foto) }}" alt="Foto Pasien" style="width:100px; height:100px; border: 1px solid #000; border-radius: 100px">
+                            </td>
+                        </tr>
+                        <tr>
                             <td style="width: 25%; padding: 4px">Nama</td>
                             <td style="padding: 4px">: {{ $medicalRecord->user->nama_depan }} {{ $medicalRecord->user->nama_belakang }}</td>
                         </tr>
