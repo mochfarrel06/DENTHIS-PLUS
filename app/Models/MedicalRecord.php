@@ -16,7 +16,8 @@ class MedicalRecord extends Model
         'tgl_periksa',
         'diagnosis',
         'resep',
-        'catatan_medis'
+        'catatan_medis',
+        'dokumen'
     ];
 
     public function user()

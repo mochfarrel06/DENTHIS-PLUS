@@ -25,7 +25,8 @@ class MedicalRecordStoreRequest extends FormRequest
             'queue_id' => ['required', 'exists:queues,id'],
             'diagnosis' => ['required', 'string'],
             'resep' => ['required', 'string'],
-            'catatan_medis' => ['required', 'string']
+            'catatan_medis' => ['required', 'string'],
+            'dokumen' => ['nullable', 'file', 'mimes:jpg,jpeg,png,doc,docx,ppt,pptx,pdf', 'max:5120'], // maks. 5MB
         ];
     }
 

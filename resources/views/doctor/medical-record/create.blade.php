@@ -27,7 +27,8 @@
             <div class="row">
                 <section class="col-lg-12">
                     <div class="card">
-                        <form id="main-form" method="POST" action="{{ route('doctor.medical-record.store') }}">
+                        <form id="main-form" method="POST" action="{{ route('doctor.medical-record.store') }}"
+                            enctype="multipart/form-data">
                             @csrf
                             <div class="card-body">
                                 <div class="form-group">
@@ -48,7 +49,8 @@
 
                                 <div class="form-group">
                                     <label for="diagnosis">Diagnosis</label>
-                                    <textarea name="diagnosis" class="form-control @error('diagnosis') is-invalid @enderror" placeholder="Masukkan diagnosis pasien"></textarea>
+                                    <textarea name="diagnosis" class="form-control @error('diagnosis') is-invalid @enderror"
+                                        placeholder="Masukkan diagnosis pasien"></textarea>
                                     @error('diagnosis')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -56,7 +58,8 @@
 
                                 <div class="form-group">
                                     <label for="resep">Perawatan</label>
-                                    <textarea name="resep" class="form-control @error('resep') is-invalid @enderror" placeholder="Masukkan perawatan pasien"></textarea>
+                                    <textarea name="resep" class="form-control @error('resep') is-invalid @enderror"
+                                        placeholder="Masukkan perawatan pasien"></textarea>
                                     @error('resep')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
@@ -64,11 +67,25 @@
 
                                 <div class="form-group">
                                     <label for="catatan_medis">Catatan Medis</label>
-                                    <textarea name="catatan_medis" class="form-control @error('catatan_medis') is-invalid @enderror" placeholder="Masukkan catatan pasien"></textarea>
+                                    <textarea name="catatan_medis" class="form-control @error('catatan_medis') is-invalid @enderror"
+                                        placeholder="Masukkan catatan pasien"></textarea>
                                     @error('catatan_medis')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
+
+                                <div class="form-group">
+                                    <label for="dokumen">Upload Dokumen (opsional)</label>
+                                    <div class="custom-file">
+                                        <input type="file" name="dokumen"
+                                            class="custom-file-input @error('dokumen') is-invalid @enderror" id="dokumen">
+                                        <label class="custom-file-label" for="dokumen">Pilih file...</label>
+                                    </div>
+                                    @error('dokumen')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
                             </div>
 
                             <div class="card-footer">
@@ -139,5 +156,9 @@
                 $(this).next('.invalid-feedback').text('');
             });
         });
+    </script>
+
+    <script>
+        bsCustomFileInput.init();
     </script>
 @endpush

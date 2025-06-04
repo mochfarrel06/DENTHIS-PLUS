@@ -102,6 +102,7 @@
     <script src="{{ asset('assets/admin/plugins/izitoast/js/iziToast.min.js') }}"></script>
     <!-- SweetAlert Library for Beautiful Alerts -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.min.js"></script>
 
     <script>
         $(function() {

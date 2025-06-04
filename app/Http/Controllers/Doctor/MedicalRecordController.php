@@ -41,6 +41,15 @@ class MedicalRecordController extends Controller
         try {
             $queue = Queue::findOrFail($request->queue_id);
 
+            $fileName = null;
+
+            // Simpan file jika diupload
+            if ($request->hasFile('dokumen')) {
+                $file = $request->file('dokumen');
+                $fileName = time() . '_' . preg_replace('/\s+/', '_', $file->getClientOriginalName());
+                $file->move(public_path('dokumen_rekam_medis'), $fileName);
+            }
+
             $medicalRecord = MedicalRecord::create([
                 'user_id' => $queue->user_id,
                 'queue_id' => $queue->id,
@@ -48,6 +57,7 @@ class MedicalRecordController extends Controller
                 'diagnosis' => $request->diagnosis,
                 'resep' => $request->resep,
                 'catatan_medis' => $request->catatan_medis,
+                'dokumen' => $fileName,
             ]);
 
             $queue->update([
