@@ -113,6 +113,7 @@ class LoginController extends Controller
                 'kota'          => $request->kota,
                 'kodepos'       => $request->kodepos,
                 'foto'          => '/uploads/foto_pasien/' . $newFotoName,
+                'alergi'        => $request->alergi
             ]);
 
             // Buat patient
@@ -132,6 +133,7 @@ class LoginController extends Controller
                 'kota'          => $request->kota,
                 'kodepos'       => $request->kodepos,
                 'foto'          => '/uploads/foto_pasien/' . $newFotoName,
+                'alergi'        => $request->alergi
             ]);
             $patient->save();
 

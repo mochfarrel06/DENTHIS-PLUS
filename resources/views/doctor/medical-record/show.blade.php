@@ -66,8 +66,16 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
+                                            <label>Alergi</label>
+                                            <textarea class="form-control" cols="30" rows="7" disabled>{{ $medicalRecord->user->alergi }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
                                             <label>Catatan Medis</label>
-                                            <textarea class="form-control" cols="30" rows="10" disabled>{{ $medicalRecord->catatan_medis }}</textarea>
+                                            <textarea class="form-control" cols="30" rows="7" disabled>{{ $medicalRecord->catatan_medis }}</textarea>
                                         </div>
                                     </div>
                                 </div>

@@ -17,7 +17,7 @@
 <body class="hold-transition login-page">
     <div class="login-box">
         <div class="login-logo">
-            <a><b>Verfikasi Email</b></a>
+            <a><b>Verifikasi Email</b></a>
         </div>
         <div class="card">
             <div class="card-body login-card-body" style="padding-bottom: 30px">

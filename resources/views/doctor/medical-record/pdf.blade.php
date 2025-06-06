@@ -78,6 +78,10 @@
                             <td style="width: 25%; padding: 4px">Tgl Periksa</td>
                             <td style="padding: 4px">: {{ $medicalRecord->queue->tgl_periksa }}</td>
                         </tr>
+                        <tr>
+                            <td style="width: 25%; padding: 4px">Alergi</td>
+                            <td style="padding: 4px">: {{ $medicalRecord->user->alergi }}</td>
+                        </tr>
                     </table>
                 </td>
             </tr>

@@ -47,6 +47,7 @@
                                         <th>Tanggal Periksa</th>
                                         <th>Pasien</th>
                                         <th>Diagnosis</th>
+                                        <th>Alergi</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -57,6 +58,7 @@
                                             <td>{{ $record->tgl_periksa }}</td>
                                             <td>{{ $record->user->nama_depan }} {{ $record->user->nama_belakang }}</td>
                                             <td>{{ Str::limit($record->diagnosis, 30) }}</td>
+                                            <td>{{ $record->user->alergi ? $record->user->alergi : '-' }}</td>
                                             <td>
                                                 <div class="btn-group">
                                                     <a data-toggle="dropdown">

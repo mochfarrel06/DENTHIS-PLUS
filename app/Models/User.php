@@ -33,7 +33,8 @@ class User extends Authenticatable
         'provinsi',
         'kota',
         'kodepos',
-        'status'
+        'status',
+        'alergi'
     ];
 
     /**

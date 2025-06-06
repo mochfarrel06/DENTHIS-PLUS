@@ -19,9 +19,10 @@ class MedicalRecordController extends Controller
         $role = $user->role;
 
         if ($role === 'admin' || $role === 'dokter') {
-            $medicalRecords = MedicalRecord::all();
+            $medicalRecords = MedicalRecord::with('user')->get();
         } else {
-            $medicalRecords = MedicalRecord::where('user_id', $user->id)->get();
+            // $medicalRecords = MedicalRecord::where('user_id', $user->id)->get();
+            $medicalRecords = MedicalRecord::with('user')->where('user_id', $user->id)->get();
         }
 
         return view('doctor.medical-record.index', compact('medicalRecords'));
@@ -89,7 +90,7 @@ class MedicalRecordController extends Controller
 
     public function generatePDF($id)
     {
-        $medicalRecord = MedicalRecord::with(['patient', 'queue'])->findOrFail($id);
+        $medicalRecord = MedicalRecord::with(['patient', 'queue', 'user'])->findOrFail($id);
 
         $pdf = Pdf::loadView('doctor.medical-record.pdf', compact('medicalRecord'))
             ->setPaper('a4', 'portrait');
@@ -99,7 +100,7 @@ class MedicalRecordController extends Controller
 
     public function show(string $id)
     {
-        $medicalRecord = MedicalRecord::with('patient')->findOrFail($id);
+        $medicalRecord = MedicalRecord::with('patient', 'user')->findOrFail($id);
         return view('doctor.medical-record.show', compact('medicalRecord'));
     }
 }
