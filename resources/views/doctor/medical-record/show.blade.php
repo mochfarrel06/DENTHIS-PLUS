@@ -79,7 +79,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                @if ($medicalRecord->dokumen)
+                                {{-- @if ($medicalRecord->dokumen)
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
@@ -89,7 +89,31 @@
                                             </div>
                                         </div>
                                     </div>
+                                @endif --}}
+                                @php
+                                    $dokumens = json_decode($medicalRecord->dokumen, true);
+                                @endphp
+
+                                @if (!empty($dokumens))
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="">Dokumen Pendukung</label>
+                                                <ul>
+                                                    @foreach ($dokumens as $dokumen)
+                                                        <li>
+                                                            <a href="{{ asset('dokumen_rekam_medis/' . $dokumen) }}"
+                                                                target="_blank">
+                                                                <i class="iconoir-download"></i> {{ $dokumen }}
+                                                            </a>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
                                 @endif
+
                             </div>
                             <div class="card-footer">
                                 <a href="{{ route('doctor.medical-record.index') }}" class="btn btn-warning">Kembali</a>

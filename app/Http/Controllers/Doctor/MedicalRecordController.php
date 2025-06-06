@@ -42,13 +42,14 @@ class MedicalRecordController extends Controller
         try {
             $queue = Queue::findOrFail($request->queue_id);
 
-            $fileName = null;
+            $fileNames = [];
 
-            // Simpan file jika diupload
             if ($request->hasFile('dokumen')) {
-                $file = $request->file('dokumen');
-                $fileName = time() . '_' . preg_replace('/\s+/', '_', $file->getClientOriginalName());
-                $file->move(public_path('dokumen_rekam_medis'), $fileName);
+                foreach ($request->file('dokumen') as $file) {
+                    $fileName = time() . '_' . preg_replace('/\s+/', '_', $file->getClientOriginalName());
+                    $file->move(public_path('dokumen_rekam_medis'), $fileName);
+                    $fileNames[] = $fileName;
+                }
             }
 
             $medicalRecord = MedicalRecord::create([
@@ -58,27 +59,13 @@ class MedicalRecordController extends Controller
                 'diagnosis' => $request->diagnosis,
                 'resep' => $request->resep,
                 'catatan_medis' => $request->catatan_medis,
-                'dokumen' => $fileName,
+                'dokumen' => !empty($fileNames) ? json_encode($fileNames) : null,
             ]);
 
             $queue->update([
                 'status' => 'selesai',
                 'medical_id' => $medicalRecord->id,
             ]);
-
-            // QueueHistory::create([
-            //     'queue_id' => $queue->id,
-            //     'user_id' => $queue->user_id,
-            //     'medical_id' => $medicalRecord->id,
-            //     'doctor_id' => $queue->doctor_id,
-            //     'patient_id' => $queue->patient_id,
-            //     'tgl_periksa' => $queue->tgl_periksa,
-            //     'start_time' => $queue->start_time,
-            //     'end_time' => $queue->end_time,
-            //     'keterangan' => $queue->keterangan,
-            //     'status' => $queue->status,
-            //     'is_booked' => $queue->is_booked,
-            // ]);
 
             session()->flash('success', 'Berhasil menambahkan data rekam medis');
             return response()->json(['success' => true], 200);

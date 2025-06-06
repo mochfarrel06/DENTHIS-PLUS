@@ -77,7 +77,7 @@
                                 <div class="form-group">
                                     <label for="dokumen">Upload Dokumen (opsional)</label>
                                     <div class="custom-file">
-                                        <input type="file" name="dokumen"
+                                        <input type="file" name="dokumen[]" multiple
                                             class="custom-file-input @error('dokumen') is-invalid @enderror" id="dokumen">
                                         <label class="custom-file-label" for="dokumen">Pilih file...</label>
                                     </div>
@@ -85,6 +85,7 @@
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
+
 
                             </div>
 
