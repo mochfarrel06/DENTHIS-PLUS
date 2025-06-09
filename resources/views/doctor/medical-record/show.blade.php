@@ -103,7 +103,11 @@
                                                     @foreach ($dokumens as $dokumen)
                                                         <li>
                                                             <a href="{{ asset('dokumen_rekam_medis/' . $dokumen) }}"
-                                                                target="_blank">
+                                                            @if(Str::endsWith($dokumen, ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp']))
+                                                                download
+                                                            @else
+                                                                target="_blank"
+                                                            @endif>
                                                                 <i class="iconoir-download"></i> {{ $dokumen }}
                                                             </a>
                                                         </li>
