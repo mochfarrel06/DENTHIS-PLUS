@@ -109,5 +109,30 @@
             <td>{{ $medicalRecord->catatan_medis }}</td>
         </tr>
     </table>
+
+    @php
+    $dokumen = json_decode($medicalRecord->dokumen, true);
+@endphp
+
+@if (!empty($dokumen) && is_array($dokumen))
+    <h2 style="font-size: 15px">Dokumen Pendukung</h2>
+    @foreach ($dokumen as $gambar)
+        @php
+            $ext = pathinfo($gambar, PATHINFO_EXTENSION);
+        @endphp
+        @if (in_array(strtolower($ext), ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp']))
+            <div style="margin: 10px 0px;">
+                <img src="{{ public_path('dokumen_rekam_medis/' . $gambar) }}"
+                     alt="Dokumen Gambar"
+                     style="width; 300px; height: 300px;">
+            </div>
+        @endif
+    @endforeach
+@else
+    <p>Tidak ada dokumen gambar</p>
+@endif
+
+
+
 </body>
 </html>

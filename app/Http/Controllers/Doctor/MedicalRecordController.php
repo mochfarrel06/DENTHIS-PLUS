@@ -78,8 +78,14 @@ class MedicalRecordController extends Controller
     public function generatePDF($id)
     {
         $medicalRecord = MedicalRecord::with(['patient', 'queue', 'user'])->findOrFail($id);
+        $imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp', 'JPG'];
+        $dokumen = collect($medicalRecord->dokumen ?? [])
+            ->filter(function ($file) use ($imageExtensions) {
+                return in_array(strtolower(pathinfo($file, PATHINFO_EXTENSION)), $imageExtensions);
+            });
 
-        $pdf = Pdf::loadView('doctor.medical-record.pdf', compact('medicalRecord'))
+
+        $pdf = Pdf::loadView('doctor.medical-record.pdf', compact('medicalRecord', 'dokumen'))
             ->setPaper('a4', 'portrait');
 
         return $pdf->stream('rekam_medis.pdf');
